@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Login from '@/views/login/Login'
 import Admin from '@/views/common/Admin'
 import Sysinfo from '@/views/set/Sysinfo'
-import Menu from '@/views/set/Menu'
 import Role from '@/views/set/Role'
 
 Vue.use(Router)
@@ -14,7 +13,6 @@ let routes = [
     {
         path: '/',
         redirect: '/set/sysinfo',
-        slug: 'view.index',
         name: '首页',
         component: Admin
     }, {
@@ -24,24 +22,18 @@ let routes = [
     {
         path: '/set',
         icon: 'el-icon-setting',
-        slug: 'view.set',
         name: '全局配置',
         component: Admin,
         children: [
             {
-                path: 'menu',
-                slug: 'view.menu',
-                name: '菜单管理',
-                component: Menu
-            },
-            {
                 path: 'sysinfo',
-                slug: 'sysinfo',
+                slug: 'view.sysinfo',
                 name: '系统概况',
                 component: Sysinfo
             },
             {
                 path: 'role',
+                slug: 'view.role',
                 name: '角色组',
                 component: Role
             }]

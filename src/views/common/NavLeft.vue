@@ -1,6 +1,6 @@
 <template>
     <aside>
-        <el-menu default-active="1" :unique-opened="true" class="el-menu-vertical-demo" :router="true">
+        <el-menu default-active="sysinfo" :unique-opened="true" class="el-menu-vertical-demo" :router="true">
             <el-submenu index="1">
                 <template slot="title">
                     <span class="admin-customtext"><i class="iconfont icon-shezhi"></i>全局配置</span>
@@ -8,8 +8,6 @@
                 <el-menu-item-group class="admin-custombg">
                     <el-menu-item index="sysinfo"><span class="admin-customtext"><i
                             class="el-icon-setting"></i>系统概况</span></el-menu-item>
-                    <el-menu-item index="menu"><span class="admin-customtext"><i
-                            class="iconfont icon-caidan"></i>菜单管理</span></el-menu-item>
                     <el-menu-item index="role"><span class="admin-customtext"><i
                             class="iconfont icon-jiaose"></i>角色组</span></el-menu-item>
                     <el-menu-item index="1-4"><span class="admin-customtext"><i class="iconfont icon-quanxianmiyao"></i>权限管理</span>
