@@ -3,8 +3,7 @@
  * @returns loginUser
  */
 export const getLoginUser = () => {
-    let u = sessionStorage.getItem('loginUser');
-    return u ? JSON.parse(u) : {};
+    return JSON.parse(sessionStorage.getItem('loginUser'));
 };
 
 /**
