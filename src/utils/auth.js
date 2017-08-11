@@ -81,9 +81,9 @@ let childrenRouter = (routes, permissions) => {
             if (!permissions.map(item => item.slug).includes(route.slug)) {
                 routes.splice(index, 1);
             }
-            if (typeof route.children !== 'undefined') {
-                routes[index].children = childrenRouter(route.children, permissions);
-            }
+        }
+        if (typeof route.children !== 'undefined') {
+            routes[index].children = childrenRouter(route.children, permissions);
         }
     })
 
