@@ -1,7 +1,7 @@
 import axios from 'axios'
 import utils from '../utils'
 
-export const base = 'http://192.168.0.110/api/admin';
+export const base = 'http://127.0.0.1/api/admin';
 
 export const requestLogin = params => {
     return axios.post(`${base}/login`, params);

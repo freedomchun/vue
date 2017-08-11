@@ -40,19 +40,52 @@ export const hasPermissions = (name, is_force = true) => {
         return false;
     }
     let data = JSON.parse(ps).map(item => item.slug);
-    
+
     if (typeof name === 'string') {
         return data.includes(name);
     } else if (name instanceof Array) {
         return is_force === true ? name.every(item => data.includes(item)) : name.some(item => data.includes(item));
     }
-    
+
     return false;
 };
 
 /**
  * 获取登录用户的权限
+ * @returns permissions
  */
 export const getUserPermissions = () => {
     return JSON.parse(sessionStorage.getItem('permissions'));
 };
+
+/**
+ * 设置登录用户的路由菜单
+ * @param allRoutes
+ * @returns userRoutes
+ */
+export const setLoginUserRouter = allRoutes => {
+    let permissions = getUserPermissions();
+
+    return childrenRouter(allRoutes, permissions);
+}
+
+/**
+ * 避免无限递归时重新读取权限
+ * @param routes
+ * @param permissions
+ * @returns routes.children
+ */
+let childrenRouter = (routes, permissions) => {
+    routes.forEach((route, index) => {
+        if (typeof route.slug !== 'undefined') {
+            if (!permissions.map(item => item.slug).includes(route.slug)) {
+                routes.splice(index, 1);
+            }
+            if (typeof route.children !== 'undefined') {
+                routes[index].children = childrenRouter(route.children, permissions);
+            }
+        }
+    })
+
+    return routes;
+}

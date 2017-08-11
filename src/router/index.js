@@ -16,7 +16,7 @@ import MyInfo from '@/views/user/MyInfo'
 Vue.use(Router)
 import utils from '../utils'
 
-let routes = [
+let allRoutes = [
     {
         path: '/',
         redirect: 'sysinfo',
@@ -70,6 +70,9 @@ let routes = [
     }
 ];
 
+let routes = utils.auth.setLoginUserRouter(allRoutes);
+console.log(routes);
+
 const router = new Router({
     routes
 })
@@ -79,14 +82,9 @@ router.beforeEach((to, from, next) => {
         utils.auth.removeLoginUser();
     }
     let loginUser = utils.auth.getLoginUser();
-    let permissions = utils.auth.getUserPermissions();
     if (!loginUser && to.path !== '/login') {
         next({
             path: '/login'
-        })
-    } else if (!permissions && to.path !== '/login') {
-        next({
-            path: '/noPermissions'
         })
     } else {
         next()
