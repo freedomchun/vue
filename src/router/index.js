@@ -9,6 +9,7 @@ import Role from '@/views/set/Role'
 
 Vue.use(Router)
 import utils from '../utils'
+
 let routes = [
     {
         path: '/',
@@ -52,11 +53,12 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path == '/login') {
-        sessionStorage.removeItem('loginUser');
+    if (to.path === '/login') {
+        utils.auth.removeLoginUser();
     }
-    let loginUser = JSON.parse(sessionStorage.getItem('loginUser'));
-    if (!loginUser && to.path != '/login') {
+    let loginUser = utils.auth.getLoginUser();
+    let permissions = utils.auth.getUserPermissions();
+    if (!loginUser && to.path !== '/login' || !permissions && to.path !== '/login') {
         next({
             path: '/login'
         })
@@ -65,4 +67,4 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-export default router
+export default router;

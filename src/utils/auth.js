@@ -19,16 +19,20 @@ export const setLoginUser = (resData) => {
 };
 
 /**
- * 移除登录用户
+ * 移除登录用户信息
  */
 export const removeLoginUser = () => {
+    // 移除权限
+    sessionStorage.removeItem('permissions');
+    // 移除登录用户
     sessionStorage.removeItem('loginUser');
 };
 
 /**
  * 检查权限
- * @param name
- * @param is_force
+ * @desc 例如 hasPermissions(['view.users', 'create.user'], true)
+ * @param name String||Array 权限名
+ * @param is_force 完全匹配
  * @returns {boolean}
  */
 export const hasPermissions = (name, is_force = true) => {
@@ -45,4 +49,11 @@ export const hasPermissions = (name, is_force = true) => {
     }
     
     return false;
+};
+
+/**
+ * 获取登录用户的权限
+ */
+export const getUserPermissions = () => {
+    return JSON.parse(sessionStorage.getItem('permissions'));
 };

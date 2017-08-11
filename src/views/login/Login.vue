@@ -59,7 +59,7 @@
                         api.requestLogin(this.ruleForm).then(rs => {
                             utils.auth.setLoginUser(rs.data);
                             this.logining = false;
-                            this.$message.success(`${rs.data.name}，欢迎回来！`);
+                            this.$message.success(`${rs.data.userInfo.name}，欢迎回来！`);
                             this.$router.push('/');
                         }).catch((err) => {
                             this.logining = false;
