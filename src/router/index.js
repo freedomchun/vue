@@ -5,7 +5,7 @@ import Login from '@/views/login/Login'
 import Admin from '@/views/common/Admin'
 import Sysinfo from '@/views/set/Sysinfo'
 import Role from '@/views/set/Role'
-import NoAllPermissions from '@/views/permissions/NoPermissions'
+import NoAllPermissions from '@/views/permissions/NoAllPermissions'
 import NoFind from '@/views/error/404'
 
 Vue.use(Router)
