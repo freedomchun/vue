@@ -5,6 +5,8 @@ import Login from '@/views/login/Login'
 import Admin from '@/views/common/Admin'
 import Sysinfo from '@/views/set/Sysinfo'
 import Role from '@/views/set/Role'
+import NoAllPermissions from '@/views/permissions/NoPermissions'
+import NoFind from '@/views/error/404'
 
 Vue.use(Router)
 import utils from '../utils'
@@ -18,8 +20,7 @@ let routes = [
     }, {
         path: '/login',
         component: Login
-    },
-    {
+    }, {
         path: '/set',
         icon: 'el-icon-setting',
         name: '全局配置',
@@ -37,6 +38,15 @@ let routes = [
                 name: '角色组',
                 component: Role
             }]
+    }, {
+        path: '/noAllPermissions',
+        component: NoAllPermissions
+    }, {
+        path: '/404',
+        component: NoFind
+    }, {
+        path: '*',
+        redirect: '/404'
     }
 ];
 
@@ -50,9 +60,13 @@ router.beforeEach((to, from, next) => {
     }
     let loginUser = utils.auth.getLoginUser();
     let permissions = utils.auth.getUserPermissions();
-    if (!loginUser && to.path !== '/login' || !permissions && to.path !== '/login') {
+    if (!loginUser && to.path !== '/login') {
         next({
             path: '/login'
+        })
+    } else if (!permissions && to.path !== '/login') {
+        next({
+            path: '/noPermissions'
         })
     } else {
         next()
