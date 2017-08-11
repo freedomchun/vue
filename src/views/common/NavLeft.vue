@@ -6,13 +6,14 @@
                     <span class="admin-customtext"><i class="iconfont icon-shezhi"></i>全局配置</span>
                 </template>
                 <el-menu-item-group class="admin-custombg">
-                    <el-menu-item index="sysinfo"><span class="admin-customtext"><i
+                    <el-menu-item index="/sysinfo"><span class="admin-customtext"><i
                             class="el-icon-setting"></i>系统概况</span></el-menu-item>
-                    <el-menu-item index="role"><span class="admin-customtext"><i
+                    <el-menu-item index="/set/role"><span class="admin-customtext"><i
                             class="iconfont icon-jiaose"></i>角色组</span></el-menu-item>
-                    <el-menu-item index="1-4"><span class="admin-customtext"><i class="iconfont icon-quanxianmiyao"></i>权限管理</span>
+                    <el-menu-item index="/set/permisson"><span class="admin-customtext"><i
+                            class="iconfont icon-quanxianmiyao"></i>权限管理</span>
                     </el-menu-item>
-                    <el-menu-item index="1-5"><span class="admin-customtext"><i
+                    <el-menu-item index="/set/accountManage"><span class="admin-customtext"><i
                             class="iconfont icon-zhanghu"></i>账户管理</span></el-menu-item>
                 </el-menu-item-group>
             </el-submenu>

@@ -8,15 +8,31 @@ import Role from '@/views/set/Role'
 import NoAllPermissions from '@/views/permissions/NoAllPermissions'
 import NoFind from '@/views/error/404'
 
+import AccountManage from '@/views/set/AccountManage'
+import Permisson from '@/views/set/Permisson'
+import RolePermisson from '@/views/set/RolePermisson'
+import MyInfo from '@/views/user/MyInfo'
+
 Vue.use(Router)
 import utils from '../utils'
 
 let routes = [
     {
         path: '/',
-        redirect: '/set/sysinfo',
+        redirect: 'sysinfo',
         name: '首页',
-        component: Admin
+        component: Admin,
+        children: [
+            {
+                path: 'sysinfo',
+                name: '系统概况',
+                component: Sysinfo
+            }, {
+                path: 'myInfo',
+                name: '个人中心',
+                component: MyInfo
+            }
+        ]
     }, {
         path: '/login',
         component: Login
@@ -25,19 +41,23 @@ let routes = [
         icon: 'el-icon-setting',
         name: '全局配置',
         component: Admin,
-        children: [
-            {
-                path: 'sysinfo',
-                slug: 'view.sysinfo',
-                name: '系统概况',
-                component: Sysinfo
-            },
-            {
-                path: 'role',
-                slug: 'view.role',
-                name: '角色组',
-                component: Role
-            }]
+        children: [{
+            path: 'role',
+            name: '角色组',
+            component: Role
+        }, {
+            path: 'permisson',
+            name: '权限管理',
+            component: Permisson
+        }, {
+            path: 'accountManage',
+            name: '账户管理',
+            component: AccountManage
+        }, {
+            path: 'rolePermisson',
+            name: '角色权限',
+            component: RolePermisson
+        }]
     }, {
         path: '/noAllPermissions',
         component: NoAllPermissions

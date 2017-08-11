@@ -14,18 +14,14 @@
 			</el-form>
 		</div>
 		<el-table :data="tableData4" border style="width: 100%; margin-top: 20px;">
-			<el-table-column prop="role_name" label="名称" width="200"></el-table-column>
-			<el-table-column prop="terms" label="检测词" width="150"></el-table-column>
-			<el-table-column prop="level" label="层级" width="150"></el-table-column>
-			<el-table-column prop="intro" label="简介"></el-table-column>
-			<el-table-column prop="date" label="创建日期" width="150"></el-table-column>
-			<el-table-column fixed="right" label="操作">
+			<el-table-column prop="per_name" label="名称" width="200"> </el-table-column>
+			<el-table-column prop="terms" label="检测词" width="150"> </el-table-column>
+			<el-table-column prop="intro" label="简介"> </el-table-column>
+			<el-table-column prop="date" label="创建日期" width="150"> </el-table-column>
+			<el-table-column fixed="right" label="操作" width="250">
 				<template scope="scope">
-					<router-link :to="'RolePermisson'" class="quan">权限</router-link>
 					<el-button type="primary" size="small">修改</el-button>
-					<el-button type="danger" @click.native.prevent="deleteRow(scope.$index, tableData4)" size="small">
-						删除
-					</el-button>
+					<el-button type="danger" @click.native.prevent="deleteRow(scope.$index, tableData4)" size="small"> 删除 </el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -35,18 +31,14 @@
 			</el-pagination>
 		</el-col>
 		<!--新增界面-->
-		<el-dialog title="新增角色" v-model="addFormVisible" :close-on-click-modal="false">
+		<el-dialog title="新增权限" v-model="addFormVisible" :close-on-click-modal="false">
 			<el-form :label-position="labelPosition" :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-				<el-form-item label="名称" prop="role_name">
-					<el-input v-model="addForm.role_name" auto-complete="off"></el-input>
+				<el-form-item label="名称" prop="per_name">
+					<el-input v-model="addForm.per_name" auto-complete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="检测词">
 					<el-input v-model="addForm.terms"></el-input>
 					<span class="text-colorred">提示：用于程序判断是否具有此角色的重要标识</span>
-				</el-form-item>
-				<el-form-item label="层级">
-					<el-input v-model="addForm.level"></el-input>
-					<span class="text-colorred">如：5，它将拥小于它层级的权限</span>
 				</el-form-item>
 				<el-form-item label="简介">
 					<el-input type="textarea" v-model="addForm.intro"></el-input>
@@ -65,7 +57,6 @@
 		data() {
 			return {
 				labelPosition: 'top',
-				addLoading: false,
 				filters: {
 					name: ''
 				},
@@ -79,43 +70,36 @@
 				},
 				//新增界面数据
 				addForm: {
-					sort: 1,
-					role_name: '超级管理员',
+
+					per_name: '删除文章',
 					terms: 'admin',
-					level: 1,
-					intro: '超级管理员组',
+					intro: '用于删除文章',
 					date: '2016-05-03',
 				},
 
 				tableData4: [{
-					sort: 1,
-					role_name: '超级管理员',
-					terms: 'admin',
-					level: 1,
-					intro: '超级管理员组',
-					date: '2016-05-03',
-				}, {
-					sort: 2,
-					role_name: '网站编辑',
-					terms: 'edit',
-					level: 2,
-					intro: '网站编辑',
-					date: '2016-05-03',
-				}, {
-					sort: 3,
-					role_name: '测试',
-					terms: 'test',
-					level: 5,
-					intro: '测试',
-					date: '2016-05-03',
-				}]
+
+						per_name: '删除文章',
+						terms: 'admin',
+						intro: '用于删除文章',
+						date: '2016-05-03',
+					},
+					{
+
+						per_name: '删除文章',
+						terms: 'test',
+						intro: '用于删除文章',
+						date: '2016-05-03',
+					}
+				]
 			}
 		},
 		methods: {
 			handleAdd: function() {
 				this.addFormVisible = true;
 				this.addForm = {
-					role_name: '超级管理员',
+					per_name: '删除文章',
+
 				};
 			},
 
@@ -135,20 +119,5 @@
 	.text-colorred {
 		color: #f00;
 		font-size: 12px;
-	}
-	
-	.quan {
-		background: #4db3ff;
-		color: white;
-		padding: 7px 9px;
-		font-size: 12px;
-		border-radius: 4px;
-		display: inline-block;
-		line-height: 1;
-		white-space: nowrap;
-		cursor: pointer;
-		text-decoration: none;
-		border: 1px solid #4db3ff;
-		margin: 0;
 	}
 </style>
