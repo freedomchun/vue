@@ -16,7 +16,7 @@
                 <span class="push-right">忘记密码，请联系管理员！</span>
                 <el-form-item style="width:100%; padding-top: 80px;">
                     <el-button type="primary" style="width:100%;" @click.native.prevent="submitForm('ruleForm')"
-                               :loading="logining">登录
+                               :loading="loading">登录
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -27,7 +27,7 @@
     export default {
         data() {
             return {
-                logining: false,
+                loading: false,
                 ruleForm: {
                     email: '676659348@qq.com',
                     password: 'bing8u',
@@ -55,14 +55,14 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.logining = true;
+                        this.loading = true;
                         api.requestLogin(this.ruleForm).then(rs => {
                             utils.auth.setLoginUser(rs.data);
-                            this.logining = false;
+                            this.loading = false;
                             this.$message.success(`${rs.data.userInfo.name}，欢迎回来！`);
                             this.$router.push('/');
-                        }).catch((err) => {
-                            this.logining = false;
+                        }).catch(err => {
+                            this.loading = false;
                             utils.fns.err(err);
                         });
                     } else {

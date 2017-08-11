@@ -29,7 +29,7 @@ export function err(err) {
             for (let v in err.response.data) {
                 msg.push(err.response.data[v]);
             }
-            Message.warning(msg.join('<br>'));
+            Message.warning(msg.join("\n"));
             break;
         case 500:
             Message.error('服务器发生了一个错误。');

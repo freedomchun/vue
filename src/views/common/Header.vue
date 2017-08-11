@@ -10,12 +10,14 @@
         </el-col>
         <el-col :span="2" class="userinfo">
             <el-dropdown trigger="hover">
-				<span class="el-dropdown-link userinfo-inner" >
-						<img :src="loginUser.avatar"> {{ loginUser.name }}
-                        <i class="icon-angle-down"></i>
-					</span>
+				<span class="el-dropdown-link userinfo-inner">
+                    <img :src="loginUser.avatar"> {{ loginUser.name }}
+                    <i class="icon-angle-down"></i>
+                </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item><router-link to="/myInfo" style="color: #000; text-decoration: none;">个人中心</router-link></el-dropdown-item>
+                    <el-dropdown-item>
+                        <router-link to="/myInfo" style="color: #000; text-decoration: none;">个人中心</router-link>
+                    </el-dropdown-item>
                     <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -28,19 +30,19 @@
         data() {
             return {
                 search: '',
-                loginUser: {},
+                loginUser: {}
             }
         },
         mounted() {
-            this.loginUser = utils.auth.getLoginUser()
+            this.loginUser = utils.auth.getLoginUser();
         },
         methods: {
             logout: function () {
-                this.$confirm('确认退出吗?', '提示').then(() => {
+                this.$confirm('你确认退出吗?', '提示', {type: 'warning'}).then(() => {
                     utils.auth.removeLoginUser()
                     this.$router.push('/login')
                 }).catch(() => {
-                })
+                });
             }
         }
     }

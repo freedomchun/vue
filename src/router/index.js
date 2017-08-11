@@ -3,18 +3,18 @@ import Router from 'vue-router'
 
 import Login from '@/views/login/Login'
 import Admin from '@/views/common/Admin'
-import Sysinfo from '@/views/set/Sysinfo'
-import Role from '@/views/set/Role'
+import Sysinfo from '@/views/setting/Sysinfo'
+import Role from '@/views/setting/Role'
 import NoAllPermissions from '@/views/permissions/NoAllPermissions'
 import NoFind from '@/views/error/404'
 
-import AccountManage from '@/views/set/AccountManage'
-import Permisson from '@/views/set/Permisson'
-import RolePermisson from '@/views/set/RolePermisson'
+import AccountManage from '@/views/setting/AccountManage'
+import Permisson from '@/views/setting/Permisson'
 import MyInfo from '@/views/user/MyInfo'
 
-Vue.use(Router)
 import utils from '../utils'
+
+Vue.use(Router);
 
 let allRoutes = [
     {
@@ -22,10 +22,12 @@ let allRoutes = [
         redirect: 'sysinfo',
         name: '首页',
         component: Admin,
+        hidden: true,
         children: [
             {
                 path: 'sysinfo',
                 name: '系统概况',
+                icon: 'el-icon-setting',
                 component: Sysinfo
             }, {
                 path: 'myInfo',
@@ -34,48 +36,48 @@ let allRoutes = [
             }
         ]
     }, {
-        path: '/login',
-        component: Login
-    }, {
-        path: '/set',
-        icon: 'el-icon-setting',
+        path: '/setting',
         name: '全局配置',
+        icon: 'iconfont icon-shezhi',
         component: Admin,
         children: [{
             path: 'role',
             name: '角色组',
+            icon: 'iconfont icon-jiaose',
             component: Role
         }, {
             path: 'permisson',
             name: '权限管理',
+            icon: 'iconfont icon-quanxianmiyao',
             component: Permisson
         }, {
             path: 'accountManage',
             name: '账户管理',
+            icon: 'iconfont icon-zhanghu',
             component: AccountManage
-        }, {
-            path: 'rolePermisson',
-            name: '角色权限',
-            component: RolePermisson
         }]
     }, {
+        path: '/login',
+        component: Login,
+        hidden: true
+    }, {
         path: '/noAllPermissions',
-        component: NoAllPermissions
+        component: NoAllPermissions,
+        hidden: true
     }, {
         path: '/404',
-        component: NoFind
+        component: NoFind,
+        hidden: true
     }, {
         path: '*',
-        redirect: '/404'
+        redirect: '/404',
+        hidden: true
     }
 ];
 
-let routes = utils.auth.setLoginUserRouter(allRoutes);
-console.log(routes);
-
 const router = new Router({
-    routes
-})
+    routes: utils.auth.setLoginUserRouter(allRoutes)
+});
 
 router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
@@ -85,10 +87,10 @@ router.beforeEach((to, from, next) => {
     if (!loginUser && to.path !== '/login') {
         next({
             path: '/login'
-        })
+        });
     } else {
-        next()
+        next();
     }
-})
+});
 
 export default router;
