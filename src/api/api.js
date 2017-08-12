@@ -74,3 +74,40 @@ export const requestDeleteRole = (id) => {
         }
     });
 };
+
+/**
+ * 获取权限列表
+ * @param id
+ * @returns {*}
+ */
+export const requestPermissions = () => {
+    return axios.get(`${base}/permission`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token
+        }
+    });
+};
+
+/**
+ * 角色同步权限
+ * @param role int id
+ * @param permissions array ids
+ * @returns {*}
+ */
+export const requestRoleSyncPermissions = (role, permissions) => {
+    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token},{permissions});
+    return axios.patch(`${base}/role/syncPermissions/${role}`, params);
+};
+
+/**
+ * 获得角色权限列表
+ * @param role
+ * @returns {*}
+ */
+export const requestRolePermissions = (role) => {
+    return axios.get(`${base}/role/permissions/${role}`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token
+        }
+    });
+};

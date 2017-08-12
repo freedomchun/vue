@@ -31,6 +31,9 @@ export function err(err) {
             }
             Message.warning(msg.join("\n"));
             break;
+        case 405:
+            Message.error('失败，没有这个请求。');
+            break;
         case 500:
             Message.error('服务器发生了一个错误。');
             break;
