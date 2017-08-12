@@ -35,7 +35,7 @@ export function err(err) {
             Message.error('失败，没有这个请求。');
             break;
         case 500:
-            Message.error('服务器可能发生了错误，也可能是你没有权限。');
+            Message.error('不能访问本次请求。');
             break;
         default :
             Message.warning('数据获取失败！');
