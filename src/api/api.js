@@ -30,20 +30,21 @@ export const requestSysInfo = () => {
 
 /**
  * 获取角色列表
+ * @param slug
  * @returns {*}
  */
 export const requestRoles = (slug = null) => {
-    console.log(slug)
     return axios.get(`${base}/role`, {
         params: {
             api_token: utils.auth.getLoginUser().api_token,
-            slug: slug
+            slug
         }
     });
 };
 
 /**
  * 创建一个角色
+ * @param params
  * @returns {*}
  */
 export const requestCreateRole = (params) => {
@@ -54,6 +55,7 @@ export const requestCreateRole = (params) => {
 
 /**
  * 修改一个角色
+ * @param params
  * @returns {*}
  */
 export const requestEditRole = (params) => {
@@ -77,17 +79,50 @@ export const requestDeleteRole = (id) => {
 
 /**
  * 获取权限列表
+ * @param slug
+ * @returns {*}
+ */
+export const requestPermissions = (slug = null) => {
+    return axios.get(`${base}/permission`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token,
+            slug
+        }
+    });
+};
+
+/**
+ * 创建权限
+ * @param params
+ * @returns {*}
+ */
+export const requestCreatePermission = (params) => {
+    params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
+    return axios.post(`${base}/permission`, params);
+};
+
+/**
+ * 修改权限
+ * @param params
+ * @returns {*}
+ */
+export const requestEditPermission = (params) => {
+    params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
+    return axios.patch(`${base}/permission/${params.id}`, params);
+};
+
+/**
+ * 删除权限
  * @param id
  * @returns {*}
  */
-export const requestPermissions = () => {
-    return axios.get(`${base}/permission`, {
+export const requestDeletePermission = (id) => {
+    return axios.delete(`${base}/permission/${id}`, {
         params: {
             api_token: utils.auth.getLoginUser().api_token
         }
     });
 };
-
 /**
  * 角色同步权限
  * @param role int id
@@ -95,7 +130,7 @@ export const requestPermissions = () => {
  * @returns {*}
  */
 export const requestRoleSyncPermissions = (role, permissions) => {
-    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token},{permissions});
+    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, {permissions});
     return axios.patch(`${base}/role/syncPermissions/${role}`, params);
 };
 

@@ -86,7 +86,7 @@
         </el-dialog>
 
         <!--同步权限-->
-        <el-dialog title="同步权限" :visible.sync="showPermissions">
+        <el-dialog :title="'同步权限：' + currentRole.name" :visible.sync="showPermissions">
             <el-table :data="psList" ref="multipleTable" v-loading="psLoading" @selection-change="handlePsChange">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column property="name" label="名称" show-overflow-tooltip></el-table-column>
@@ -97,8 +97,7 @@
             </el-table>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="showPermissions = false">取消</el-button>
-                <el-button type="primary" @click.native.prevent="submitSyncPermissions" :loading="syncLoading">提交
-                </el-button>
+                <el-button type="primary" @click.native.prevent="submitSyncPermissions" :loading="syncLoading">提交</el-button>
             </div>
         </el-dialog>
     </section>
