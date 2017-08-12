@@ -146,3 +146,17 @@ export const requestRolePermissions = (role) => {
         }
     });
 };
+
+/**
+ * 获得用户列表
+ * @param keyword
+ * @returns {*}
+ */
+export const requestUsers = (keyword = null) => {
+    return axios.get(`${base}/user`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token,
+            keyword
+        }
+    });
+};
