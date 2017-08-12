@@ -55,7 +55,8 @@ export const hasPermissions = (name, is_force = true) => {
  * @returns permissions
  */
 export const getUserPermissions = () => {
-    return JSON.parse(sessionStorage.getItem('permissions'));
+    let ps = sessionStorage.getItem('permissions');
+    return ps === null ? [] : JSON.parse(ps);
 };
 
 /**

@@ -23,7 +23,8 @@
             }
         },
         mounted() {
-            this.menus = this.$router.options.routes;
+            let rs = this.$router.options.routes;
+            this.menus = utils.auth.setLoginUserRouter(rs);
         }
     }
 </script>

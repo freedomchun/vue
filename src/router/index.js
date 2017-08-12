@@ -16,25 +16,23 @@ import utils from '../utils'
 
 Vue.use(Router);
 
-let allRoutes = [
-    {
+const router = new Router({
+    routes: [{
         path: '/',
         redirect: 'sysinfo',
         name: '首页',
         component: Admin,
         hidden: true,
-        children: [
-            {
-                path: 'sysinfo',
-                name: '系统概况',
-                icon: 'el-icon-setting',
-                component: Sysinfo
-            }, {
-                path: 'myInfo',
-                name: '个人中心',
-                component: MyInfo
-            }
-        ]
+        children: [{
+            path: 'sysinfo',
+            name: '系统概况',
+            icon: 'el-icon-setting',
+            component: Sysinfo
+        }, {
+            path: 'myInfo',
+            name: '个人中心',
+            component: MyInfo
+        }]
     }, {
         path: '/setting',
         name: '全局配置',
@@ -43,16 +41,19 @@ let allRoutes = [
         children: [{
             path: 'role',
             name: '角色组',
+            slug: 'all.role',
             icon: 'iconfont icon-jiaose',
             component: Role
         }, {
             path: 'permisson',
             name: '权限管理',
+            slug: 'all.permission',
             icon: 'iconfont icon-quanxianmiyao',
             component: Permisson
         }, {
             path: 'accountManage',
             name: '账户管理',
+            slug: 'all.user',
             icon: 'iconfont icon-zhanghu',
             component: AccountManage
         }]
@@ -72,11 +73,7 @@ let allRoutes = [
         path: '*',
         redirect: '/404',
         hidden: true
-    }
-];
-
-const router = new Router({
-    routes: utils.auth.setLoginUserRouter(allRoutes)
+    }]
 });
 
 router.beforeEach((to, from, next) => {
