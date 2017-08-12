@@ -45,7 +45,7 @@ const router = new Router({
             icon: 'iconfont icon-jiaose',
             component: Role
         }, {
-            path: 'permisson',
+            path: 'permission',
             name: '权限管理',
             slug: 'all.permission',
             icon: 'iconfont icon-quanxianmiyao',
