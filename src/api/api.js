@@ -17,6 +17,16 @@ export const requestLogin = params => {
 };
 
 /**
+ * 注销登录
+ * @returns {*}
+ */
+export const requestLogout = () => {
+    return axios.post(`${base}/logout`, {
+        api_token: utils.auth.getLoginUser().api_token
+    });
+};
+
+/**
  * 获取系统信息
  * @returns {*}
  */

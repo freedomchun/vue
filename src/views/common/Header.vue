@@ -39,8 +39,9 @@
         methods: {
             logout: function () {
                 this.$confirm('你确认退出吗?', '提示', {type: 'warning'}).then(() => {
-                    utils.auth.removeLoginUser()
-                    this.$router.push('/login')
+                    api.requestLogout();
+                    utils.auth.removeLoginUser();
+                    this.$router.push('/login');
                 }).catch(() => {
                 });
             }
