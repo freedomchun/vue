@@ -44,9 +44,15 @@
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
-            <el-table-column fixed="right" label="操作" width="170">
+            <el-table-column fixed="right" label="操作" width="200">
                 <template scope="scope">
                     <el-button-group>
+                        <el-button type="warning" size="small" @click.native.prevent="changeDisable(scope.row, 'T')"
+                                   v-if="scope.row.disable_at === null">禁用
+                        </el-button>
+                        <el-button type="success" size="small" @click.native.prevent="changeDisable(scope.row, 'F')"
+                                   v-else>激活
+                        </el-button>
                         <el-button type="primary" size="small"
                                    @click.native.prevent="restPassword(scope.$index, users)">重置密码
                         </el-button>
@@ -124,6 +130,15 @@
             this.getUsers();
         },
         methods: {
+            changeDisable(user, disable) {
+                let index = this.users.indexOf(user);
+                let roles = user.roles;
+                api.requestEditUser(user.id, {disable}).then(rs => {
+                    user = rs.data;
+                    user.roles = roles;
+                    this.$set(this.users, index, user);
+                }).catch(utils.fns.err);
+            },
             restPassword(index, rows) {
                 this.$confirm(`你确认要将${rows[index].name}的密码重置吗?`, '提示', {type: 'warning'}).then(() => {
                     api.requestResetPassword(rows[index].id).then(rs => {
@@ -141,7 +156,7 @@
                 });
             },
             deleteRow(index, rows) {
-                this.$confirm(`你确认删除${rows[index].name}吗?`, '提示', {type: 'warning'}).then(() => {
+                this.$confirm(`你还要删除${rows[index].name}吗?`, '此账号所有资料都将清除！', {type: 'warning'}).then(() => {
                     api.requestDeleteUser(rows[index].id).then(rs => {
                         rows.splice(index, 1);
                     }).catch(utils.fns.err);
@@ -227,7 +242,7 @@
         font-size: 12px;
     }
 
-    .el-tag + .el-tag {
-        margin-left: 10px;
+    .el-tag{
+        margin-right: 10px;
     }
 </style>

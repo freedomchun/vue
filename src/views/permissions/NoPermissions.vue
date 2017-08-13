@@ -1,6 +1,6 @@
 <template>
     <section>
-        你还没有任何权限，联系管理员赋予你所在角色权限。
+        你没有权限进入。
     </section>
 </template>
 

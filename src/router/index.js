@@ -5,8 +5,8 @@ import Login from '@/views/login/Login'
 import Admin from '@/views/common/Admin'
 import Sysinfo from '@/views/setting/Sysinfo'
 import Role from '@/views/setting/Role'
-import NoAllPermissions from '@/views/permissions/NoAllPermissions'
-import NoFind from '@/views/error/404'
+import NoPermissions from '@/views/permissions/NoPermissions'
+import NotFind from '@/views/error/404'
 
 import AccountManage from '@/views/setting/AccountManage'
 import Permisson from '@/views/setting/Permisson'
@@ -32,6 +32,16 @@ const router = new Router({
             path: 'myInfo',
             name: '个人中心',
             component: MyInfo
+        }, {
+            path: 'noPermissions',
+            name: '无权限',
+            component: NoPermissions,
+            hidden: true
+        }, {
+            path: '404',
+            name: '404',
+            component: NotFind,
+            hidden: true
         }]
     }, {
         path: '/setting',
@@ -60,14 +70,6 @@ const router = new Router({
     }, {
         path: '/login',
         component: Login,
-        hidden: true
-    }, {
-        path: '/noAllPermissions',
-        component: NoAllPermissions,
-        hidden: true
-    }, {
-        path: '/404',
-        component: NoFind,
         hidden: true
     }, {
         path: '*',
