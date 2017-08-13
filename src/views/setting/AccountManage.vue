@@ -40,6 +40,7 @@
                     <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
                             @close="removeUserRole(scope.row, role)">{{ role.name }}
                     </el-tag>
+                    <el-button type="danger" plain size="small">+</el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
