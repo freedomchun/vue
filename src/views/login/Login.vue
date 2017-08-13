@@ -31,7 +31,7 @@
                 ruleForm: {
                     email: '',
                     password: '',
-                    remember: true
+                    remember: false
                 },
                 rules2: {
                     email: [{
@@ -57,8 +57,6 @@
                 this.ruleForm.email = info.email;
                 this.ruleForm.password = info.password;
                 this.ruleForm.remember = info.remember;
-            } else {
-                this.ruleForm.remember = false;
             }
         },
         methods: {
