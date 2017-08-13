@@ -15,7 +15,7 @@
         </div>
 
         <el-table :data="users" v-loading="loading" border style="width: 100%; margin-top: 20px;">
-            <el-table-column type="selection" label="勾选" width="55"></el-table-column>
+            <el-table-column prop="id" label="ID" sortable width="100"></el-table-column>
             <el-table-column prop="avatar" label="头像">
                 <template scope="scope">
                     <img :src="scope.row.avatar" width="100">
@@ -188,26 +188,28 @@
                 this.$refs.addUser.resetFields();
             },
             removeUserRole(user, role) {
-                let index = user.roles.indexOf(role);
+                this.$confirm(`你要将${user.name}移除${role.name}吗?`, '提示', {type: 'warning'}).then(() => {
+                    let index = user.roles.indexOf(role);
 
-                /**
-                 * 新复制角色组， 从当前角色组 删除一个 来提交到用户的同步角色请求上
-                 */
-                let roles = user.roles.slice();
-                roles.splice(index, 1);
+                    /**
+                     * 新复制角色组， 从当前角色组 删除一个 来提交到用户的同步角色请求上
+                     */
+                    let roles = user.roles.slice();
+                    roles.splice(index, 1);
 
-                /**
-                 * 查找新复制的角色组中的id属性
-                 */
-                let roleIds = roles.map(item => item.id);
+                    /**
+                     * 查找新复制的角色组中的id属性
+                     */
+                    let roleIds = roles.map(item => item.id);
 
-                /**
-                 * 请求成功再移除原本角色组中，需要删除的角色
-                 */
-                api.requestSyncUserRoles(user.id, roleIds).then(rs => {
-                    user.roles.splice(index, 1);
-                    console.log(rs);
-                }).catch(utils.fns.err);
+                    /**
+                     * 请求成功再移除原本角色组中，需要删除的角色
+                     */
+                    api.requestSyncUserRoles(user.id, roleIds).then(rs => {
+                        user.roles.splice(index, 1);
+                    }).catch(utils.fns.err);
+                }).catch(() => {
+                });
             }
         },
     }
