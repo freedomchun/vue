@@ -203,7 +203,6 @@ export const requestSyncUserRoles = (user, roles) => {
     return axios.patch(`${base}/user/syncRoles/${user}`, params);
 };
 
-
 /**
  * 重置密码
  * @param user

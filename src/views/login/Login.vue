@@ -29,8 +29,8 @@
             return {
                 loading: false,
                 ruleForm: {
-                    email: '676659348@qq.com',
-                    password: 'bing8u',
+                    email: '',
+                    password: '',
                     remember: true
                 },
                 rules2: {
@@ -51,12 +51,23 @@
                 }
             }
         },
+        mounted() {
+            let info = JSON.parse(localStorage.getItem('saveUserInputInfo'));
+            if (info !== null && info.remember) {
+                this.ruleForm.email = info.email;
+                this.ruleForm.password = info.password;
+                this.ruleForm.remember = info.remember;
+            } else {
+                this.ruleForm.remember = false;
+            }
+        },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.loading = true;
                         api.requestLogin(this.ruleForm).then(rs => {
+                            this.saveUserInputInfo();
                             utils.auth.setLoginUser(rs.data);
                             this.loading = false;
                             this.$message.success(`${rs.data.userInfo.name}，欢迎回来！`);
@@ -70,8 +81,8 @@
                     }
                 });
             },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
+            saveUserInputInfo() {
+                localStorage.setItem('saveUserInputInfo', JSON.stringify(this.ruleForm));
             }
         }
     }
