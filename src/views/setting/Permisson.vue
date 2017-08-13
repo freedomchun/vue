@@ -119,7 +119,7 @@
                 this.$confirm(`你确认删除${rows[index].name}吗?`, '提示', {type: 'warning'}).then(() => {
                     api.requestDeletePermission(rows[index].id).then(rs => {
                         rows.splice(index, 1);
-                    }).catch(err => utils.fns.err(err));
+                    }).catch(utils.fns.err);
                 }).catch(() => {
                 });
             },

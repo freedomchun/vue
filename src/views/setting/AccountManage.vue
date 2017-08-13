@@ -28,7 +28,9 @@
             <el-table-column fixed="right" label="操作" width="170">
                 <template scope="scope">
                     <el-button-group>
-                        <el-button type="primary" size="small">重置密码</el-button>
+                        <el-button type="primary" size="small"
+                                   @click.native.prevent="restPassword(scope.$index, users)">重置密码
+                        </el-button>
                         <el-button type="danger" @click.native.prevent="deleteRow(scope.$index, users)" size="small">
                             删除
                         </el-button>
@@ -39,45 +41,35 @@
 
         <!--分页-->
         <el-col :span="24" class="toolbar" style="margin-top: 20px;">
-            <el-pagination layout="prev, pager, next" :total="1000" style="float:right;">
-            </el-pagination>
+            <el-pagination layout="total, prev, pager, next" :total="userTotal" :page-size="pageSize"
+                           @current-change="currentChange" style="float:right;"></el-pagination>
         </el-col>
 
         <!--新增界面-->
         <el-dialog title="新增账户" v-model="showAddUser" :close-on-click-modal="false">
             <el-form label-position="top" :model="addUser" ref="addUser">
-                <el-form-item label="昵称" prop="name">
+                <el-form-item label="昵称" prop="name" :rules="[{ required: true, message: '昵称不能为空'}]">
                     <el-input v-model="addUser.name"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email">
+                <el-form-item label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空'}, { type: 'email', message: '邮箱格式不正确'}]">
                     <el-input v-model="addUser.email"></el-input>
                 </el-form-item>
-                <el-form-item label="角色组" prop="rolegroup">
-                    <el-dropdown>
-                        <el-button>
-                            请选择角色<i class="el-icon-caret-bottom el-icon--right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>超级管理员</el-dropdown-item>
-                            <el-dropdown-item>网站编辑</el-dropdown-item>
-                            <el-dropdown-item>测试</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                <el-form-item label="角色" prop="role" :rules="[{ required: true, message: '角色不能为空'}]">
+                    <el-select v-model="addUser.role" multiple placeholder="请选择角色">
+                        <el-option label="超级管理员" value="admin"></el-option>
+                        <el-option label="网站编辑" value="edit"></el-option>
+                        <el-option label="测试" value="test"></el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="状态">
-                    <el-dropdown>
-                        <el-button>
-                            请选择状态<i class="el-icon-caret-bottom el-icon--right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>启用</el-dropdown-item>
-                            <el-dropdown-item>禁用</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                <el-form-item label="状态" prop="disable" :rules="[{ required: true, message: '状态不能为空'}]">
+                    <el-select v-model="addUser.disable" placeholder="请选择状态">
+                        <el-option label="启用" value="F"></el-option>
+                        <el-option label="禁用" value="T"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button>取消</el-button>
+                <el-button @click="showAddUser = false">取消</el-button>
                 <el-button type="primary">提交</el-button>
             </div>
         </el-dialog>
@@ -91,12 +83,17 @@
                 keyword: '',
                 loading: false,
                 users: [],
+                userTotal: 0,
+                currentPage: 1,
+                pageSize: 15,
                 showAddUser: false,
                 addUser: {
                     avatar: '',
                     name: '',
                     email: '',
                     password: '',
+                    role: ['admin'],
+                    disable: 'F'
                 }
             }
         },
@@ -104,14 +101,41 @@
             this.getUsers();
         },
         methods: {
-            deleteRow(index, rows) {
-                rows.splice(index, 1);
+            restPassword(index, rows) {
+                this.$confirm(`你确认要将${rows[index].name}的密码重置吗?`, '提示', {type: 'warning'}).then(() => {
+                    api.requestResetPassword(rows[index].id).then(rs => {
+                        this.$notify({
+                            type: 'success',
+                            title: `新密码是 ${rs.data}`,
+                            message: `${rows[index].name} 需要使用新密码。`,
+                            duration: 20000,
+                            offset: 35
+                        });
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }).catch(() => {
+                });
             },
-            getUsers(keyword = null) {
-                api.requestUsers(this.keyword).then(rs => {
-                    this.users = rs.data;
+            deleteRow(index, rows) {
+                this.$confirm(`你确认删除${rows[index].name}吗?`, '提示', {type: 'warning'}).then(() => {
+                    api.requestDeleteUser(rows[index].id).then(rs => {
+                        rows.splice(index, 1);
+                    }).catch(utils.fns.err);
+                }).catch(() => {
+                });
+            },
+            getUsers() {
+                let o = {keyword: this.keyword, pageSize: this.pageSize, page: this.currentPage};
+                api.requestUsers(o).then(rs => {
+                    this.userTotal = rs.data.total;
+                    this.users = rs.data.data;
                     this.loading = false;
                 }).catch(utils.fns.err);
+            },
+            currentChange(val) {
+                this.currentPage = val;
+                this.getUsers();
             }
         },
     }

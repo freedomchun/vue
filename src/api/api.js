@@ -66,11 +66,11 @@ export const requestEditRole = (params) => {
 
 /**
  * 删除一个角色
- * @param id
+ * @param role
  * @returns {*}
  */
-export const requestDeleteRole = (id) => {
-    return axios.delete(`${base}/role/${id}`, {
+export const requestDeleteRole = (role) => {
+    return axios.delete(`${base}/role/${role}`, {
         params: {
             api_token: utils.auth.getLoginUser().api_token
         }
@@ -113,11 +113,11 @@ export const requestEditPermission = (params) => {
 
 /**
  * 删除权限
- * @param id
+ * @param permission
  * @returns {*}
  */
-export const requestDeletePermission = (id) => {
-    return axios.delete(`${base}/permission/${id}`, {
+export const requestDeletePermission = (permission) => {
+    return axios.delete(`${base}/permission/${permission}`, {
         params: {
             api_token: utils.auth.getLoginUser().api_token
         }
@@ -125,7 +125,7 @@ export const requestDeletePermission = (id) => {
 };
 /**
  * 角色同步权限
- * @param role int id
+ * @param role
  * @param permissions array ids
  * @returns {*}
  */
@@ -149,14 +149,34 @@ export const requestRolePermissions = (role) => {
 
 /**
  * 获得用户列表
- * @param keyword
+ * @param otherParams
  * @returns {*}
  */
-export const requestUsers = (keyword = null) => {
-    return axios.get(`${base}/user`, {
+export const requestUsers = (otherParams = {}) => {
+    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, otherParams);
+    return axios.get(`${base}/user`, {params});
+};
+
+/**
+ * 删除用户
+ * @param user
+ * @returns {*}
+ */
+export const requestDeleteUser = (user) => {
+    return axios.delete(`${base}/user/${user}`, {
         params: {
-            api_token: utils.auth.getLoginUser().api_token,
-            keyword
+            api_token: utils.auth.getLoginUser().api_token
         }
+    });
+};
+
+/**
+ * 重置密码
+ * @param user
+ * @returns {*}
+ */
+export const requestResetPassword = (user) => {
+    return axios.patch(`${base}/user/resetPassword/${user}`, {
+        api_token: utils.auth.getLoginUser().api_token
     });
 };
