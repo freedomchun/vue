@@ -9,7 +9,7 @@
                     <el-button type="primary" @click="getUsers">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="showAddUser = true">新建</el-button>
+                    <el-button type="primary" @click="addUserForm">新建</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -21,10 +21,28 @@
                     <img :src="scope.row.avatar" width="100">
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="昵称"></el-table-column>
-            <el-table-column prop="email" label="邮箱" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="disable_at" label="状态"></el-table-column>
-            <el-table-column prop="created_at" label="创建日期"></el-table-column>
+            <el-table-column prop="name" label="名称" sortable></el-table-column>
+            <el-table-column prop="email" label="邮箱" sortable show-overflow-tooltip></el-table-column>
+            <el-table-column prop="disable_at" label="状态" width="100" sortable>
+                <template scope="scope">
+                    <el-tag type="success" v-if="scope.row.disable_at === null">激活</el-tag>
+                    <el-popover trigger="hover" placement="top" v-else>
+                        <el-icon name="time"></el-icon>
+                        {{ scope.row.disable_at }}
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag type="danger">禁用</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column prop="roles" label="角色组" sortable>
+                <template scope="scope">
+                    <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
+                            @close="removeUserRole(scope.row, role)">{{ role.name }}
+                    </el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
             <el-table-column fixed="right" label="操作" width="170">
                 <template scope="scope">
                     <el-button-group>
@@ -48,17 +66,16 @@
         <!--新增界面-->
         <el-dialog title="新增账户" v-model="showAddUser" :close-on-click-modal="false">
             <el-form label-position="top" :model="addUser" ref="addUser">
-                <el-form-item label="昵称" prop="name" :rules="[{ required: true, message: '昵称不能为空'}]">
+                <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="addUser.name"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email" :rules="[{ required: true, message: '邮箱不能为空'}, { type: 'email', message: '邮箱格式不正确'}]">
+                <el-form-item label="邮箱" prop="email"
+                              :rules="[{ required: true, message: '邮箱不能为空'}, { type: 'email', message: '邮箱格式不正确'}]">
                     <el-input v-model="addUser.email"></el-input>
                 </el-form-item>
-                <el-form-item label="角色" prop="role" :rules="[{ required: true, message: '角色不能为空'}]">
-                    <el-select v-model="addUser.role" multiple placeholder="请选择角色">
-                        <el-option label="超级管理员" value="admin"></el-option>
-                        <el-option label="网站编辑" value="edit"></el-option>
-                        <el-option label="测试" value="test"></el-option>
+                <el-form-item label="角色" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
+                    <el-select v-model="addUser.roles" multiple placeholder="请选择角色">
+                        <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="状态" prop="disable" :rules="[{ required: true, message: '状态不能为空'}]">
@@ -67,10 +84,14 @@
                         <el-option label="禁用" value="T"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="密码" prop="password"
+                              :rules="[{ required: true, message: '密码不能为空'}, { min: 6, max: 15, message: '密码长度在6-15位' }]">
+                    <el-input type="password" v-model="addUser.password"></el-input>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="showAddUser = false">取消</el-button>
-                <el-button type="primary">提交</el-button>
+                <el-button @click="closeUserForm">取消</el-button>
+                <el-button type="primary" @click.native.prevent="addUserSubmit">提交</el-button>
             </div>
         </el-dialog>
     </section>
@@ -92,9 +113,10 @@
                     name: '',
                     email: '',
                     password: '',
-                    role: ['admin'],
+                    roles: [],
                     disable: 'F'
-                }
+                },
+                roles: [],
             }
         },
         mounted() {
@@ -126,16 +148,66 @@
                 });
             },
             getUsers() {
+                this.loading = true;
                 let o = {keyword: this.keyword, pageSize: this.pageSize, page: this.currentPage};
                 api.requestUsers(o).then(rs => {
                     this.userTotal = rs.data.total;
                     this.users = rs.data.data;
                     this.loading = false;
+                    this.userTotal++;
                 }).catch(utils.fns.err);
             },
             currentChange(val) {
                 this.currentPage = val;
                 this.getUsers();
+            },
+            addUserForm() {
+                this.showAddUser = true;
+                if (!!this.roles.length) {
+                    return false;
+                }
+                api.requestRoles().then(rs => {
+                    this.roles = rs.data;
+                }).catch(utils.fns.err);
+            },
+            addUserSubmit() {
+                this.$refs.addUser.validate((valid) => {
+                    if (valid) {
+                        api.requestCreateUser(this.addUser).then(rs => {
+                            this.users.push(rs.data);
+                            this.addUser = {avatar: '', name: '', email: '', password: '', roles: [], disable: 'F'};
+                            this.closeUserForm();
+                        }).catch(utils.fns.err);
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            closeUserForm() {
+                this.showAddUser = false;
+                this.$refs.addUser.resetFields();
+            },
+            removeUserRole(user, role) {
+                let index = user.roles.indexOf(role);
+
+                /**
+                 * 新复制角色组， 从当前角色组 删除一个 来提交到用户的同步角色请求上
+                 */
+                let roles = user.roles.slice();
+                roles.splice(index, 1);
+
+                /**
+                 * 查找新复制的角色组中的id属性
+                 */
+                let roleIds = roles.map(item => item.id);
+
+                /**
+                 * 请求成功再移除原本角色组中，需要删除的角色
+                 */
+                api.requestSyncUserRoles(user.id, roleIds).then(rs => {
+                    user.roles.splice(index, 1);
+                    console.log(rs);
+                }).catch(utils.fns.err);
             }
         },
     }
@@ -150,5 +222,9 @@
     .text-colorred {
         color: #f00;
         font-size: 12px;
+    }
+
+    .el-tag + .el-tag {
+        margin-left: 10px;
     }
 </style>

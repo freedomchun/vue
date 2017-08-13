@@ -123,6 +123,7 @@ export const requestDeletePermission = (permission) => {
         }
     });
 };
+
 /**
  * 角色同步权限
  * @param role
@@ -148,8 +149,8 @@ export const requestRolePermissions = (role) => {
 };
 
 /**
- * 获得用户列表
- * @param otherParams
+ * 获得账户列表
+ * @param otherParams page:页码, pageSize:数量
  * @returns {*}
  */
 export const requestUsers = (otherParams = {}) => {
@@ -158,7 +159,7 @@ export const requestUsers = (otherParams = {}) => {
 };
 
 /**
- * 删除用户
+ * 删除账户
  * @param user
  * @returns {*}
  */
@@ -169,6 +170,39 @@ export const requestDeleteUser = (user) => {
         }
     });
 };
+
+/**
+ * 创建账户
+ * @param params
+ * @returns {*}
+ */
+export const requestCreateUser = (params) => {
+    params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
+    return axios.post(`${base}/user`, params);
+};
+
+/**
+ * 编辑账户
+ * @param user
+ * @param permissions
+ * @returns {*}
+ */
+export const requestEditUser = (user, params) => {
+    params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
+    return axios.patch(`${base}/user/${user}`, params);
+};
+
+/**
+ * 同步账户角色组
+ * @param user
+ * @param roles
+ * @returns {*}
+ */
+export const requestSyncUserRoles = (user, roles) => {
+    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, {roles});
+    return axios.patch(`${base}/user/syncRoles/${user}`, params);
+};
+
 
 /**
  * 重置密码
