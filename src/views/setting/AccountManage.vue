@@ -159,6 +159,7 @@
                 this.$confirm(`你还要删除${rows[index].name}吗?`, '此账号所有资料都将清除！', {type: 'warning'}).then(() => {
                     api.requestDeleteUser(rows[index].id).then(rs => {
                         rows.splice(index, 1);
+                        this.userTotal--;
                     }).catch(utils.fns.err);
                 }).catch(() => {
                 });
@@ -170,7 +171,6 @@
                     this.userTotal = rs.data.total;
                     this.users = rs.data.data;
                     this.loading = false;
-                    this.userTotal++;
                 }).catch(utils.fns.err);
             },
             currentChange(val) {
@@ -190,6 +190,7 @@
                 this.$refs.addUser.validate((valid) => {
                     if (valid) {
                         api.requestCreateUser(this.addUser).then(rs => {
+                            this.userTotal++;
                             this.users.push(rs.data);
                             this.addUser = {avatar: '', name: '', email: '', password: '', roles: [], disable: 'F'};
                             this.closeUserForm();
