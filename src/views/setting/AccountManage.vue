@@ -13,7 +13,6 @@
                 </el-form-item>
             </el-form>
         </div>
-
         <el-table :data="users" v-loading="loading" border style="width: 100%; margin-top: 20px;">
             <el-table-column prop="id" label="ID" sortable width="100"></el-table-column>
             <el-table-column prop="avatar" label="头像">
@@ -40,7 +39,7 @@
                     <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
                             @close="removeUserRole(scope.row, role)">{{ role.name }}
                     </el-tag>
-                    <el-button type="danger" plain size="small" @click="addUserForm22">+</el-button>
+                    <el-button type="danger" plain size="small" icon="more" @click="syncUserRolesForm(scope.row)"></el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
@@ -99,20 +98,18 @@
                 <el-button type="primary" @click.native.prevent="addUserSubmit">提交</el-button>
             </div>
         </el-dialog>
-        
-          <!--添加角色-->
-        <el-dialog title="添加角色" v-model="showAddUser22" :close-on-click-modal="false">
-            <el-form label-position="left" :model="addUser22" ref="addUser22">
-               <el-form-item label="角色" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
-                    <el-select v-model="addUser.roles" multiple placeholder="请选择角色">
+        <!--同步账户角色-->
+        <el-dialog title="同步账户角色" v-model="showAddUserRolesForm" :close-on-click-modal="false">
+            <el-form label-position="left" :model="currentSyncUser" ref="currentSyncUser">
+                <el-form-item label="角色组" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
+                    <el-select v-model="currentSyncRoles" multiple placeholder="请选择角色">
                         <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id"></el-option>
                     </el-select>
                 </el-form-item>
-                
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="closeUserForm">取消</el-button>
-                <el-button type="primary" @click.native.prevent="addUserSubmit">提交</el-button>
+                <el-button @click="showAddUserRolesForm = false">取消</el-button>
+                <el-button type="primary" @click.native.prevent="syncUserRolesSubmit">提交</el-button>
             </div>
         </el-dialog>
     </section>
@@ -137,12 +134,10 @@
                     roles: [],
                     disable: 'F'
                 },
-                showAddUser22: false,
-                addUser22: {
-                    roles: [],
-                    disable: 'F'
-                },
                 roles: [],
+                showAddUserRolesForm: false,
+                currentSyncUser: {},
+                currentSyncRoles: [],
             }
         },
         mounted() {
@@ -196,8 +191,7 @@
                 this.currentPage = val;
                 this.getUsers();
             },
-            addUserForm22() {
-                this.showAddUser22 = true;
+            getRoles() {
                 if (!!this.roles.length) {
                     return false;
                 }
@@ -205,14 +199,21 @@
                     this.roles = rs.data;
                 }).catch(utils.fns.err);
             },
+            syncUserRolesSubmit() {
+                api.requestSyncUserRoles(this.currentSyncUser.id, this.currentSyncRoles).then(rs => {
+                    this.currentSyncUser.roles = rs.data;
+                    this.showAddUserRolesForm = false;
+                }).catch(utils.fns.err);
+            },
+            syncUserRolesForm(user) {
+                this.showAddUserRolesForm = true;
+                this.currentSyncUser = user;
+                this.currentSyncRoles = user.roles.map(item => item.id);
+                this.getRoles();
+            },
             addUserForm() {
                 this.showAddUser = true;
-                if (!!this.roles.length) {
-                    return false;
-                }
-                api.requestRoles().then(rs => {
-                    this.roles = rs.data;
-                }).catch(utils.fns.err);
+                this.getRoles();
             },
             addUserSubmit() {
                 this.$refs.addUser.validate((valid) => {
@@ -271,8 +272,11 @@
         font-size: 12px;
     }
 
-    .el-tag{
+    .el-tag {
         margin-right: 10px;
     }
-    .el-select{ width: 100%;}
+
+    .el-select {
+        width: 100%;
+    }
 </style>
