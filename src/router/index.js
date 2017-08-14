@@ -12,6 +12,8 @@ import AccountManage from '@/views/setting/AccountManage'
 import Permisson from '@/views/setting/Permisson'
 import MyInfo from '@/views/user/MyInfo'
 
+import Pic from '@/views/picture/Pic'
+
 import utils from '../utils'
 
 Vue.use(Router);
@@ -66,6 +68,17 @@ const router = new Router({
             slug: 'all.user',
             icon: 'iconfont icon-zhanghu',
             component: AccountManage
+        }]
+    },{
+        path: '/picture',
+        name: '附件管理',
+        icon: 'iconfont icon-shezhi',
+        component: Admin,
+        children: [{
+            path: 'pic',
+            name: '图片管理',
+            icon: 'iconfont icon-jiaose',
+            component: Pic
         }]
     }, {
         path: '/login',

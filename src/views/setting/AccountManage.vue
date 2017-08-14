@@ -40,7 +40,7 @@
                     <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
                             @close="removeUserRole(scope.row, role)">{{ role.name }}
                     </el-tag>
-                    <el-button type="danger" plain size="small" @click="addUserForm">+</el-button>
+                    <el-button type="danger" plain size="small" @click="addUserForm22">+</el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
@@ -101,8 +101,8 @@
         </el-dialog>
         
           <!--添加角色-->
-        <el-dialog title="添加角色" v-model="showAddUser" :close-on-click-modal="false">
-            <el-form label-position="left" :model="addUser" ref="addUser">
+        <el-dialog title="添加角色" v-model="showAddUser22" :close-on-click-modal="false">
+            <el-form label-position="left" :model="addUser22" ref="addUser22">
                <el-form-item label="角色" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
                     <el-select v-model="addUser.roles" multiple placeholder="请选择角色">
                         <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id"></el-option>
@@ -134,6 +134,11 @@
                     name: '',
                     email: '',
                     password: '',
+                    roles: [],
+                    disable: 'F'
+                },
+                showAddUser22: false,
+                addUser22: {
                     roles: [],
                     disable: 'F'
                 },
@@ -190,6 +195,15 @@
             currentChange(val) {
                 this.currentPage = val;
                 this.getUsers();
+            },
+            addUserForm22() {
+                this.showAddUser22 = true;
+                if (!!this.roles.length) {
+                    return false;
+                }
+                api.requestRoles().then(rs => {
+                    this.roles = rs.data;
+                }).catch(utils.fns.err);
             },
             addUserForm() {
                 this.showAddUser = true;
