@@ -37,7 +37,7 @@
 
         <!--新增界面-->
         <el-dialog title="新增角色" v-model="showAddRole" :close-on-click-modal="false">
-            <el-form :model="addRole" ref="addRole" label-position="top" label-width="80px">
+            <el-form :model="addRole" ref="addRole" label-position="top">
                 <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="addRole.name" auto-complete="off"></el-input>
                 </el-form-item>
@@ -62,7 +62,7 @@
 
         <!--修改界面-->
         <el-dialog title="修改角色" :visible.sync="showEditRole" :close-on-click-modal="false">
-            <el-form :model="editRole" ref="editRole" label-position="top" label-width="80px">
+            <el-form :model="editRole" ref="editRole" label-position="top">
                 <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="editRole.name"></el-input>
                 </el-form-item>
