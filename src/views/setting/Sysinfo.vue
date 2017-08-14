@@ -1,9 +1,16 @@
 <template>
     <div class="grid-content bg-g">
+    	<el-row>
+			<el-col :span="14">
+				<img src="../../assets/fuwu.jpg"/>
+			</el-col>
+		<el-col :span="10">
         <ul>
             <li><h3>服务器信息</h3></li>
             <li v-for="(info, key) in infos">{{ key }}：{{ info }}</li>
         </ul>
+        </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -39,5 +46,9 @@
         line-height: 24px;
         font-size: 16px;
         padding: 12px 0;
+    }
+    .bg-g ul li:last-child {
+        border-bottom:  none !important;
+        
     }
 </style>
