@@ -13,6 +13,8 @@ export const getLoginUser = () => {
 export const setLoginUser = (resData) => {
     // 设置权限
     sessionStorage.setItem('permissions', JSON.stringify(resData.permissions));
+    // 设置角色
+    sessionStorage.setItem('roles', JSON.stringify(resData.roles));
     // 设置登录用户
     sessionStorage.setItem('loginUser', JSON.stringify(resData.userInfo));
 };

@@ -223,3 +223,25 @@ export const requestResetPassword = (user) => {
         api_token: utils.auth.getLoginUser().api_token
     });
 };
+
+/**
+ * 当前账户的角色组
+ * @returns {*}
+ */
+export const requestMyRoles = () => {
+    return axios.get(`${base}/user/myRoles`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token
+        }
+    });
+};
+
+/**
+ * 修改个人信息
+ * @param params
+ * @returns {*}
+ */
+export const requestEditMyInfo = (params) => {
+    params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
+    return axios.patch(`${base}/user/update/myInfo`, params);
+};
