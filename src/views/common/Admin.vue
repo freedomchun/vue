@@ -66,7 +66,9 @@
     }
 
     .usersearch span input {
-        background-color: #3a3b3d !important;
+        background-color: #3a3b3d;
+        color: #dddddd;
+        border: 1px solid #636b6f !important;
     }
 
     .inputnew {
