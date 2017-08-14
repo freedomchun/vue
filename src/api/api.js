@@ -5,7 +5,7 @@ import utils from '../utils'
  * 请求地址
  * @type {string}
  */
-export const base = 'http://127.0.0.1/api/admin';
+export const base = 'http://192.168.0.110/api/admin';
 
 /**
  * 获取登录信息
