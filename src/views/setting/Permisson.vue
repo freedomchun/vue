@@ -38,7 +38,7 @@
 		<el-dialog title="新增权限" v-model="showAddPermission" :close-on-click-modal="false">
 			<el-form :model="addPermission" ref="addPermission" label-position="top">
 				<el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
-					<el-input v-model="addPermission.name" auto-complete="off"></el-input>
+					<el-input v-model="addPermission.name"></el-input>
 				</el-form-item>
 				<el-form-item label="检测词" prop="slug" :rules="[{ required: true, message: '检测词不能为空'}]">
 					<el-input v-model="addPermission.slug"></el-input>

@@ -40,7 +40,7 @@
                     <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
                             @close="removeUserRole(scope.row, role)">{{ role.name }}
                     </el-tag>
-                    <el-button type="danger" plain size="small">+</el-button>
+                    <el-button type="danger" plain size="small" @click="addUserForm">+</el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
@@ -63,13 +63,11 @@
                 </template>
             </el-table-column>
         </el-table>
-
         <!--分页-->
         <el-col :span="24" class="toolbar" style="margin-top: 20px;">
             <el-pagination layout="total, prev, pager, next" :total="userTotal" :page-size="pageSize"
                            @current-change="currentChange" style="float:right;"></el-pagination>
         </el-col>
-
         <!--新增界面-->
         <el-dialog title="新增账户" v-model="showAddUser" :close-on-click-modal="false">
             <el-form label-position="top" :model="addUser" ref="addUser">
@@ -95,6 +93,22 @@
                               :rules="[{ required: true, message: '密码不能为空'}, { min: 6, max: 15, message: '密码长度在6-15位' }]">
                     <el-input type="password" v-model="addUser.password"></el-input>
                 </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="closeUserForm">取消</el-button>
+                <el-button type="primary" @click.native.prevent="addUserSubmit">提交</el-button>
+            </div>
+        </el-dialog>
+        
+          <!--添加角色-->
+        <el-dialog title="添加角色" v-model="showAddUser" :close-on-click-modal="false">
+            <el-form label-position="left" :model="addUser" ref="addUser">
+               <el-form-item label="角色" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
+                    <el-select v-model="addUser.roles" multiple placeholder="请选择角色">
+                        <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="closeUserForm">取消</el-button>
@@ -246,4 +260,5 @@
     .el-tag{
         margin-right: 10px;
     }
+    .el-select{ width: 100%;}
 </style>
