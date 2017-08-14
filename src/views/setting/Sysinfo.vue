@@ -1,24 +1,26 @@
 <template>
     <div class="grid-content bg-g">
-    	<el-row>
-			<el-col :span="14">
-				<img src="../../assets/fuwu.jpg"/>
-			</el-col>
-		<el-col :span="10">
-        <ul>
-            <li><h3>服务器信息</h3></li>
-            <li v-for="(info, key) in infos">{{ key }}：{{ info }}</li>
-        </ul>
-        </el-col>
+        <el-row>
+            <el-col :lg="14" :md="24">
+                <img :src="fuwu" width="100%">
+            </el-col>
+            <el-col :lg="10" :md="24">
+                <ul>
+                    <li><h3>服务器信息</h3></li>
+                    <li v-for="(info, key) in infos">{{ key }}：{{ info }}</li>
+                </ul>
+            </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
+    import fuwu from '@/assets/fuwu.jpg'
     export default {
         data() {
             return {
-                infos: []
+                infos: [],
+                fuwu
             }
         },
         mounted() {
@@ -47,8 +49,9 @@
         font-size: 16px;
         padding: 12px 0;
     }
+
     .bg-g ul li:last-child {
-        border-bottom:  none !important;
-        
+        border-bottom: none !important;
+
     }
 </style>
