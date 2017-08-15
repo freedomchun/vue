@@ -245,3 +245,25 @@ export const requestEditMyInfo = (params) => {
     params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, params);
     return axios.patch(`${base}/user/update/myInfo`, params);
 };
+
+/**
+ * 获取附件管理目录
+ * @returns {*}
+ */
+export const requestAttDirs = () => {
+    return axios.get(`${base}/attDir`, {
+        params: {
+            api_token: utils.auth.getLoginUser().api_token,
+        }
+    });
+};
+
+/**
+ * 获取附件列表
+ * @param otherParams page:页码, pageSize:数量
+ * @returns {*}
+ */
+export const requestAttachments = (otherParams = {}) => {
+    let params = Object.assign({api_token: utils.auth.getLoginUser().api_token}, otherParams);
+    return axios.get(`${base}/attachment`, {params});
+};
