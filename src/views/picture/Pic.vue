@@ -150,8 +150,10 @@
                 return data.title.indexOf(value) !== -1;
             },
             handleNodeClick(data) {
-                this.currentDir = data;
-                this.getAttachments();
+                if(this.currentDir !== data){
+                    this.currentDir = data;
+                    this.getAttachments();
+                }
             },
             currentPageChange(val) {
                 this.currentPage = val;
