@@ -1,18 +1,30 @@
 <template>
     <section>
+        <el-collapse-transition>
+            <el-upload style="margin-bottom: 15px;" v-if="showUploadDiv"
+                       :action="action" :data="appendInfo"
+                       :headers="{Accept: 'application/json, text/plain, */*'}"
+                       :on-remove="handleRemove" :file-list="fileList" :on-progress="onProgress"
+                       :on-preview="handlePreview" :before-upload="beforeUpload"
+                       multiple list-type="picture-card">
+                <i class="el-icon-plus"></i>
+            </el-upload>
+        </el-collapse-transition>
+
+        <el-dialog v-model="dialogVisible" size="tiny">
+            <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
+
         <div class="grid-content bg-g">
             <el-form inline>
                 <el-form-item>
                     <el-input v-model="filterText" placeholder="按文件夹名搜索"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">查询</el-button>
+                    <el-button type="warning" icon="upload" @click="toggleUpload">上传图片</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="warning">上传图片</el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="addFileForm">新建文件夹</el-button>
+                    <el-button type="primary" icon="plus" @click="addFileForm">新建文件夹</el-button>
                 </el-form-item>
             </el-form>
             <el-row :gutter="5">
@@ -21,29 +33,35 @@
                         <h3 class="pic_h3">图片目录</h3>
                     </div>
                     <el-tree :data="dirs" :props="defaultProps" ref="dirs" highlight-current v-loading="dirLoading"
-                             :expand-on-click-node="false"
-                             default-expand-all :filter-node-method="filterNode"
+                             default-expand-all
+                             :expand-on-click-node="false" :filter-node-method="filterNode"
                              @node-click="handleNodeClick"></el-tree>
                 </el-col>
                 <el-col :span="20">
                     <div class="pic_title">
-                        <el-checkbox style="margin-right: 20px;">全选</el-checkbox>
-                        <el-button type="danger" style="margin-right: 20px; ">删除</el-button>
+                        <el-checkbox style="margin-right: 20px;" :indeterminate="isIndeterminate" v-model="checkAll"
+                                     @change="handleCheckAllChange">全选
+                        </el-checkbox>
+                        <el-button type="danger" icon="delete" @click="deleteSelect" :disabled="isDeleting">删除</el-button>
                     </div>
-                    <div class="bg-white">
-                        <el-row v-loading="attachmentLoading">
-                            <el-col :lg="6" :md="8" v-for="(attachment, index) in attachments" :key="attachment.id">
-                                <el-card :body-style="{ padding: '0px' }">
-                                    <img :src="attachment.path" class="image">
-                                    <div class="hao_title">
-                                        <span>{{ attachment.title }}</span>
-                                    </div>
-                                    <div class="bottom clearfix">
-                                        <el-checkbox class="check"></el-checkbox>
-                                    </div>
-                                </el-card>
-                            </el-col>
-                        </el-row>
+                    <div class="bg-white" v-loading="attachmentLoading">
+                        <el-checkbox-group v-model="checkedAttachments" @change="handleCheckedAttachmentsChange">
+                            <el-row>
+                                <el-col :lg="6" :md="8" v-for="(attachment, index) in attachments" :key="attachment.id">
+                                    <el-card :body-style="{ padding: '0px' }">
+                                        <img :src="attachment.url" class="image">
+                                        <div class="hao_title">
+                                            <span>{{ attachment.name }}</span>
+                                        </div>
+                                        <div class="bottom clearfix">
+                                            <el-checkbox class="check" :label="attachment.id" :key="attachment.id">{{
+                                                attachment.file_size}}
+                                            </el-checkbox>
+                                        </div>
+                                    </el-card>
+                                </el-col>
+                            </el-row>
+                        </el-checkbox-group>
                         <el-pagination class="fenye" layout="total, prev, pager, next" :total="attachmentTotal"
                                        :page-size="pageSize" @current-change="currentPageChange"></el-pagination>
                     </div>
@@ -54,6 +72,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -71,6 +91,16 @@
                 currentPage: 1,
                 attachmentTotal: 0,
                 attachments: [],
+                showUploadDiv: false,
+                fileList: [],
+                action: '',
+                appendInfo: {},
+                dialogImageUrl: '',
+                dialogVisible: false,
+                isIndeterminate: false,
+                checkAll: false,
+                checkedAttachments: [],
+                isDeleting: false,
             };
         },
         watch: {
@@ -93,7 +123,7 @@
             getAttachments() {
                 this.attachmentLoading = true;
                 let dir_id = typeof this.currentDir.id === 'undefined' ? null : this.currentDir.id;
-                let o = {pageSize: this.pageSize, page: this.currentPage, dir_id};
+                let o = {pageSize: this.pageSize, page: this.currentPage, dir_id, is_image: 'T'};
                 api.requestAttachments(o).then(rs => {
                     this.attachmentTotal = rs.data.total;
                     this.attachments = rs.data.data;
@@ -101,8 +131,17 @@
                 }).catch(utils.fns.err);
             },
             addFileForm() {
-                this.$prompt('请输入文件夹名', '新建文件夹').then(({value}) => {
-                    console.log(value)
+                let parent_id = typeof this.currentDir.id === 'undefined' ? 0 : this.currentDir.id;
+                let msg = parent_id === 0 ? '建立顶级文件夹' : `【${this.currentDir.title}】正在建立子文件夹`;
+                this.$prompt(msg, '新建文件夹').then(({value}) => {
+                    api.requestCreateDir({parent_id, title: value}).then(rs => {
+                        if (parent_id === 0) {
+                            this.dirs.push(rs.data);
+                        } else {
+                            let index = this.dirs.indexOf(this.currentDir);
+                            this.dirs[index].all_children.push(rs.data);
+                        }
+                    }).catch(utils.fns.err);
                 }).catch(() => {
                 });
             },
@@ -118,6 +157,73 @@
                 this.currentPage = val;
                 this.getAttachments();
             },
+            toggleUpload() {
+                if (typeof this.currentDir.id === 'undefined') {
+                    this.$message('选择图片目录！');
+                    return;
+                }
+                this.action = `${api.base}/attachment`;
+                this.appendInfo = {api_token: api.userToken, dir_id: this.currentDir.id, is_image: 'T'};
+                this.showUploadDiv = !this.showUploadDiv;
+            },
+            handleRemove(file, fileList) {
+                if (file !== null && typeof file.response.id !== 'undefined') {
+                    api.requestDeleteAttachment(file.response.id).then(rs => {
+                        this.getAttachments();
+                    }).catch(utils.fns.err);
+                }
+            },
+            onProgress(event, file, fileList) {
+                if (event.loaded === event.total) {
+                    this.getAttachments();
+                }
+            },
+            beforeUpload(file) {
+                let arrType = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
+                let isImage = arrType.includes(file.type);
+                let isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isImage) {
+                    this.$message.error(`上传图片只能是 图片 格式!`);
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传图片大小不能超过 2MB!');
+                }
+                return isImage && isLt2M;
+            },
+            handlePreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
+            handleCheckAllChange(event) {
+                this.isIndeterminate = false;
+                this.checkedAttachments = event.target.checked ? this.attachments.map(item => item.id) : [];
+            },
+            handleCheckedAttachmentsChange(value) {
+                let checkedCount = value.length;
+                this.checkAll = checkedCount === this.attachments.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.attachments.length;
+            },
+            deleteSelect() {
+                if (!!this.checkedAttachments.length) {
+                    this.attachmentLoading = true;
+                    this.isDeleting = true;
+                    let requseAll = [];
+                    this.checkedAttachments.forEach(id => {
+                        let sq = api.requestDeleteAttachment(id);
+                        requseAll.push(sq);
+                    });
+
+                    axios.all(requseAll).then(axios.spread(() => {
+                        this.checkedAttachments = [];
+                        this.isIndeterminate = false;
+                        this.checkAll = false;
+                        this.attachmentLoading = false;
+                        this.isDeleting = false;
+                        this.getAttachments();
+                    }));
+                }
+            }
         }
     };
 </script>
