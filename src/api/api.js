@@ -5,7 +5,8 @@ import utils from '../utils'
  * 请求地址
  * @type {string}
  */
-export const base = 'http://192.168.0.110/api/admin';
+export const host = 'http://192.168.0.110';
+export const base = `${host}/api/admin`;
 
 /**
  * 用户token
@@ -277,13 +278,14 @@ export const requestAttachments = (otherParams = {}) => {
 
 /**
  * 删除附件
- * @param attachment
+ * @param ids
  * @returns {*}
  */
-export const requestDeleteAttachment = (attachment) => {
-    return axios.delete(`${base}/attachment/${attachment}`, {
+export const requestDeleteAttachment = (ids) => {
+    return axios.delete(`${base}/attachment`, {
         params: {
-            api_token: this.getUserToken()
+            api_token: this.getUserToken(),
+            ids
         }
     });
 };

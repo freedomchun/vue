@@ -42,14 +42,15 @@
                         <el-checkbox style="margin-right: 20px;" :indeterminate="isIndeterminate" v-model="checkAll"
                                      @change="handleCheckAllChange">全选
                         </el-checkbox>
-                        <el-button type="danger" icon="delete" @click="deleteSelect" :disabled="isDeleting">删除</el-button>
+                        <el-button type="danger" icon="delete" @click="deleteSelect" :disabled="isDeleting">删除
+                        </el-button>
                     </div>
                     <div class="bg-white" v-loading="attachmentLoading">
                         <el-checkbox-group v-model="checkedAttachments" @change="handleCheckedAttachmentsChange">
                             <el-row>
                                 <el-col :lg="6" :md="8" v-for="(attachment, index) in attachments" :key="attachment.id">
                                     <el-card :body-style="{ padding: '0px' }">
-                                        <img :src="attachment.url" class="image">
+                                        <img :src="imagecut(attachment.url, 300)" class="image">
                                         <div class="hao_title">
                                             <span>{{ attachment.name }}</span>
                                         </div>
@@ -113,6 +114,9 @@
             this.getAttachments();
         },
         methods: {
+            imagecut(url, width, height = false) {
+                return `${api.host}/thumb/${width}${height ? `/${height}` : ''}?url=${encodeURI(url)}`;
+            },
             getAttDirs() {
                 this.dirLoading = true;
                 api.requestAttDirs().then(rs => {
@@ -150,7 +154,7 @@
                 return data.title.indexOf(value) !== -1;
             },
             handleNodeClick(data) {
-                if(this.currentDir !== data){
+                if (this.currentDir !== data) {
                     this.currentDir = data;
                     this.getAttachments();
                 }
@@ -186,7 +190,7 @@
                 let isLt2M = file.size / 1024 / 1024 < 2;
 
                 if (!isImage) {
-                    this.$message.error(`上传图片只能是 图片 格式!`);
+                    this.$message.error('上传图片只能是 图片 格式!');
                 }
                 if (!isLt2M) {
                     this.$message.error('上传图片大小不能超过 2MB!');
@@ -210,20 +214,14 @@
                 if (!!this.checkedAttachments.length) {
                     this.attachmentLoading = true;
                     this.isDeleting = true;
-                    let requseAll = [];
-                    this.checkedAttachments.forEach(id => {
-                        let sq = api.requestDeleteAttachment(id);
-                        requseAll.push(sq);
-                    });
-
-                    axios.all(requseAll).then(axios.spread(() => {
+                    api.requestDeleteAttachment(this.checkedAttachments).then(rs => {
                         this.checkedAttachments = [];
                         this.isIndeterminate = false;
                         this.checkAll = false;
                         this.attachmentLoading = false;
                         this.isDeleting = false;
                         this.getAttachments();
-                    }));
+                    }).catch(utils.fns.err);
                 }
             }
         }
