@@ -165,7 +165,7 @@
                     return;
                 }
                 this.action = `${api.base}/attachment`;
-                this.appendInfo = {api_token: api.userToken, dir_id: this.currentDir.id, is_image: 'T'};
+                this.appendInfo = {api_token: api.getUserToken(), dir_id: this.currentDir.id, is_image: 'T'};
                 this.showUploadDiv = !this.showUploadDiv;
             },
             handleRemove(file, fileList) {

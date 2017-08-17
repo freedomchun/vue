@@ -10,7 +10,9 @@ export const base = 'http://192.168.0.110/api/admin';
 /**
  * 用户token
  */
-export const userToken = utils.auth.getLoginUser() ? utils.auth.getLoginUser().api_token : null;
+export const getUserToken = () => {
+    return utils.auth.getLoginUser() ? utils.auth.getLoginUser().api_token : null;
+};
 
 /**
  * 获取登录信息
@@ -27,7 +29,7 @@ export const requestLogin = params => {
  */
 export const requestLogout = () => {
     return axios.post(`${base}/logout`, {
-        api_token: this.userToken
+        api_token: this.getUserToken()
     });
 };
 
@@ -38,7 +40,7 @@ export const requestLogout = () => {
 export const requestSysInfo = () => {
     return axios.get(`${base}/sysInfo`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -51,7 +53,7 @@ export const requestSysInfo = () => {
 export const requestRoles = (slug = null) => {
     return axios.get(`${base}/role`, {
         params: {
-            api_token: this.userToken,
+            api_token: this.getUserToken(),
             slug
         }
     });
@@ -63,7 +65,7 @@ export const requestRoles = (slug = null) => {
  * @returns {*}
  */
 export const requestCreateRole = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.post(`${base}/role`, params);
 };
 
@@ -74,7 +76,7 @@ export const requestCreateRole = (params) => {
  * @returns {*}
  */
 export const requestEditRole = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.patch(`${base}/role/${params.id}`, params);
 };
 
@@ -87,7 +89,7 @@ export const requestEditRole = (params) => {
 export const requestDeleteRole = (role) => {
     return axios.delete(`${base}/role/${role}`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -100,7 +102,7 @@ export const requestDeleteRole = (role) => {
 export const requestPermissions = (slug = null) => {
     return axios.get(`${base}/permission`, {
         params: {
-            api_token: this.userToken,
+            api_token: this.getUserToken(),
             slug
         }
     });
@@ -112,7 +114,7 @@ export const requestPermissions = (slug = null) => {
  * @returns {*}
  */
 export const requestCreatePermission = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.post(`${base}/permission`, params);
 };
 
@@ -122,7 +124,7 @@ export const requestCreatePermission = (params) => {
  * @returns {*}
  */
 export const requestEditPermission = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.patch(`${base}/permission/${params.id}`, params);
 };
 
@@ -134,7 +136,7 @@ export const requestEditPermission = (params) => {
 export const requestDeletePermission = (permission) => {
     return axios.delete(`${base}/permission/${permission}`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -146,7 +148,7 @@ export const requestDeletePermission = (permission) => {
  * @returns {*}
  */
 export const requestRoleSyncPermissions = (role, permissions) => {
-    let params = Object.assign({api_token: this.userToken}, {permissions});
+    let params = Object.assign({api_token: this.getUserToken()}, {permissions});
     return axios.patch(`${base}/role/syncPermissions/${role}`, params);
 };
 
@@ -158,7 +160,7 @@ export const requestRoleSyncPermissions = (role, permissions) => {
 export const requestRolePermissions = (role) => {
     return axios.get(`${base}/role/permissions/${role}`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -169,7 +171,7 @@ export const requestRolePermissions = (role) => {
  * @returns {*}
  */
 export const requestUsers = (otherParams = {}) => {
-    let params = Object.assign({api_token: this.userToken}, otherParams);
+    let params = Object.assign({api_token: this.getUserToken()}, otherParams);
     return axios.get(`${base}/user`, {params});
 };
 
@@ -181,7 +183,7 @@ export const requestUsers = (otherParams = {}) => {
 export const requestDeleteUser = (user) => {
     return axios.delete(`${base}/user/${user}`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -192,7 +194,7 @@ export const requestDeleteUser = (user) => {
  * @returns {*}
  */
 export const requestCreateUser = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.post(`${base}/user`, params);
 };
 
@@ -203,7 +205,7 @@ export const requestCreateUser = (params) => {
  * @returns {*}
  */
 export const requestEditUser = (user, params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.patch(`${base}/user/${user}`, params);
 };
 
@@ -214,7 +216,7 @@ export const requestEditUser = (user, params) => {
  * @returns {*}
  */
 export const requestSyncUserRoles = (user, roles) => {
-    let params = Object.assign({api_token: this.userToken}, {roles});
+    let params = Object.assign({api_token: this.getUserToken()}, {roles});
     return axios.patch(`${base}/user/syncRoles/${user}`, params);
 };
 
@@ -225,7 +227,7 @@ export const requestSyncUserRoles = (user, roles) => {
  */
 export const requestResetPassword = (user) => {
     return axios.patch(`${base}/user/resetPassword/${user}`, {
-        api_token: this.userToken
+        api_token: this.getUserToken()
     });
 };
 
@@ -236,7 +238,7 @@ export const requestResetPassword = (user) => {
 export const requestMyRoles = () => {
     return axios.get(`${base}/user/myRoles`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -247,7 +249,7 @@ export const requestMyRoles = () => {
  * @returns {*}
  */
 export const requestEditMyInfo = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.patch(`${base}/user/update/myInfo`, params);
 };
 
@@ -258,7 +260,7 @@ export const requestEditMyInfo = (params) => {
 export const requestAttDirs = () => {
     return axios.get(`${base}/attDir`, {
         params: {
-            api_token: this.userToken,
+            api_token: this.getUserToken(),
         }
     });
 };
@@ -269,7 +271,7 @@ export const requestAttDirs = () => {
  * @returns {*}
  */
 export const requestAttachments = (otherParams = {}) => {
-    let params = Object.assign({api_token: this.userToken}, otherParams);
+    let params = Object.assign({api_token: this.getUserToken()}, otherParams);
     return axios.get(`${base}/attachment`, {params});
 };
 
@@ -281,7 +283,7 @@ export const requestAttachments = (otherParams = {}) => {
 export const requestDeleteAttachment = (attachment) => {
     return axios.delete(`${base}/attachment/${attachment}`, {
         params: {
-            api_token: this.userToken
+            api_token: this.getUserToken()
         }
     });
 };
@@ -292,6 +294,6 @@ export const requestDeleteAttachment = (attachment) => {
  * @returns {*}
  */
 export const requestCreateDir = (params) => {
-    params = Object.assign({api_token: this.userToken}, params);
+    params = Object.assign({api_token: this.getUserToken()}, params);
     return axios.post(`${base}/attDir`, params);
 };
