@@ -174,7 +174,7 @@
             },
             handleRemove(file, fileList) {
                 if (file !== null && typeof file.response.id !== 'undefined') {
-                    api.requestDeleteAttachment(file.response.id).then(rs => {
+                    api.requestDeleteAttachment([file.response.id]).then(rs => {
                         this.getAttachments();
                     }).catch(utils.fns.err);
                 }
