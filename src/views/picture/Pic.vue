@@ -28,7 +28,7 @@
                 </el-form-item>
             </el-form>
             <el-row :gutter="5">
-                <el-col :span="4">
+                <el-col :lg="4" :md="8">
                     <div class="pic_title">
                         <h3 class="pic_h3">图片目录</h3>
                     </div>
@@ -37,7 +37,7 @@
                              :expand-on-click-node="false" :filter-node-method="filterNode"
                              @node-click="handleNodeClick"></el-tree>
                 </el-col>
-                <el-col :span="20">
+                <el-col :lg="20" :md="16">
                     <div class="pic_title">
                         <el-checkbox style="margin-right: 20px;" :indeterminate="isIndeterminate" v-model="checkAll"
                                      @change="handleCheckAllChange">全选
