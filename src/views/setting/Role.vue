@@ -97,14 +97,16 @@
             </el-table>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="showPermissions = false">取消</el-button>
-                <el-button type="primary" @click.native.prevent="submitSyncPermissions" :loading="syncLoading">提交</el-button>
+                <el-button type="primary" @click.native.prevent="submitSyncPermissions" :loading="syncLoading">提交
+                </el-button>
             </div>
         </el-dialog>
     </section>
 </template>
 
 <script>
-    import axios from 'axios';
+    import * as api from '@/api/setting'
+    import axios from 'axios'
 
     export default {
         data() {
@@ -147,14 +149,14 @@
                 this.psLoading = true;
 
                 // 获取所有权限
-                let psReady = api.requestPermissions().then(rs => {
+                let psReady = !!this.psList.length ? Promise.resolve() : api.requestPermissions().then(rs => {
                     this.psList = rs.data;
-                }).catch(utils.fns.err);
+                });
 
                 // 获取角色的权限
                 let psRoleReady = api.requestRolePermissions(this.currentRole.id).then(rs => {
                     this.currentRolePermissions = rs.data;
-                }).catch(utils.fns.err);
+                });
 
                 // 所有请求已完成
                 axios.all([psReady, psRoleReady]).then(axios.spread(() => {
@@ -162,8 +164,8 @@
                     this.psList.forEach(row => {
                         let v = this.currentRolePermissions.map(item => item.id).includes(row.id);
                         this.$refs.multipleTable.toggleRowSelection(row, v);
-                    });
-                })).catch(utils.fns.err);
+                    })
+                }))
             },
             editRow(index, rows) {
                 this.editRole = rows[index];
@@ -173,7 +175,7 @@
                 this.$confirm(`你确认删除${rows[index].name}吗?`, '提示', {type: 'warning'}).then(() => {
                     api.requestDeleteRole(rows[index].id).then(rs => {
                         rows.splice(index, 1);
-                    }).catch(utils.fns.err);
+                    });
                 }).catch(() => {
                 });
             },
@@ -182,9 +184,6 @@
                 api.requestRoles(this.keyword).then(rs => {
                     this.roles = rs.data;
                     this.loading = false;
-                }).catch(err => {
-                    this.loading = false;
-                    utils.fns.err(err);
                 });
             },
             submitAddRole() {
@@ -195,9 +194,6 @@
                             this.addLoading = false;
                             this.showAddRole = false;
                             this.roles.push(rs.data);
-                        }).catch(err => {
-                            this.addLoading = false;
-                            utils.fns.err(err);
                         });
                     } else {
                         return false;
@@ -211,9 +207,6 @@
                         api.requestEditRole(this.editRole).then(rs => {
                             this.editLoading = false;
                             this.showEditRole = false;
-                        }).catch(err => {
-                            this.editLoading = false;
-                            utils.fns.err(err);
                         });
                     } else {
                         return false;
@@ -227,7 +220,7 @@
                 let ids = this.psListMultiple.map(item => item.id);
                 api.requestRoleSyncPermissions(this.currentRole.id, ids).then(rs => {
                     this.showPermissions = false;
-                }).catch(utils.fns.err);
+                });
             },
         },
     }

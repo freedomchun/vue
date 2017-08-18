@@ -1,9 +1,12 @@
 <template>
     <section>
         <el-row>
-            <el-col :span="24" class="bg-g">
-                <el-upload class="avatar-uploader" action="" :show-file-list="false" :on-success="handleAvatarSuccess"
-                           :before-upload="beforeAvatarUpload">
+            <el-col :span="24" class="bg-g" v-if="user">
+                <el-upload class="avatar-uploader"
+                           :headers="{Accept: 'application/json, text/plain, */*', Authorization: 'Bearer ' + token}"
+                           :action="uploadUrl" :show-file-list="false" :on-success="handleAvatarSuccess"
+                           :on-error="handleAvatarError"
+                           :before-upload="beforeAvatarUpload" name="avatar">
                     <img v-if="user.avatar" :src="user.avatar" class="avatar">
                     <el-button type="primary">上传头像</el-button>
                     <span> 支持jpg格式，图片大小1MB以内。</span>
@@ -46,10 +49,13 @@
 </template>
 
 <script>
+    import * as api from '@/api/api'
+    import {getToken, getLoginUser, setLoginUser} from '@/utils/auth'
+
     export default {
         data() {
             return {
-                user: {},
+                user: null,
                 roles: [],
                 pwdLoading: false,
                 pwdInfo: {
@@ -57,11 +63,17 @@
                     newPassword: '',
                     newPassword_confirmation: '',
                 },
+                uploadUrl: `${process.env.BASE_API}/user/update/myInfo`,
             };
         },
+        computed: {
+            token() {
+                return getToken();
+            }
+        },
         mounted() {
-            this.user = utils.auth.getLoginUser();
             this.getMyRoles();
+            this.user = getLoginUser();
         },
         methods: {
             validatePass(rule, value, callback) {
@@ -76,18 +88,19 @@
             getMyRoles() {
                 api.requestMyRoles().then(rs => {
                     this.roles = rs.data;
-                }).catch(utils.fns.err);
+                });
             },
             pwdInfoSubmit() {
                 this.$refs.pwdInfo.validate((valid) => {
                     if (valid) {
                         this.pwdLoading = true;
                         api.requestEditMyInfo(this.pwdInfo).then(rs => {
-                            this.user = rs.data;
                             this.$message.success('修改成功，下次登录需要使用新密码。');
                             this.resetPwdForm();
                             this.pwdLoading = false;
-                        }).catch(utils.fns.err);
+                        }).catch(err => {
+                            this.pwdLoading = false;
+                        });
                     } else {
                         return false;
                     }
@@ -96,20 +109,30 @@
             resetPwdForm() {
                 this.$refs.pwdInfo.resetFields();
             },
-            handleAvatarSuccess(res, file) {
-                this.user.avatar = URL.createObjectURL(file.raw);
+            handleAvatarSuccess(rs, file) {
+                this.user.avatar = rs.url;
+                api.requestEditMyInfo({avatar: this.user.avatar}).then(rs => {
+                    setLoginUser(rs.data);
+                    this.user = getLoginUser();
+                    this.$message.success('头像更新成功。');
+                    document.getElementById('avatar').src = rs.data.avatar;
+                });
+            },
+            handleAvatarError(err, file, fileList) {
+                this.$message.warning('上传失败。');
             },
             beforeAvatarUpload(file) {
-                let isJPG = file.type === 'image/jpeg';
+                let arrType = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
+                let isImage = arrType.includes(file.type);
                 let isLt2M = file.size / 1024 / 1024 < 1;
 
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                if (!isImage) {
+                    this.$message.error('上传图片只能是 图片 格式!');
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 1MB!');
+                    this.$message.error('上传图片大小不能超过 1MB!');
                 }
-                return isJPG && isLt2M;
+                return isImage && isLt2M;
             }
         }
     }

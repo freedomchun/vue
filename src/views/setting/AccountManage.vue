@@ -39,7 +39,8 @@
                     <el-tag v-for="role in scope.row.roles" :key="role.id" type="gray" closable
                             @close="removeUserRole(scope.row, role)">{{ role.name }}
                     </el-tag>
-                    <el-button type="danger" plain size="small" icon="more" @click="syncUserRolesForm(scope.row)"></el-button>
+                    <el-button type="danger" plain size="small" icon="more"
+                               @click="syncUserRolesForm(scope.row)"></el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="created_at" label="创建日期" sortable></el-table-column>
@@ -116,6 +117,8 @@
 </template>
 
 <script>
+    import * as api from '@/api/setting'
+
     export default {
         data() {
             return {
@@ -151,7 +154,7 @@
                     user = rs.data;
                     user.roles = roles;
                     this.$set(this.users, index, user);
-                }).catch(utils.fns.err);
+                });
             },
             restPassword(index, rows) {
                 this.$confirm(`你确认要将${rows[index].name}的密码重置吗?`, '提示', {type: 'warning'}).then(() => {
@@ -163,8 +166,6 @@
                             duration: 20000,
                             offset: 35
                         });
-                    }).catch(err => {
-                        console.log(err)
                     });
                 }).catch(() => {
                 });
@@ -174,7 +175,7 @@
                     api.requestDeleteUser(rows[index].id).then(rs => {
                         rows.splice(index, 1);
                         this.userTotal--;
-                    }).catch(utils.fns.err);
+                    });
                 }).catch(() => {
                 });
             },
@@ -185,7 +186,7 @@
                     this.userTotal = rs.data.total;
                     this.users = rs.data.data;
                     this.loading = false;
-                }).catch(utils.fns.err);
+                });
             },
             currentChange(val) {
                 this.currentPage = val;
@@ -197,13 +198,13 @@
                 }
                 api.requestRoles().then(rs => {
                     this.roles = rs.data;
-                }).catch(utils.fns.err);
+                });
             },
             syncUserRolesSubmit() {
                 api.requestSyncUserRoles(this.currentSyncUser.id, this.currentSyncRoles).then(rs => {
                     this.currentSyncUser.roles = rs.data;
                     this.showAddUserRolesForm = false;
-                }).catch(utils.fns.err);
+                });
             },
             syncUserRolesForm(user) {
                 this.showAddUserRolesForm = true;
@@ -223,7 +224,7 @@
                             this.users.push(rs.data);
                             this.addUser = {avatar: '', name: '', email: '', password: '', roles: [], disable: 'F'};
                             this.closeUserForm();
-                        }).catch(utils.fns.err);
+                        });
                     } else {
                         return false;
                     }
@@ -253,7 +254,7 @@
                      */
                     api.requestSyncUserRoles(user.id, roleIds).then(rs => {
                         user.roles.splice(index, 1);
-                    }).catch(utils.fns.err);
+                    });
                 }).catch(() => {
                 });
             }

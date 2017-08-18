@@ -73,7 +73,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import * as api from '@/api/attachment'
 
     export default {
         data() {
@@ -115,14 +115,14 @@
         },
         methods: {
             imagecut(url, width, height = false) {
-                return `${api.host}/thumb/${width}${height ? `/${height}` : ''}?url=${encodeURI(url)}`;
+                return `${process.env.BASE_HOST}/thumb/${width}${height ? `/${height}` : ''}?url=${encodeURI(url)}`;
             },
             getAttDirs() {
                 this.dirLoading = true;
                 api.requestAttDirs().then(rs => {
                     this.dirs = rs.data;
                     this.dirLoading = false;
-                }).catch(utils.fns.err);
+                });
             },
             getAttachments() {
                 this.attachmentLoading = true;
@@ -132,20 +132,26 @@
                     this.attachmentTotal = rs.data.total;
                     this.attachments = rs.data.data;
                     this.attachmentLoading = false;
-                }).catch(utils.fns.err);
+                })
             },
             addFileForm() {
                 let parent_id = typeof this.currentDir.id === 'undefined' ? 0 : this.currentDir.id;
                 let msg = parent_id === 0 ? '建立顶级文件夹' : `【${this.currentDir.title}】正在建立子文件夹`;
-                this.$prompt(msg, '新建文件夹').then(({value}) => {
+                this.$prompt(msg, '新建文件夹', {
+                    confirmButtonText: '建立',
+                    inputPattern: /.{3,20}/,
+                    inputErrorMessage: '输入3-20个字符。'
+                }).then(({value}) => {
                     api.requestCreateDir({parent_id, title: value}).then(rs => {
                         if (parent_id === 0) {
                             this.dirs.push(rs.data);
                         } else {
+                            console.log(this.dirs[index].all_children)
                             let index = this.dirs.indexOf(this.currentDir);
                             this.dirs[index].all_children.push(rs.data);
                         }
-                    }).catch(utils.fns.err);
+                    }).catch(err => {
+                    });
                 }).catch(() => {
                 });
             },
@@ -168,15 +174,15 @@
                     this.$message('选择图片目录！');
                     return;
                 }
-                this.action = `${api.base}/attachment`;
-                this.appendInfo = {api_token: api.getUserToken(), dir_id: this.currentDir.id, is_image: 'T'};
+                this.action = `${process.env.BASE_API}/attachment`;
+                this.appendInfo = {api_token: this.$store.getters.token, dir_id: this.currentDir.id, is_image: 'T'};
                 this.showUploadDiv = !this.showUploadDiv;
             },
             handleRemove(file, fileList) {
                 if (file !== null && typeof file.response.id !== 'undefined') {
                     api.requestDeleteAttachment([file.response.id]).then(rs => {
                         this.getAttachments();
-                    }).catch(utils.fns.err);
+                    });
                 }
             },
             onProgress(event, file, fileList) {
@@ -221,7 +227,7 @@
                         this.attachmentLoading = false;
                         this.isDeleting = false;
                         this.getAttachments();
-                    }).catch(utils.fns.err);
+                    });
                 }
             }
         }
@@ -294,8 +300,8 @@
 
     .bottom {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
     }
 
     .fenye {

@@ -15,7 +15,9 @@
 </template>
 
 <script>
+    import {requestSysInfo} from '@/api/api'
     import fuwu from '@/assets/fuwu.jpg'
+
     export default {
         data() {
             return {
@@ -24,10 +26,8 @@
             }
         },
         mounted() {
-            api.requestSysInfo().then(rs => {
+            requestSysInfo().then(rs => {
                 this.infos = rs.data
-            }).catch(err => {
-                utils.fns.err(err)
             })
         }
     }

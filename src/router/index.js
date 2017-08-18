@@ -1,20 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Login from '@/views/login/Login'
+import Login from '@/views/user/Login'
 import Admin from '@/views/common/Admin'
-import Sysinfo from '@/views/setting/Sysinfo'
+import Sysinfo from '@/views/common/Sysinfo'
 import Role from '@/views/setting/Role'
 import NoPermissions from '@/views/permissions/NoPermissions'
 import NotFind from '@/views/error/404'
-
 import AccountManage from '@/views/setting/AccountManage'
 import Permisson from '@/views/setting/Permisson'
 import MyInfo from '@/views/user/MyInfo'
-
 import Pic from '@/views/picture/Pic'
-
-import utils from '../utils'
 
 Vue.use(Router);
 
@@ -69,7 +64,7 @@ const router = new Router({
             icon: 'iconfont icon-zhanghu',
             component: AccountManage
         }]
-    },{
+    }, {
         path: '/picture',
         name: '附件管理',
         icon: 'iconfont icon-shezhi',
@@ -89,20 +84,6 @@ const router = new Router({
         redirect: '/404',
         hidden: true
     }]
-});
-
-router.beforeEach((to, from, next) => {
-    if (to.path === '/login') {
-        utils.auth.removeLoginUser();
-    }
-    let loginUser = utils.auth.getLoginUser();
-    if (!loginUser && to.path !== '/login') {
-        next({
-            path: '/login'
-        });
-    } else {
-        next();
-    }
 });
 
 export default router;

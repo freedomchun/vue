@@ -30,8 +30,8 @@
 <style>
     .container {
         position: absolute;
-        top: 0px;
-        bottom: 0px;
+        top: 0;
+        bottom: 0;
         width: 100%;
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -99,7 +99,7 @@
         display: flex;
         position: absolute;
         top: 50px;
-        bottom: 0px;
+        bottom: 0;
         overflow: hidden;
     }
 
@@ -107,8 +107,8 @@
         flex: 0 0 260px;
         width: 260px;
         position: absolute;
-        top: 0px;
-        bottom: 0px;
+        top: 0;
+        bottom: 0;
         background: #35363a;
     }
 
@@ -127,7 +127,7 @@
 
     .submenu {
         position: absolute;
-        top: 0px;
+        top: 0;
         left: 60px;
         z-index: 99999;
         height: auto;
@@ -148,9 +148,9 @@
         background: #fff;
         flex: 1;
         position: absolute;
-        right: 0px;
-        top: 0px;
-        bottom: 0px;
+        right: 0;
+        top: 0;
+        bottom: 0;
         left: 260px;
         overflow-y: scroll;
     }

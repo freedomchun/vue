@@ -6,7 +6,8 @@
                     <span class="admin-customtext"><i :class="menu.icon"></i>{{ menu.name }}</span>
                 </template>
                 <el-menu-item-group class="admin-custombg">
-                    <el-menu-item v-for="(item, index) in menu.children" :index="menu.path + '/' + item.path" :key="item.path">
+                    <el-menu-item v-for="(item, index) in menu.children" :index="menu.path + '/' + item.path"
+                                  :key="item.path">
                         <span class="admin-customtext"><i :class="item.icon"></i>{{ item.name }}</span>
                     </el-menu-item>
                 </el-menu-item-group>
@@ -16,15 +17,13 @@
 </template>
 
 <script>
+    import {setLoginUserRouter} from '@/utils/auth'
+
     export default {
-        data() {
-            return {
-                menus: []
+        computed: {
+            menus() {
+                return setLoginUserRouter(this.$router.options.routes);
             }
-        },
-        mounted() {
-            let rs = this.$router.options.routes;
-            this.menus = utils.auth.setLoginUserRouter(rs);
         }
     }
 </script>
