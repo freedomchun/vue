@@ -10,12 +10,12 @@ export const requestAttDirs = () => {
 
 /**
  * 获取附件列表
- * @param otherParams page:页码, pageSize:数量
+ * @param params page:页码, per_page:每页数量
  * @returns {*}
  */
-export const requestAttachments = (otherParams = {}) => {
+export const requestAttachments = (params = {}) => {
     return fetch.get('/attachment', {
-        params: otherParams
+        params
     })
 }
 
@@ -26,7 +26,9 @@ export const requestAttachments = (otherParams = {}) => {
  */
 export const requestDeleteAttachment = (ids) => {
     return fetch.delete('/attachment', {
-        params: {ids}
+        params: {
+            ids
+        }
     })
 }
 

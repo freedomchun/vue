@@ -93,12 +93,12 @@ export const requestRolePermissions = (role) => {
 
 /**
  * 获得账户列表
- * @param otherParams page:页码, pageSize:数量
+ * @param params page:页码, per_page:每页数量
  * @returns {*}
  */
-export const requestUsers = (otherParams = {}) => {
+export const requestUsers = (params = {}) => {
     return fetch.get('/user', {
-        params: otherParams
+        params
     })
 }
 

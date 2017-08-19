@@ -65,7 +65,7 @@
         </el-table>
         <!--分页-->
         <el-col :span="24" class="toolbar" style="margin-top: 20px;">
-            <el-pagination layout="total, prev, pager, next" :total="userTotal" :page-size="pageSize"
+            <el-pagination layout="total, prev, pager, next" :total="userTotal" :page-size="per_page"
                            @current-change="currentChange" style="float:right;"></el-pagination>
         </el-col>
         <!--新增界面-->
@@ -127,7 +127,7 @@
                 users: [],
                 userTotal: 0,
                 currentPage: 1,
-                pageSize: 15,
+                per_page: 15,
                 showAddUser: false,
                 addUser: {
                     avatar: '',
@@ -181,7 +181,7 @@
             },
             getUsers() {
                 this.loading = true;
-                let o = {keyword: this.keyword, pageSize: this.pageSize, page: this.currentPage};
+                let o = {keyword: this.keyword, per_page: this.per_page, page: this.currentPage};
                 api.requestUsers(o).then(rs => {
                     this.userTotal = rs.data.total;
                     this.users = rs.data.data;

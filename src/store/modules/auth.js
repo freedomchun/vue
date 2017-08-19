@@ -31,7 +31,7 @@ const auth = {
             return new Promise((resolve, reject) => {
                 login(params).then(rs => {
                     commit('saveLoginUser', rs.data);
-                    resolve(rs);
+                    resolve();
                 }).catch(error => {
                     reject(error);
                 })
@@ -40,7 +40,7 @@ const auth = {
         logOut({commit, state}) {
             return new Promise((resolve, reject) => {
                 commit('removeLoginInfo');
-                resolve(1);
+                resolve();
             })
         }
     }
