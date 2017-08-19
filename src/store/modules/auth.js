@@ -1,46 +1,46 @@
-import {login, logout} from '@/api/login';
-import * as Auth from '@/utils/auth';
+import {login, logout} from '@/api/login'
+import * as Auth from '@/utils/auth'
 
 const auth = {
-
+    state: {},
     mutations: {
         saveLoginUser(state, resData) {
-            Auth.setToken(resData.userInfo.api_token);
-            Auth.setLoginUser(resData.userInfo);
-            Auth.setUserPermissions(resData.permissions);
+            Auth.setToken(resData.userInfo.api_token)
+            Auth.setLoginUser(resData.userInfo)
+            Auth.setUserPermissions(resData.permissions)
         },
         removeLoginInfo(state) {
-            Auth.removeToken();
-            Auth.removeLoginUser();
-            Auth.removeUserPermissions();
+            Auth.removeToken()
+            Auth.removeLoginUser()
+            Auth.removeUserPermissions()
         }
     },
     getters: {
         token() {
-            return Auth.getToken();
+            return Auth.getToken()
         },
         loginUser() {
-            return Auth.getLoginUser();
+            return Auth.getLoginUser()
         },
         userPermissions() {
-            return Auth.getUserPermissions();
+            return Auth.getUserPermissions()
         }
     },
     actions: {
         login({commit}, params) {
             return new Promise((resolve, reject) => {
                 login(params).then(rs => {
-                    commit('saveLoginUser', rs.data);
-                    resolve();
+                    commit('saveLoginUser', rs.data)
+                    resolve(rs)
                 }).catch(error => {
-                    reject(error);
+                    reject(error)
                 })
             })
         },
         logOut({commit, state}) {
             return new Promise((resolve, reject) => {
-                commit('removeLoginInfo');
-                resolve();
+                commit('removeLoginInfo')
+                resolve()
             })
         }
     }
