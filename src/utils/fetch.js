@@ -37,6 +37,7 @@ service.interceptors.response.use(
                         store.dispatch('logOut').then(() => {
                             location.reload()
                         })
+                    }).catch(() => {
                     })
                     break
                 case 422:

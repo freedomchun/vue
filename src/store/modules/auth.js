@@ -1,36 +1,62 @@
-import {login, logout} from '@/api/login'
-import * as Auth from '@/utils/auth'
+import {login, logout, requestEditMyInfo, requestMyRoles} from '@/api/login'
+import {
+    setToken,
+    setLoginUser,
+    setUserPermissions,
+    removeToken,
+    removeLoginUser,
+    removeUserPermissions,
+    getLoginUser,
+    getToken
+} from '@/utils/auth'
 
 const auth = {
-    state: {},
+    state: {
+        pwdInfo: {
+            oldPassword: '',
+            newPassword: '',
+            newPassword_confirmation: '',
+        },
+        roles: [],
+        loading: {
+            pwd: false,
+        },
+        upload: {
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                Authorization: 'Bearer ' + getToken()
+            },
+            url: `${process.env.BASE_API}/user/update/myInfo`,
+        }
+    },
     mutations: {
-        saveLoginUser(state, resData) {
-            Auth.setToken(resData.userInfo.api_token)
-            Auth.setLoginUser(resData.userInfo)
-            Auth.setUserPermissions(resData.permissions)
+        saveToken(state, token) {
+            setToken(token)
+        },
+        saveLoginUser(state, user) {
+            setLoginUser(user)
+        },
+        savePermissions(state, permissions) {
+            setUserPermissions(permissions)
         },
         removeLoginInfo(state) {
-            Auth.removeToken()
-            Auth.removeLoginUser()
-            Auth.removeUserPermissions()
+            removeToken()
+            removeLoginUser()
+            removeUserPermissions()
         }
     },
     getters: {
-        token() {
-            return Auth.getToken()
-        },
         loginUser() {
-            return Auth.getLoginUser()
-        },
-        userPermissions() {
-            return Auth.getUserPermissions()
+            return getLoginUser()
         }
     },
     actions: {
         login({commit}, params) {
             return new Promise((resolve, reject) => {
                 login(params).then(rs => {
-                    commit('saveLoginUser', rs.data)
+                    commit('saveToken', rs.data.userInfo.api_token)
+                    commit('saveLoginUser', rs.data.userInfo)
+                    commit('savePermissions', rs.data.permissions)
                     resolve(rs)
                 }).catch(error => {
                     reject(error)
@@ -42,7 +68,24 @@ const auth = {
                 commit('removeLoginInfo')
                 resolve()
             })
-        }
+        },
+        updatePassword({commit, state}) {
+            return new Promise((resolve, reject) => {
+                state.loading.pwd = true
+                requestEditMyInfo(state.pwdInfo).then(rs => {
+                    state.loading.pwd = false
+                    resolve(rs)
+                }).catch(error => {
+                    state.loading.pwd = false
+                    reject(error)
+                })
+            })
+        },
+        getMyRoles({state}) {
+            requestMyRoles().then(rs => {
+                state.roles = rs.data
+            })
+        },
     }
 }
 

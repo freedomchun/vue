@@ -6,25 +6,27 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import BingPlugin from './utils/BingPlugin'
 
 Vue.use(ElementUI)
+Vue.use(BingPlugin)
 
 router.beforeEach((to, from, next) => {
-    NProgress.start();
+    NProgress.start()
     if (to.path === '/login') {
-        store.dispatch('logOut');
+        store.dispatch('logOut')
     }
-    let token = sessionStorage.getItem('token');
+    let token = sessionStorage.getItem('token')
     if (!token && to.path !== '/login') {
-        next('/login');
+        next('/login')
     } else {
-        next();
+        next()
     }
-});
+})
 
 router.afterEach(transition => {
-    NProgress.done();
-});
+    NProgress.done()
+})
 
 new Vue({
     el: '#app',
@@ -34,4 +36,4 @@ new Vue({
     components: {
         App
     }
-});
+})

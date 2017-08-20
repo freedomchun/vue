@@ -1,24 +1,24 @@
 <template>
     <section>
         <el-row>
-            <el-col :span="24" class="bg-g" v-if="user">
+            <el-col :span="24" class="bg-g">
                 <el-upload class="avatar-uploader"
-                           :headers="{Accept: 'application/json, text/plain, */*', Authorization: 'Bearer ' + token}"
-                           :action="uploadUrl" :show-file-list="false" :on-success="handleAvatarSuccess"
+                           :headers="upload.headers"
+                           :action="upload.url" :show-file-list="false" :on-success="handleAvatarSuccess"
                            :on-error="handleAvatarError"
                            :before-upload="beforeAvatarUpload" name="avatar">
-                    <img v-if="user.avatar" :src="user.avatar" class="avatar">
+                    <img v-if="loginUser.avatar" :src="imagecut(loginUser.avatar, 160)" class="avatar">
                     <el-button type="primary">上传头像</el-button>
                     <span> 支持jpg格式，图片大小1MB以内。</span>
                 </el-upload>
                 <ul>
-                    <li>名称：{{ user.name }}</li>
-                    <li>电子邮箱：{{ user.email }}</li>
+                    <li>名称：{{ loginUser.name }}</li>
+                    <li>电子邮箱：{{ loginUser.email }}</li>
                     <li>角色组：
                         <el-tag type="gray" v-for="role in roles" :key="role.id">{{ role.name }}</el-tag>
                     </li>
                     <li>状态：
-                        <el-tag type="success" v-if="user.disable_at === null">激活</el-tag>
+                        <el-tag type="success" v-if="loginUser.disable_at === null">激活</el-tag>
                         <el-tag type="danger" v-else>禁用</el-tag>
                     </li>
                 </ul>
@@ -39,7 +39,7 @@
                         <el-input type="password" v-model="pwdInfo.newPassword_confirmation"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="pwdInfoSubmit" :loading="pwdLoading">提交</el-button>
+                        <el-button type="primary" @click="pwdInfoSubmit" :loading="loading.pwd">提交</el-button>
                         <el-button @click="resetPwdForm">重置</el-button>
                     </el-form-item>
                 </el-form>
@@ -49,33 +49,24 @@
 </template>
 
 <script>
-    import * as api from '@/api/api'
-    import {getToken, getLoginUser, setLoginUser} from '@/utils/auth'
+    import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
     export default {
-        data() {
-            return {
-                user: null,
-                roles: [],
-                pwdLoading: false,
-                pwdInfo: {
-                    oldPassword: '',
-                    newPassword: '',
-                    newPassword_confirmation: '',
-                },
-                uploadUrl: `${process.env.BASE_API}/user/update/myInfo`,
-            };
-        },
         computed: {
-            token() {
-                return getToken();
-            }
+            ...mapState({
+                pwdInfo: state => state.auth.pwdInfo,
+                roles: state => state.auth.roles,
+                loading: state => state.auth.loading,
+                upload: state => state.auth.upload,
+            }),
+            ...mapGetters(['loginUser'])
         },
         mounted() {
             this.getMyRoles();
-            this.user = getLoginUser();
         },
         methods: {
+            ...mapMutations(['saveLoginUser']),
+            ...mapActions(['updatePassword', 'getMyRoles']),
             validatePass(rule, value, callback) {
                 if (value === '') {
                     callback(new Error('请再次输入密码'));
@@ -85,54 +76,41 @@
                     callback();
                 }
             },
-            getMyRoles() {
-                api.requestMyRoles().then(rs => {
-                    this.roles = rs.data;
-                });
-            },
             pwdInfoSubmit() {
                 this.$refs.pwdInfo.validate((valid) => {
                     if (valid) {
-                        this.pwdLoading = true;
-                        api.requestEditMyInfo(this.pwdInfo).then(rs => {
-                            this.$message.success('修改成功，下次登录需要使用新密码。');
-                            this.resetPwdForm();
-                            this.pwdLoading = false;
-                        }).catch(err => {
-                            this.pwdLoading = false;
-                        });
+                        this.updatePassword().then(rs => {
+                            this.resetPwdForm()
+                            this.$message.success('密码修改成功，下次登录使用新密码。')
+                        }).catch(() => {
+                        })
                     } else {
-                        return false;
+                        return false
                     }
-                });
+                })
             },
             resetPwdForm() {
-                this.$refs.pwdInfo.resetFields();
+                this.$refs.pwdInfo.resetFields()
             },
             handleAvatarSuccess(rs, file) {
-                this.user.avatar = rs.url;
-                api.requestEditMyInfo({avatar: this.user.avatar}).then(rs => {
-                    setLoginUser(rs.data);
-                    this.user = getLoginUser();
-                    this.$message.success('头像更新成功。');
-                    document.getElementById('avatar').src = rs.data.avatar;
-                });
+                this.saveLoginUser(rs)
+                location.reload()
             },
             handleAvatarError(err, file, fileList) {
-                this.$message.warning('上传失败。');
+                this.$message.warning('上传失败。')
             },
             beforeAvatarUpload(file) {
-                let arrType = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
-                let isImage = arrType.includes(file.type);
-                let isLt2M = file.size / 1024 / 1024 < 1;
+                let arrType = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
+                let isImage = arrType.includes(file.type)
+                let isLt2M = file.size / 1024 / 1024 < 1
 
                 if (!isImage) {
-                    this.$message.error('上传图片只能是 图片 格式!');
+                    this.$message.error('上传图片只能是 图片 格式!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传图片大小不能超过 1MB!');
+                    this.$message.error('上传图片大小不能超过 1MB!')
                 }
-                return isImage && isLt2M;
+                return isImage && isLt2M
             }
         }
     }

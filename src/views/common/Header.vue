@@ -11,7 +11,7 @@
         <el-col :span="2" class="userinfo" v-if="loginUser">
             <el-dropdown trigger="hover">
 				<span class="el-dropdown-link userinfo-inner">
-                    <img :src="loginUser.avatar" id="avatar"> {{ loginUser.name }}
+                    <img :src="imagecut(loginUser.avatar, 35)" id="avatar"> {{ loginUser.name }}
                     <i class="icon-angle-down"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">

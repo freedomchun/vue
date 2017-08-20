@@ -9,5 +9,13 @@ export function logout() {
     return fetch.post('/logout', {api_token: getToken()});
 }
 
+export const requestMyRoles = () => {
+    return fetch.get('/user/myRoles')
+}
+
+export const requestEditMyInfo = (params) => {
+    return fetch.post('/user/update/myInfo', params)
+}
+
 
 

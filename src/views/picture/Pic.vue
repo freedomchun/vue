@@ -30,7 +30,7 @@
                     <h3 class="pic_h3">图片目录</h3>
                 </div>
                 <el-tree :data="dirs" :props="props" ref="tree" highlight-current v-loading="loading.dir"
-                         @node-click="dirClick" :expand-on-click-node="false" :filter-node-method="searchDir"></el-tree>
+                         @node-click="dirClick" :filter-node-method="searchDir"></el-tree>
             </el-col>
             <el-col :lg="20" :md="16">
                 <div class="pic_title">
@@ -100,8 +100,10 @@
                 return data.title.indexOf(value) !== -1
             },
             dirClick(data) {
-                this.setCurrentDir(data)
-                this.getAtts()
+                if (this.op.current_dir !== data) {
+                    this.setCurrentDir(data)
+                    this.getAtts()
+                }
             },
             showFolderDialog() {
                 let parent_id = this.op.current_dir !== null ? this.op.current_dir.id : 0
@@ -121,9 +123,6 @@
                 }
                 this.setUploadInfo({dir_id: this.op.current_dir.id, is_image: 'T'})
                 this.showUploadDiv = !this.showUploadDiv
-            },
-            imagecut(url, width, height = false) {
-                return `${process.env.BASE_HOST}/thumb/${width}${height ? `/${height}` : ''}?url=${encodeURIComponent(url)}`;
             },
             beforeUpload(file) {
                 let arrType = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
