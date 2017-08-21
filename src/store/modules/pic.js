@@ -124,6 +124,24 @@ const pic = {
                     dispatch('getAtts')
                 });
             }
+        },
+        updateFolder({dispatch, state}, dir) {
+            return new Promise((resolve, reject) => {
+                attachment.requestEditDir(dir).then(rs => {
+                    resolve(rs)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        deleteFolder({dispatch, state}, dir) {
+            return new Promise((resolve, reject) => {
+                attachment.requestDeleteDir(dir).then(rs => {
+                    resolve(rs)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     }
 }

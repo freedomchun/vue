@@ -40,3 +40,20 @@ export const requestDeleteAttachment = (ids) => {
 export const requestCreateDir = (params) => {
     return fetch.post('/attDir', params)
 }
+
+/**
+ * 修改目录
+ * @param dir
+ * @returns {*}
+ */
+export const requestEditDir = (dir) => {
+    return fetch.patch(`/attDir/${dir.id}`, dir)
+}
+
+/**
+ * 删除目录
+ * @param dir
+ */
+export const requestDeleteDir = (dir) => {
+    return fetch.delete(`/attDir/${dir.id}`)
+}
