@@ -30,7 +30,8 @@
                     <h3 class="pic_h3">图片目录</h3>
                 </div>
                 <el-tree :data="dirs" :props="props" ref="tree" highlight-current v-loading="loading.dir"
-                         @node-click="dirClick" :filter-node-method="searchDir"
+                         @node-click="dirClick" :filter-node-method="searchDir" :expand-on-click-node="false"
+                         node-key="id"
                          :render-content="renderContent"></el-tree>
             </el-col>
             <el-col :lg="20" :md="16">
@@ -146,7 +147,11 @@
                 store.remove(data);
             },
             renderContent(h, {node, data, store}) {
-                return h('span', [
+                return h('span', {
+                    attrs: {
+                        style: 'white-space: normal'
+                    }
+                }, [
                     h('span', node.label),
                     h('span', {
                         attrs: {
