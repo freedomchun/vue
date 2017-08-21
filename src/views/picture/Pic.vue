@@ -30,7 +30,8 @@
                     <h3 class="pic_h3">图片目录</h3>
                 </div>
                 <el-tree :data="dirs" :props="props" ref="tree" highlight-current v-loading="loading.dir"
-                         @node-click="dirClick" :filter-node-method="searchDir"></el-tree>
+                         @node-click="dirClick" :filter-node-method="searchDir"
+                         :render-content="renderContent"></el-tree>
             </el-col>
             <el-col :lg="20" :md="16">
                 <div class="pic_title">
@@ -91,7 +92,7 @@
         },
         methods: {
             ...mapMutations(['setCurrentDir', 'setUploadInfo', 'uploadPreview', 'checkAllChange', 'checkedAttsChange']),
-            ...mapActions(['getDirs', 'getAtts', 'createFolder', 'uploadRemove', 'uploadProgress', 'deleteSelect']),
+            ...mapActions(['getDirs', 'getAtts', 'createFolder', 'uploadRemove', 'uploadProgress', 'deleteSelect', 'updateFolder', 'deleteFolder']),
             searchInput(value) {
                 this.$refs.tree.filter(value)
             },
@@ -110,7 +111,7 @@
                 let msg = parent_id ? `【${this.op.current_dir.title}】正在建立子文件夹` : '建立一级文件夹'
                 this.$prompt(msg, '新建文件夹', {
                     confirmButtonText: '建立',
-                    inputPattern: /.{3,20}/,
+                    inputPattern: /.{2,20}/,
                     inputErrorMessage: '输入3-20个字符。'
                 }).then(({value}) => {
                     this.createFolder({parent_id, title: value})
@@ -135,6 +136,73 @@
                     this.$message.error('上传图片大小不能超过 2MB!');
                 }
                 return isImage && isLt2M;
+            },
+            append(store, data) {
+                store.append(
+                    {id: Math.random(), label: 'testtest', children: []}, data
+                );
+            },
+            remove(store, data) {
+                store.remove(data);
+            },
+            renderContent(h, {node, data, store}) {
+                return h('span', [
+                    h('span', node.label),
+                    h('span', {
+                        attrs: {
+                            style: 'float: right; margin-right: 10px;'
+                        }
+                    }, [
+                        h('el-button', {
+                            attrs: {
+                                size: 'mini',
+                                icon: 'edit',
+                                plain: true,
+                                type: 'success'
+                            }, on: {
+                                click: () => this.editDir(data)
+                            }
+                        }),
+                        h('el-button', {
+                            attrs: {
+                                size: 'mini',
+                                icon: 'delete',
+                                plain: true,
+                                type: 'danger'
+                            }, on: {
+                                click: () => this.deleteDir(data)
+                            }
+                        }),
+                    ]),
+                ]);
+            },
+            editDir(data) {
+                this.$prompt('正在修改文件夹名', {
+                    inputValue: data.title,
+                    inputPattern: /.{2,20}/,
+                    inputErrorMessage: '输入3-20个字符。'
+                }).then(({value}) => {
+                    if (data.title !== value) {
+                        let params = Object.assign({}, data, {title: value})
+                        this.updateFolder(params).then(rs => {
+                            Object.assign(data, rs.data)
+                            this.$message.success('修改成功!')
+                        })
+                    }
+                }).catch(() => {
+                })
+            },
+            deleteDir(data) {
+                this.$confirm('此操作将永久删除该目录下的所有文件, 是否继续?', '提示').then(() => {
+                    this.deleteFolder(data).then(() => {
+                        this.$message.success('删除成功!')
+                        this.setCurrentDir(null)
+                        this.getAtts()
+                        this.getDirs()
+                    }).catch(() => {
+                    })
+                }).catch(() => {
+                })
             }
         }
     }
@@ -165,11 +233,6 @@
         border: 1px solid #d1dbe5;
         padding: 10px 0;
         box-sizing: border-box;
-    }
-
-    .time {
-        font-size: 14px;
-        color: #999;
     }
 
     .hao_title {
