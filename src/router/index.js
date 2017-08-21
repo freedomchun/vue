@@ -11,6 +11,17 @@ import Permisson from '@/views/setting/Permisson'
 import MyInfo from '@/views/user/MyInfo'
 import Pic from '@/views/picture/Pic'
 
+import WebInfo from '@/views/web/WebInfo'
+import ColumnList from '@/views/web/ColumnList'
+import ArticleList from '@/views/web/ArticleList'
+import Message from '@/views/web/Message'
+import ActivityManage from '@/views/operation/ActivityManage'
+import TopicManage from '@/views/operation/TopicManage'
+import DestinationManage from '@/views/operation/DestinationManage'
+import LeaderManage from '@/views/operation/LeaderManage'
+import RaiderManage from '@/views/operation/RaiderManage'
+import FoodManage from '@/views/operation/FoodManage'
+
 Vue.use(Router);
 
 const router = new Router({
@@ -74,6 +85,68 @@ const router = new Router({
             name: '图片管理',
             icon: 'iconfont icon-jiaose',
             component: Pic
+        }]
+    },{
+        path: '/web',
+        name: '网站内容',
+        icon: 'iconfont icon-shezhi',
+        component: Admin,
+        children: [{
+            path: 'webInfo',
+            name: '网站信息',
+            icon: 'iconfont icon-jiaose',
+            component: WebInfo
+        },{
+            path: 'columnList',
+            name: '栏目设置',
+            icon: 'iconfont icon-jiaose',
+            component: ColumnList
+        },{
+            path: 'articleList',
+            name: '文章发布',
+            icon: 'iconfont icon-jiaose',
+            component: ArticleList
+        },{
+            path: 'message',
+            name: '短信管理',
+            icon: 'iconfont icon-jiaose',
+            component: Message
+        }]
+    },{
+        path: '/operation',
+        name: '运营管理',
+        icon: 'iconfont icon-shezhi',
+        component: Admin,
+        children: [{
+            path: 'activityManage',
+            name: '活动管理',
+            icon: 'iconfont icon-jiaose',
+            component: ActivityManage
+        },{
+            path: 'topicManage',
+            icon: 'iconfont icon-jiaose',
+            name: '主题管理',
+            component: TopicManage
+        },{
+            path: 'destinationManage',
+            icon: 'iconfont icon-jiaose',
+            name: '目的地管理',
+            component: DestinationManage
+        },{
+            path: 'leaderManage',
+            icon: 'iconfont icon-jiaose',
+            name: '领队管理',
+            component: LeaderManage
+        },{
+            path: 'raiderManage',
+            icon: 'iconfont icon-jiaose',
+            name: '攻略管理',
+            component: RaiderManage
+        },{
+            path: 'foodManage',
+            icon: 'iconfont icon-jiaose',
+            name: '美食管理',
+            component: FoodManage
         }]
     }, {
         path: '/login',

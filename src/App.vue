@@ -46,4 +46,8 @@
         line-height: 1;
         display: inline-block;
     }
+    .fenye {
+		text-align: center;
+		margin-top: 20px;
+	}
 </style>
