@@ -35,7 +35,7 @@
         </el-table>
 
         <!--新增界面-->
-        <el-dialog title="新增权限" v-model="showAddPermission" :close-on-click-modal="false">
+        <el-dialog title="新增权限" v-model="showAddPermission" :close-on-click-modal="false" size="tiny">
             <el-form :model="addPermission" ref="addPermission" label-position="top">
                 <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="addPermission.name"></el-input>
@@ -59,7 +59,7 @@
         </el-dialog>
 
         <!--修改界面-->
-        <el-dialog title="修改权限" :visible.sync="showEditPermission" :close-on-click-modal="false">
+        <el-dialog title="修改权限" :visible.sync="showEditPermission" :close-on-click-modal="false" size="tiny">
             <el-form :model="editPermission" ref="editPermission" label-position="top">
                 <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="editPermission.name"></el-input>

@@ -69,7 +69,7 @@
                            @current-change="currentChange" style="float:right;"></el-pagination>
         </el-col>
         <!--新增界面-->
-        <el-dialog title="新增账户" v-model="showAddUser" :close-on-click-modal="false">
+        <el-dialog title="新增账户" v-model="showAddUser" :close-on-click-modal="false" size="tiny">
             <el-form label-position="top" :model="addUser" ref="addUser">
                 <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
                     <el-input v-model="addUser.name"></el-input>
@@ -100,7 +100,7 @@
             </div>
         </el-dialog>
         <!--同步账户角色-->
-        <el-dialog title="同步账户角色" v-model="showAddUserRolesForm" :close-on-click-modal="false">
+        <el-dialog title="同步账户角色" v-model="showAddUserRolesForm" :close-on-click-modal="false" size="tiny">
             <el-form label-position="left" :model="currentSyncUser" ref="currentSyncUser">
                 <el-form-item label="角色组" prop="roles" :rules="[{ type: 'array', required: true, message: '至少选择一个角色'}]">
                     <el-select v-model="currentSyncRoles" multiple placeholder="请选择角色">
