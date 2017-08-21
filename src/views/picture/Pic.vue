@@ -59,9 +59,9 @@
                             </el-col>
                         </el-row>
                     </el-checkbox-group>
-                    <el-pagination class="fenye" layout="total, prev, pager, next"
+                    <el-pagination class="fenye" layout="total, prev, pager, next" @current-change="getAtts"
                                    :total="pagination.total"
-                                   :current-page="pagination.current_page"
+                                   :current-page.sync="pagination.current_page"
                                    :page-size="pagination.per_page"></el-pagination>
                 </div>
             </el-col>

@@ -4,8 +4,7 @@ import store from '@/store'
 import {getToken} from '@/utils/auth'
 
 const service = axios.create({
-    baseURL: process.env.BASE_API,
-    timeout: 5000
+    baseURL: process.env.BASE_API
 })
 
 // 添加请求拦截器
@@ -22,10 +21,6 @@ service.interceptors.response.use(
         return response
     },
     error => {
-        if (error.code === 'ECONNABORTED') {
-            Message.error('浏览器请求超时。')
-        }
-
         if (typeof error.response !== 'undefined') {
             switch (error.response.status) {
                 case 401:
@@ -49,6 +44,9 @@ service.interceptors.response.use(
                     break
                 case 404:
                     Message.error('没有这个请求。')
+                    break
+                case 429:
+                    Message.error('请求过于频换。')
                     break
                 case 500:
                     Message.error('不能访问本次请求。')
