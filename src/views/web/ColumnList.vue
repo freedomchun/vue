@@ -81,7 +81,7 @@
                     <el-select placeholder="请选择" style="width: 100%;" v-model="current.parent_id">
                         <el-option :key="0" label="顶级栏目" :value="0"></el-option>
                         <el-option v-for="item in list" :key="item.id" :label="'----'.repeat(item.level) + item.title"
-                                   :value="item.id"></el-option>
+                                   :value="item.id" :disabled="item.id === current.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="栏目名称" prop="title" :rules="[{ required: true, message: '栏目名不能为空'}]">

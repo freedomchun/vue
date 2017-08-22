@@ -198,7 +198,9 @@
                 })
             },
             deleteDir(data) {
-                this.$confirm('此操作将永久删除该目录下的所有文件, 是否继续?', '提示').then(() => {
+                this.$confirm('此操作将永久删除该目录下的所有文件, 是否继续?', '提示', {
+                    type: 'warning'
+                }).then(() => {
                     this.deleteFolder(data).then(() => {
                         this.$message.success('删除成功!')
                         this.setCurrentDir(null)
