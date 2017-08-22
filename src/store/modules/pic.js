@@ -12,7 +12,7 @@ const pic = {
         },
         props: {
             label: 'title',
-            children: 'all_children',
+            children: 'children',
         },
         loading: {
             dir: false,

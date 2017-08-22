@@ -113,7 +113,7 @@
                 this.$prompt(msg, '新建文件夹', {
                     confirmButtonText: '建立',
                     inputPattern: /.{2,20}/,
-                    inputErrorMessage: '输入3-20个字符。'
+                    inputErrorMessage: '输入2-20个字符。'
                 }).then(({value}) => {
                     this.createFolder({parent_id, title: value})
                 }).catch(() => {
@@ -185,7 +185,7 @@
                 this.$prompt('正在修改文件夹名', {
                     inputValue: data.title,
                     inputPattern: /.{2,20}/,
-                    inputErrorMessage: '输入3-20个字符。'
+                    inputErrorMessage: '输入2-20个字符。'
                 }).then(({value}) => {
                     if (data.title !== value) {
                         let params = Object.assign({}, data, {title: value})
