@@ -112,7 +112,7 @@
         background: #35363a;
     }
 
-    .el-menu {
+    aside .el-menu {
         height: 100%;
         background: #35363a;
     }
@@ -192,17 +192,17 @@
         color: #fff;
     }
 
-    .el-submenu__title {
+    aside .el-submenu__title {
         color: #fff !important;
     }
 
-    .el-menu-item.is-active {
+    aside .el-menu-item.is-active {
         color: #fff;
         background: #242527;
     }
 
-    .el-submenu .el-menu-item:hover,
-    .el-submenu__title:hover {
+    aside .el-submenu .el-menu-item:hover,
+   aside .el-submenu__title:hover {
         background-color: #242527;
         color: #fff;
     }

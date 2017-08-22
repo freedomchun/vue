@@ -9,7 +9,7 @@
 					<el-button type="primary" @click="getPermissions">查询</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click="showAddPermission = true">新建</el-button>
+					<router-link to="/colum/columnListAdd">新建</router-link>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -39,87 +39,18 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<!--新增界面-->
-		<el-dialog title="新建栏目" v-model="showAddPermission" :close-on-click-modal="false" size="tiny">
-			<el-form :model="addPermission" ref="addPermission" label-position="top">
-				<el-form-item label="栏目名称" prop="name" :rules="[{ required: true, message: '名称不能为空'}]">
-					<el-input v-model="addPermission.name" placeholder="请输入栏目名称"></el-input>
-				</el-form-item>
-				<el-form-item label="顶级栏目" prop="topLevel">
-					<el-select v-model="value" placeholder="请选择" style="width: 100%;">
-						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-						</el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="SEO 标题" placeholder="请输入SEO 标题">
-					<el-input v-model="addPermission.seoTitle"></el-input>
-				</el-form-item>
-				<el-form-item label="SEO 关键词">
-					<el-input v-model="addPermission.seoKeyword" placeholder="请输入SEO 关键词"></el-input>
-				</el-form-item>
-				<el-form-item label="SEO 网页描述">
-					<el-input v-model="addPermission.seoDescription" placeholder="请输入SEO 网页描述"></el-input>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="showAddPermission = false">取消</el-button>
-				<el-button type="primary" @click.native.prevent="submitAddPermission" :loading="addLoading">提交</el-button>
-			</div>
-		</el-dialog>
+		<transition name="el-fade-in-linear">
+            <router-view></router-view>
+        </transition>
 	</section>
 </template>
 <script>
 	export default {
 		data() {
-			return {
-				options: [{
-					value: '选项1',
-					label: '关于遇途记'
-				}, {
-					value: '选项2',
-					label: '活动报名'
-				}],
-				value: '',
+			return { 
 				psList: [],
 				keyword: '',
-				showEditPermission: false,
-				showAddPermission: false,
-				addLoading: false,
-				addPermission: {
-					name: '',
-					quantity: '',
-					seoTitle: '',
-					seoKeyword: '',
-					seoDescription: '',
-				},
 			}
-		},
-		mounted() {
-			this.getPermissions();
-		},
-		methods: {
-			getPermissions() {
-				this.loading = true;
-				console.log(this.keyword)
-			},
-			submitAddPermission() {
-				this.$refs.addPermission.validate((valid) => {
-					if(valid) {
-						this.addLoading = true;
-						api.requestCreatePermission(this.addPermission).then(rs => {
-							this.addLoading = false;
-							this.showAddPermission = false;
-							this.psList.push(rs.data);
-						}).catch(err => {
-							this.addLoading = false;
-							utils.fns.err(err);
-						});
-					} else {
-						return false;
-					}
-				});
-			},
-
 		},
 	}
 </script>
