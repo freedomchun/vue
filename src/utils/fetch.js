@@ -36,11 +36,15 @@ service.interceptors.response.use(
                     })
                     break
                 case 422:
-                    let msg = []
-                    for (let v in error.response.data) {
-                        msg.push(error.response.data[v])
+                    if (typeof error.response.data === 'object') {
+                        let msg = []
+                        for (let v in error.response.data) {
+                            msg.push(error.response.data[v])
+                        }
+                        Message.warning(msg.join("\n"))
+                    } else {
+                        Message.warning(error.response.data)
                     }
-                    Message.warning(msg.join("\n"))
                     break
                 case 404:
                     Message.error('没有这个请求。')
