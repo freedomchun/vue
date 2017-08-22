@@ -34,6 +34,7 @@ const category = {
         },
         clear_current(state) {
             state.current = {
+                id: 0,
                 title: null,
                 parent_id: 0,
                 is_show: true,
@@ -67,6 +68,7 @@ const category = {
             })
         },
         editCategory({state}) {
+            console.log(JSON.stringify(state.current))
             return new Promise((resolve, reject) => {
                 state.loading.edit = true
                 updateCategory(state.current).then(rs => {
