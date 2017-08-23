@@ -5,7 +5,7 @@
 				<el-submenu index="1">
 					<template slot="title">公司信息</template>
 					<el-menu-item-group class="artbg">
-						<el-menu-item index="/web/articleEdit">关于遇途记</el-menu-item>
+						<el-menu-item index="/web/article/articleEdit">关于遇途记</el-menu-item>
 						<el-menu-item index="1-2">活动报名</el-menu-item>
 						<el-menu-item index="1-2">预订须知</el-menu-item>
 					</el-menu-item-group>

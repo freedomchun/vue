@@ -10,23 +10,21 @@ import AccountManage from '@/views/setting/AccountManage'
 import Permisson from '@/views/setting/Permisson'
 import MyInfo from '@/views/user/MyInfo'
 import Pic from '@/views/picture/Pic'
-
 import WebInfo from '@/views/web/WebInfo'
 import ColumnList from '@/views/web/ColumnList'
-import ColumnListAdd from '@/views/web/colum/ColumnListAdd'
-
 import ArticleList from '@/views/web/ArticleList'
 import Alist from '@/views/web/Alist'
 import ArticleEdit from '@/views/web/ArticleEdit'
-
-
 import Message from '@/views/web/Message'
 import ActivityManage from '@/views/operation/ActivityManage'
+import ActivityManageAdd from '@/views/operation/ActivityManageAdd'
 import TopicManage from '@/views/operation/TopicManage'
 import DestinationManage from '@/views/operation/DestinationManage'
 import LeaderManage from '@/views/operation/LeaderManage'
 import RaiderManage from '@/views/operation/RaiderManage'
+import RaiderManageAdd from '@/views/operation/RaiderManageAdd'
 import FoodManage from '@/views/operation/FoodManage'
+import FoodManageAdd from '@/views/operation/FoodManageAdd'
 
 Vue.use(Router);
 
@@ -56,13 +54,24 @@ const router = new Router({
 			name: '404',
 			component: NotFind,
 			hidden: true
-		}, {
-			hidden: true,
-			path: 'colum/columnListAdd',
-			name: '新建栏目',
+		},{
+			path: 'activityManageAdd',
+			name: '新增活动',
 			icon: 'iconfont icon-jiaose',
-			component: ColumnListAdd,
-
+			component: ActivityManageAdd,
+			hidden: true,
+		},{
+			path: 'raiderManageAdd',
+			name: '新增活动',
+			icon: 'iconfont icon-jiaose',
+			component: RaiderManageAdd,
+			hidden: true,
+		},{
+			path: 'foodManageAdd',
+			name: '新增美食',
+			icon: 'iconfont icon-jiaose',
+			component: FoodManageAdd,
+			hidden: true,
 		}]
 	}, {
 		path: '/setting',
@@ -115,9 +124,9 @@ const router = new Router({
 			icon: 'iconfont icon-jiaose',
 			component: ColumnList,
 		}, {
-			path: '',
+			path: 'article',
 			name: '文章发布',
-			redirect: 'alist',
+			redirect: '/web/article/alist',
 			icon: 'iconfont icon-jiaose',
 			component: ArticleList,
 			children: [{
@@ -125,13 +134,13 @@ const router = new Router({
 				name: '列表页',
 				icon: 'iconfont icon-jiaose',
 				component: Alist,
-				hidden:true,
-			},{
+				hidden: true,
+			}, {
 				path: 'articleEdit',
 				name: '编辑页',
 				icon: 'iconfont icon-jiaose',
 				component: ArticleEdit,
-				hidden:true,
+				hidden: true,
 			}]
 		}, {
 			path: 'message',
@@ -148,7 +157,8 @@ const router = new Router({
 			path: 'activityManage',
 			name: '活动管理',
 			icon: 'iconfont icon-jiaose',
-			component: ActivityManage
+			component: ActivityManage,
+			
 		}, {
 			path: 'topicManage',
 			icon: 'iconfont icon-jiaose',

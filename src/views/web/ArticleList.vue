@@ -5,7 +5,7 @@
 			<el-row :span="24" :gutter="10">
 				<article-left></article-left>
 				<el-col :span="20">
-					 <router-view></router-view>
+					<router-view></router-view>
 				</el-col>
 			</el-row>
 		</div>
@@ -27,5 +27,4 @@
 		border-radius: .2em;
 		padding: 20px;
 	}
-	
 </style>
