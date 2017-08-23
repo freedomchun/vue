@@ -25,6 +25,9 @@ import RaiderManage from '@/views/operation/RaiderManage'
 import RaiderManageAdd from '@/views/operation/RaiderManageAdd'
 import FoodManage from '@/views/operation/FoodManage'
 import FoodManageAdd from '@/views/operation/FoodManageAdd'
+import MinsuManage from '@/views/operation/MinsuManage'
+import MinsuManageAdd from '@/views/operation/MinsuManageAdd'
+
 
 Vue.use(Router);
 
@@ -62,7 +65,7 @@ const router = new Router({
 			hidden: true,
 		},{
 			path: 'raiderManageAdd',
-			name: '新增活动',
+			name: '新增攻略',
 			icon: 'iconfont icon-jiaose',
 			component: RaiderManageAdd,
 			hidden: true,
@@ -71,6 +74,12 @@ const router = new Router({
 			name: '新增美食',
 			icon: 'iconfont icon-jiaose',
 			component: FoodManageAdd,
+			hidden: true,
+		},{
+			path: 'minsuManageAdd',
+			name: '新增民宿',
+			icon: 'iconfont icon-jiaose',
+			component: MinsuManageAdd,
 			hidden: true,
 		}]
 	}, {
@@ -184,6 +193,11 @@ const router = new Router({
 			icon: 'iconfont icon-jiaose',
 			name: '美食管理',
 			component: FoodManage
+		}, {
+			path: 'minsuManage',
+			icon: 'iconfont icon-jiaose',
+			name: '民宿管理',
+			component: MinsuManage
 		}]
 	}, {
 		path: '/login',

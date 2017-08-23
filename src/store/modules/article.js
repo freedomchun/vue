@@ -10,6 +10,10 @@ const article = {
         },
         op: {
             title: null,
+        },
+        props:{
+        	label: 'title',
+        	children: 'children'
         }
     },
     mutations: {
