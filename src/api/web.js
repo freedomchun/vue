@@ -52,3 +52,13 @@ export function updateCategory(category) {
 export function deleteCategory(id) {
     return fetch.delete(`/category/${id}`)
 }
+
+/**
+ * 获取文章列表
+ * @param params
+ */
+export function getArticles(params = null) {
+    return fetch.get('/article', {
+        params
+    })
+}

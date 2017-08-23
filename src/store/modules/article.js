@@ -1,24 +1,29 @@
-import {getCategorys} from '@/api/web'
+import {getCategorys, getArticles} from '@/api/web'
 
 const article = {
     state: {
         categorys: [],
+        articles: [],
         loading: {
             category: false,
-            add: false,
-            edit: false,
+            article: false,
         },
         op: {
             title: null,
+            multipleSelection: [],
         },
-        props:{
-        	label: 'title',
-        	children: 'children'
-        }
+        props: {
+            label: 'title',
+            children: 'children'
+        },
+        currentCategory: null,
     },
     mutations: {
         save_categorys(state, categorys) {
             state.categorys = categorys
+        },
+        save_articles(state, articles) {
+            state.articles = articles
         }
     },
     actions: {
@@ -30,7 +35,16 @@ const article = {
             }).catch(err => {
                 state.loading.category = false
             })
-        }
+        },
+        get_articles({state, commit}) {
+            state.loading.article = true
+            getArticles().then(rs => {
+                commit('save_articles', rs.data.data)
+                state.loading.article = false
+            }).catch(err => {
+                state.loading.article = false
+            })
+        },
     }
 }
 
