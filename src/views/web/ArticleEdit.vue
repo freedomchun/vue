@@ -1,12 +1,6 @@
 <template>
 	<div class="cont">
 		<el-form :model="addPermission" ref="addPermission" label-position="top">
-			<el-form-item label="所属栏目" prop="topLevel">
-				<el-select v-model="value" placeholder="请选择" style="width: 100%;">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
-			</el-form-item>
 			<el-form-item label="文章标题" prop="title">
 				<el-input v-model="addPermission.name" placeholder="请输入文章名称"></el-input>
 			</el-form-item>
@@ -37,14 +31,6 @@
 		},
 		data() {
 			return {
-				options: [{
-					value: '选项1',
-					label: '关于遇途记'
-				}, {
-					value: '选项2',
-					label: '活动报名'
-				}],
-				value: '',
 				makd: '',
 				addPermission: {
 					title: '',
