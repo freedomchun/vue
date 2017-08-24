@@ -152,7 +152,7 @@
                         style: 'white-space: normal'
                     }
                 }, [
-                    h('span', node.label),
+                    h('span', node.label + ` (${data.attachments_count})`),
                     h('span', {
                         attrs: {
                             style: 'float: right; margin-right: 10px;'
