@@ -30,8 +30,7 @@
                     <h3 class="pic_h3">图片目录</h3>
                 </div>
                 <el-tree :data="dirs" :props="props" ref="tree" highlight-current v-loading="loading.dir"
-                         @node-click="dirClick" :filter-node-method="searchDir" :expand-on-click-node="false"
-                         node-key="id"
+                         @node-click="dirClick" :filter-node-method="searchDir" node-key="id"
                          :render-content="renderContent"></el-tree>
             </el-col>
             <el-col :lg="20" :md="16">
@@ -152,7 +151,7 @@
                         style: 'white-space: normal'
                     }
                 }, [
-                    h('span', node.label + ` (${data.attachments_count})`),
+                    h('span', node.label + `(${data.attachments_count})`),
                     h('span', {
                         attrs: {
                             style: 'float: right; margin-right: 10px;'
@@ -165,7 +164,10 @@
                                 plain: true,
                                 type: 'success'
                             }, on: {
-                                click: () => this.editDir(data)
+                                click: (e) => {
+                                    e.stopPropagation()
+                                    this.editDir(data)
+                                }
                             }
                         }),
                         h('el-button', {
@@ -175,11 +177,14 @@
                                 plain: true,
                                 type: 'danger'
                             }, on: {
-                                click: () => this.deleteDir(data)
+                                click: (e) => {
+                                    e.stopPropagation()
+                                    this.deleteDir(data)
+                                }
                             }
                         }),
                     ]),
-                ]);
+                ])
             },
             editDir(data) {
                 this.$prompt('正在修改文件夹名', {

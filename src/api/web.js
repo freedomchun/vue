@@ -62,3 +62,15 @@ export function getArticles(params = null) {
         params
     })
 }
+
+/**
+ * 删除文章
+ * @param ids
+ */
+export function deleteArticles(ids = []) {
+    return fetch.delete('/article', {
+        params: {
+            ids
+        }
+    })
+}
