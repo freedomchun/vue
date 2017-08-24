@@ -15,9 +15,8 @@
 </template>
 
 <script>
-    import {requestSysInfo} from '@/api/api'
+    import {requestSysInfo} from '@/api/api';
     import fuwu from '@/assets/fuwu.jpg'
-
     export default {
         data() {
             return {

@@ -30,197 +30,297 @@ import MinsuManageAdd from '@/views/operation/MinsuManageAdd'
 import ScenicManage from '@/views/operation/ScenicManage'
 import ScenicManageAdd from '@/views/operation/ScenicManageAdd'
 
-
-Vue.use(Router);
+Vue.use(Router)
 
 const router = new Router({
 	routes: [{
 		path: '/',
-		redirect: 'sysinfo',
-		name: '首页',
+		redirect: {
+			name: 'sysinfo'
+		},
+		name: 'home',
 		component: Admin,
-		hidden: true,
+		meta: {
+			title: '首页',
+			hidden: true,
+		},
 		children: [{
 			path: 'sysinfo',
-			name: '系统概况',
-			icon: 'el-icon-setting',
-			component: Sysinfo
+			name: 'sysinfo',
+			component: Sysinfo,
+			meta: {
+				title: '系统概况',
+				icon: 'el-icon-setting',
+			}
 		}, {
 			path: 'myInfo',
-			name: '个人中心',
-			component: MyInfo
+			name: 'myInfo',
+			component: MyInfo,
+			meta: {
+				title: '个人中心',
+				icon: 'el-icon-setting',
+			}
 		}, {
 			path: 'noPermissions',
-			name: '无权限',
+			name: 'noPermissions',
 			component: NoPermissions,
-			hidden: true
+			meta: {
+				title: '无权限',
+				icon: 'el-icon-setting',
+			}
+		}, {
+			path: 'activityManageAdd',
+			name: 'activityManageAdd',
+			component: ActivityManageAdd,
+			meta: {
+				title: '新增活动',
+				icon: 'el-icon-setting',
+			}
+		}, {
+			path: 'raiderManageAdd',
+			name: 'raiderManageAdd',
+			component: RaiderManageAdd,
+			meta: {
+				title: '新增攻略',
+				icon: 'el-icon-setting',
+			}
+		}, {
+			path: 'foodManageAdd',
+			name: 'foodManageAdd',
+			component: FoodManageAdd,
+			meta: {
+				title: '新增美食',
+				icon: 'el-icon-setting',
+			}
+		}, {
+			path: 'minsuManageAdd',
+			name: 'minsuManageAdd',
+			component: MinsuManageAdd,
+			meta: {
+				title: '新增民宿',
+				icon: 'el-icon-setting',
+			}
+		}, {
+			path: 'scenicManageAdd',
+			name: 'scenicManageAdd',
+			component: ScenicManageAdd,
+			meta: {
+				title: '新增景点',
+				icon: 'el-icon-setting',
+			}
 		}, {
 			path: '404',
 			name: '404',
 			component: NotFind,
-			hidden: true
-		},{
-			path: 'activityManageAdd',
-			name: '新增活动',
-			icon: 'iconfont icon-jiaose',
-			component: ActivityManageAdd,
-			hidden: true,
-		},{
-			path: 'raiderManageAdd',
-			name: '新增攻略',
-			icon: 'iconfont icon-jiaose',
-			component: RaiderManageAdd,
-			hidden: true,
-		},{
-			path: 'foodManageAdd',
-			name: '新增美食',
-			icon: 'iconfont icon-jiaose',
-			component: FoodManageAdd,
-			hidden: true,
-		},{
-			path: 'minsuManageAdd',
-			name: '新增民宿',
-			icon: 'iconfont icon-jiaose',
-			component: MinsuManageAdd,
-			hidden: true,
-		},{
-			path: 'ScenicManageAdd',
-			name: '新增景点',
-			icon: 'iconfont icon-jiaose',
-			component: ScenicManageAdd,
-			hidden: true,
+			meta: {
+				title: '未找到页面',
+			}
 		}]
 	}, {
 		path: '/setting',
-		name: '全局配置',
-		icon: 'iconfont icon-shezhi',
+		name: 'setting',
 		component: Admin,
+		meta: {
+			title: '全局配置',
+			icon: 'iconfont icon-shezhi',
+		},
 		children: [{
 			path: 'role',
-			name: '角色组',
-			slug: 'all.role',
-			icon: 'iconfont icon-jiaose',
-			component: Role
+			name: 'role',
+			component: Role,
+			meta: {
+				slug: 'all.role',
+				title: '角色管理',
+				icon: 'iconfont icon-jiaose',
+			}
 		}, {
 			path: 'permission',
-			name: '权限管理',
-			slug: 'all.permission',
-			icon: 'iconfont icon-quanxianmiyao',
-			component: Permisson
+			name: 'permission',
+			component: Permisson,
+			meta: {
+				slug: 'all.permission',
+				title: '权限管理',
+				icon: 'iconfont icon-quanxianmiyao',
+			}
 		}, {
 			path: 'accountManage',
-			name: '账户管理',
-			slug: 'all.user',
-			icon: 'iconfont icon-zhanghu',
-			component: AccountManage
+			name: 'accountManage',
+			component: AccountManage,
+			meta: {
+				slug: 'all.user',
+				title: '账户管理',
+				icon: 'iconfont icon-zhanghu',
+			}
 		}]
 	}, {
 		path: '/picture',
-		name: '附件管理',
-		icon: 'iconfont icon-shezhi',
+		name: 'picture',
 		component: Admin,
+		meta: {
+			title: '附件管理',
+			icon: 'iconfont icon-zhanghu',
+		},
 		children: [{
 			path: 'pic',
-			name: '图片管理',
-			icon: 'iconfont icon-jiaose',
-			component: Pic
+			name: 'pic',
+			component: Pic,
+			meta: {
+				title: '图片管理',
+				icon: 'iconfont icon-zhanghu',
+			}
 		}]
 	}, {
 		path: '/web',
-		name: '网站内容',
-		icon: 'iconfont icon-shezhi',
+		name: 'web',
 		component: Admin,
+		meta: {
+			title: '网站内容',
+			icon: 'iconfont icon-shezhi',
+		},
 		children: [{
 			path: 'webInfo',
-			name: '网站信息',
-			icon: 'iconfont icon-jiaose',
-			component: WebInfo
+			name: 'webInfo',
+			component: WebInfo,
+			meta: {
+				title: '网站信息',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'columnList',
-			name: '栏目设置',
-			icon: 'iconfont icon-jiaose',
+			name: 'columnList',
 			component: ColumnList,
+			meta: {
+				title: '栏目设置',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'article',
-			name: '文章发布',
-			redirect: '/web/article/alist',
-			icon: 'iconfont icon-jiaose',
+			name: 'article',
+			redirect: {
+				name: 'alist'
+			},
 			component: ArticleList,
+			meta: {
+				title: '文章发布',
+				icon: 'iconfont icon-shezhi',
+			},
 			children: [{
 				path: 'alist',
-				name: '列表页',
-				icon: 'iconfont icon-jiaose',
+				name: 'alist',
 				component: Alist,
-				hidden: true,
+				meta: {
+					title: '列表页',
+					icon: 'iconfont icon-shezhi',
+				}
 			}, {
 				path: 'articleEdit',
-				name: '编辑页',
-				icon: 'iconfont icon-jiaose',
+				name: 'articleEdit',
 				component: ArticleEdit,
-				hidden: true,
+				meta: {
+					title: '编辑页',
+					icon: 'iconfont icon-shezhi',
+				}
 			}]
 		}, {
 			path: 'message',
-			name: '短信管理',
-			icon: 'iconfont icon-jiaose',
-			component: Message
+			name: 'message',
+			component: Message,
+			meta: {
+				title: '短信管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}]
 	}, {
 		path: '/operation',
-		name: '运营管理',
-		icon: 'iconfont icon-shezhi',
+		name: 'operation',
 		component: Admin,
+		meta: {
+			title: '运营管理',
+			icon: 'iconfont icon-shezhi',
+		},
 		children: [{
+			path: 'destinationManage',
+			name: 'destinationManage',
+			component: DestinationManage,
+			meta: {
+				title: '目的地管理',
+				icon: 'iconfont icon-shezhi',
+			}
+		}, {
 			path: 'activityManage',
-			name: '活动管理',
-			icon: 'iconfont icon-jiaose',
+			name: 'activityManage',
 			component: ActivityManage,
-			
+			meta: {
+				title: '活动管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'topicManage',
-			icon: 'iconfont icon-jiaose',
-			name: '主题管理',
-			component: TopicManage
-		}, {
-			path: 'destinationManage',
-			icon: 'iconfont icon-jiaose',
-			name: '目的地管理',
-			component: DestinationManage
+			name: 'topicManage',
+			component: TopicManage,
+			meta: {
+				title: '主题管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'leaderManage',
-			icon: 'iconfont icon-jiaose',
-			name: '领队管理',
-			component: LeaderManage
+			name: 'leaderManage',
+			component: LeaderManage,
+			meta: {
+				title: '领队管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'raiderManage',
-			icon: 'iconfont icon-jiaose',
-			name: '攻略管理',
-			component: RaiderManage
+			name: 'raiderManage',
+			component: RaiderManage,
+			meta: {
+				title: '攻略管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'foodManage',
-			icon: 'iconfont icon-jiaose',
-			name: '美食管理',
-			component: FoodManage
+			name: 'foodManage',
+			component: FoodManage,
+			meta: {
+				title: '美食管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
 			path: 'minsuManage',
-			icon: 'iconfont icon-jiaose',
-			name: '民宿管理',
-			component: MinsuManage
+			name: 'minsuManage',
+			component: MinsuManage,
+			meta: {
+				title: '民宿管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}, {
-			path: 'scenicManageManage',
-			icon: 'iconfont icon-jiaose',
-			name: '景点管理',
-			component: ScenicManage
+			path: 'scenicManage',
+			name: 'scenicManage',
+			component: ScenicManage,
+			meta: {
+				title: '景点管理',
+				icon: 'iconfont icon-shezhi',
+			}
 		}]
 	}, {
 		path: '/login',
 		component: Login,
-		hidden: true
+		meta: {
+			title: '登录',
+			hidden: true,
+		}
 	}, {
 		path: '*',
-		redirect: '/404',
-		hidden: true
-	}]
-});
+		redirect: {
+			name: '404'
+		},
+		meta: {
+			title: '404',
+			hidden: true,
 
-export default router;
+		}
+	}]
+})
+
+export default router

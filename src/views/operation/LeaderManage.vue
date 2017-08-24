@@ -3,10 +3,10 @@
 		<div class="grid-content bg-g">
 			<el-form inline style="padding-top: 20px; padding-left: 20px;">
 				<el-form-item>
-					<el-input v-model="keyword" placeholder="请输入关键词"></el-input>
+					<el-input placeholder="请输入关键词"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click="getPermissions">查询</el-button>
+					<el-button type="primary">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="addUserForm">新建</el-button>
@@ -16,7 +16,10 @@
 		<div>
 			<el-form inline style="padding-top: 20px; padding-left: 20px;" label-position="top">
 				<el-form-item label="选择目的地">
-					<el-cascader :options="options" v-model="selectedOptions"></el-cascader>
+					<el-select placeholder="请选择" v-model="value">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item style=" vertical-align: bottom">
 					<el-button type="primary">确定</el-button>
@@ -42,7 +45,7 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-pagination class="fenye" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
+		<el-pagination class="fenye" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
 		</el-pagination>
 		<!--新增界面-->
 		<el-dialog title="新增领队" v-model="showAddUser" :close-on-click-modal="false" size="tiny">
@@ -67,7 +70,10 @@
 					<el-input type="textarea" placeholder="请输入内容"></el-input>
 				</el-form-item>
 				<el-form-item label="选择关联目的地">
-					<el-cascader :options="options11" v-model="selectedOptions11"></el-cascader>
+					<el-select placeholder="请选择" v-model="value">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 					<div class="mudi">
 						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
 						<div style="margin: 15px 0;"></div>
@@ -90,83 +96,21 @@
 
 		data() {
 			return {
+				options: [{
+					value: '选项1',
+					label: '黄金糕'
+				}],
+				value: '',
 				currentPage1: 5,
 				checkAll: true,
 				checkedCities: ['上海', '北京'],
 				cities: cityOptions,
 				isIndeterminate: true,
-				options11: [{
-					value: 'zhinan',
-					label: '国内',
-					children: [{
-						value: 'shejiyuanze',
-						label: '四川',
-						children: [{
-							value: 'yizhi',
-							label: '成都'
-						}, {
-							value: 'fankui',
-							label: '绵阳'
-						}, {
-							value: 'xiaolv',
-							label: '资阳'
-						}, {
-							value: 'kekong',
-							label: '广元'
-						}]
-					}, {
-						value: 'daohang',
-						label: '西藏',
-						children: [{
-							value: 'cexiangdaohang',
-							label: '拉萨'
-						}, {
-							value: 'dingbudaohang',
-							label: '林芝'
-						}]
-					}]
-				}],
-				selectedOptions11: [],
 				psList: [],
-				keyword: '',
 				showAddUser: false,
 				addUser: {},
-				options: [{
-					value: 'zhinan',
-					label: '指南',
-					children: [{
-						value: 'shejiyuanze',
-						label: '设计原则',
-						children: [{
-							value: 'yizhi',
-							label: '一致'
-						}, {
-							value: 'fankui',
-							label: '反馈'
-						}, {
-							value: 'xiaolv',
-							label: '效率'
-						}, {
-							value: 'kekong',
-							label: '可控'
-						}]
-					}, {
-						value: 'daohang',
-						label: '导航',
-						children: [{
-							value: 'cexiangdaohang',
-							label: '侧向导航'
-						}, {
-							value: 'dingbudaohang',
-							label: '顶部导航'
-						}]
-					}]
-				}],
-				selectedOptions: [],
+
 			}
-		},
-		mounted() {
-			this.getPermissions();
 		},
 		methods: {
 			handleCheckAllChange(event) {
@@ -181,16 +125,7 @@
 			addUserForm() {
 				this.showAddUser = true;
 			},
-			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
-			},
-			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
-			},
-			getPermissions() {
-				this.loading = true;
-				console.log(this.keyword)
-			},
+
 		},
 	}
 </script>

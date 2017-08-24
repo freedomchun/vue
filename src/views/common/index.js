@@ -1,4 +1,4 @@
-export {default as HeadTop} from './Header'
+export {default as HeadTop} from './Header';
 
 export {default as NavLeft} from './NavLeft'
 

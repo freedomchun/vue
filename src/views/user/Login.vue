@@ -32,33 +32,33 @@
             }
         },
         mounted() {
-            let info = JSON.parse(localStorage.getItem('userInputInfo'));
+            let info = JSON.parse(localStorage.getItem('userInputInfo'))
             if (info !== null && info.remember) {
-                this.loginForm.email = info.email;
-                this.loginForm.password = info.password;
-                this.loginForm.remember = info.remember;
+                this.loginForm.email = info.email
+                this.loginForm.password = info.password
+                this.loginForm.remember = info.remember
             }
         },
         methods: {
             submitForm() {
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        this.loading = true;
+                        this.loading = true
                         this.$store.dispatch('login', this.loginForm).then(rs => {
-                            this.saveUserInputInfo();
-                            this.loading = false;
-                            this.$message.success(`${rs.data.userInfo.name}，欢迎回来！`);
-                            this.$router.push('/');
+                            this.saveUserInputInfo()
+                            this.loading = false
+                            this.$message.success(`${rs.data.userInfo.name}，欢迎回来！`)
+                            this.$router.push('/')
                         }).catch(() => {
-                            this.loading = false;
+                            this.loading = false
                         })
                     } else {
-                        return false;
+                        return false
                     }
-                });
+                })
             },
             saveUserInputInfo() {
-                localStorage.setItem('userInputInfo', JSON.stringify(this.loginForm));
+                localStorage.setItem('userInputInfo', JSON.stringify(this.loginForm))
             }
         }
     }

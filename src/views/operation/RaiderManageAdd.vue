@@ -14,7 +14,10 @@
 			</div>
 			<div class="bg-g">
 				<el-form-item label="选择关联目的地">
-					<el-cascader :options="options" v-model="selectedOptions"></el-cascader>
+					<el-select placeholder="请选择" v-model="value">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 					<div class="mudi">
 						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
 						<div style="margin: 15px 0;"></div>
@@ -122,6 +125,11 @@
 	export default {
 		data() {
 			return {
+				options: [{
+					value: '选项1',
+					label: '黄金糕'
+				}],
+				value: '',
 				activeName: 'first',
 				dialogImageUrl: '',
 				dialogVisible: false,
@@ -132,45 +140,12 @@
 				},
 				value1: '',
 				value3: true,
-
 				inputVisible: false,
 				inputValue: '',
 				checkAll: true,
 				checkedCities: ['上海', '北京'],
 				cities: cityOptions,
 				isIndeterminate: true,
-				options: [{
-					value: 'zhinan',
-					label: '国内',
-					children: [{
-						value: 'shejiyuanze',
-						label: '四川',
-						children: [{
-							value: 'yizhi',
-							label: '成都'
-						}, {
-							value: 'fankui',
-							label: '绵阳'
-						}, {
-							value: 'xiaolv',
-							label: '资阳'
-						}, {
-							value: 'kekong',
-							label: '广元'
-						}]
-					}, {
-						value: 'daohang',
-						label: '西藏',
-						children: [{
-							value: 'cexiangdaohang',
-							label: '拉萨'
-						}, {
-							value: 'dingbudaohang',
-							label: '林芝'
-						}]
-					}]
-				}],
-				selectedOptions: [],
 				activityform: {
 					name: '',
 					word: '',
@@ -255,6 +230,7 @@
 		border-bottom: 1px solid #ccc;
 		padding: 20px 20px 30px 20px;
 	}
+	
 	.addmain {
 		background: #4db3ff;
 		color: white;
