@@ -29,6 +29,11 @@ import MinsuManage from '@/views/operation/MinsuManage'
 import MinsuManageAdd from '@/views/operation/MinsuManageAdd'
 import ScenicManage from '@/views/operation/ScenicManage'
 import ScenicManageAdd from '@/views/operation/ScenicManageAdd'
+import OrderManage from '@/views/order/OrderManage'
+import ActivityOrder from '@/views/order/ActivityOrder'
+import OrderDetail from '@/views/order/OrderDetail'
+import DinzhiManage from '@/views/order/DinzhiManage'
+import DinzhiDetail from '@/views/order/DinzhiDetail'
 
 Vue.use(Router)
 
@@ -303,6 +308,55 @@ const router = new Router({
 				icon: 'iconfont icon-shezhi',
 			}
 		}]
+	},{
+		path: '/order',
+		name: 'order',
+		component: Admin,
+		meta: {
+			title: '订单中心',
+			icon: 'iconfont icon-zhanghu',
+		},
+		children: [{
+			path: 'orderManage',
+			name: 'orderManage',
+			component: OrderManage,
+			meta: {
+				title: '订单管理',
+				icon: 'iconfont icon-zhanghu',
+			}
+		},{
+			path: 'activityOrder',
+			name: 'activityOrder',
+			component: ActivityOrder,
+			meta: {
+				title: '活动订单',
+				icon: 'iconfont icon-zhanghu',
+			}
+		},{
+			path: 'orderDetail',
+			name: 'orderDetail',
+			component: OrderDetail,
+			meta: {
+				title: '订单详情',
+				icon: 'iconfont icon-zhanghu',
+			}
+		},{
+			path: 'dinzhiManage',
+			name: 'dinzhiManage',
+			component: DinzhiManage,
+			meta: {
+				title: '定制管理',
+				icon: 'iconfont icon-zhanghu',
+			}
+		},{
+			path: 'dinzhiDetail',
+			name: 'dinzhiDetail',
+			component: DinzhiDetail,
+			meta: {
+				title: '定制详情',
+				icon: 'iconfont icon-zhanghu',
+			}
+		},]
 	}, {
 		path: '/login',
 		component: Login,
