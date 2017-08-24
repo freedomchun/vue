@@ -27,6 +27,8 @@ import FoodManage from '@/views/operation/FoodManage'
 import FoodManageAdd from '@/views/operation/FoodManageAdd'
 import MinsuManage from '@/views/operation/MinsuManage'
 import MinsuManageAdd from '@/views/operation/MinsuManageAdd'
+import ScenicManage from '@/views/operation/ScenicManage'
+import ScenicManageAdd from '@/views/operation/ScenicManageAdd'
 
 
 Vue.use(Router);
@@ -80,6 +82,12 @@ const router = new Router({
 			name: '新增民宿',
 			icon: 'iconfont icon-jiaose',
 			component: MinsuManageAdd,
+			hidden: true,
+		},{
+			path: 'ScenicManageAdd',
+			name: '新增景点',
+			icon: 'iconfont icon-jiaose',
+			component: ScenicManageAdd,
 			hidden: true,
 		}]
 	}, {
@@ -198,6 +206,11 @@ const router = new Router({
 			icon: 'iconfont icon-jiaose',
 			name: '民宿管理',
 			component: MinsuManage
+		}, {
+			path: 'scenicManageManage',
+			icon: 'iconfont icon-jiaose',
+			name: '景点管理',
+			component: ScenicManage
 		}]
 	}, {
 		path: '/login',

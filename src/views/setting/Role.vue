@@ -15,11 +15,11 @@
         </div>
 
         <el-table :data="roles" border v-loading="loading" style="width: 100%; margin-top: 20px;">
-            <el-table-column prop="name" label="名称" width="200"></el-table-column>
-            <el-table-column prop="slug" label="检测词" width="150"></el-table-column>
-            <el-table-column prop="level" label="层级" width="100"></el-table-column>
-            <el-table-column prop="description" label="摘要"></el-table-column>
-            <el-table-column prop="created_at" label="创建日期" width="200"></el-table-column>
+            <el-table-column prop="name" label="名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="slug" label="检测词" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="level" label="层级" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="description" label="摘要" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="created_at" label="创建日期" show-overflow-tooltip></el-table-column>
             <el-table-column fixed="right" label="操作" width="170">
                 <template scope="scope">
                     <el-button-group>
