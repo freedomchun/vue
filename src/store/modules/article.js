@@ -23,6 +23,11 @@ const article = {
             per_page: 16,
             total: 0,
         },
+        addArticle: {
+            title: '',
+            description: '',
+            content: '# h1 #',
+        },
     },
     mutations: {
         setPagination(state, pagination) {

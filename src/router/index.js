@@ -205,7 +205,7 @@ const router = new Router({
                     icon: 'iconfont icon-shezhi',
                 }
             }, {
-                path: 'articleEdit',
+                path: 'articleEdit/:id',
                 name: 'articleEdit',
                 component: ArticleEdit,
                 meta: {
