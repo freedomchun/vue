@@ -3,7 +3,7 @@
  * @returns token
  */
 export function getToken() {
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem('token')
 }
 
 /**
@@ -26,7 +26,7 @@ export function removeToken() {
  * @returns token
  */
 export function getLoginUser() {
-    return JSON.parse(sessionStorage.getItem('loginUser'));
+    return JSON.parse(sessionStorage.getItem('loginUser'))
 }
 
 /**
@@ -64,8 +64,8 @@ export function removeUserPermissions() {
  * @returns permissions
  */
 export function getUserPermissions() {
-    let ps = sessionStorage.getItem('permissions');
-    return ps === null ? [] : JSON.parse(ps);
+    let ps = sessionStorage.getItem('permissions')
+    return ps === null ? [] : JSON.parse(ps)
 }
 
 /**
@@ -74,8 +74,8 @@ export function getUserPermissions() {
  * @returns userRoutes
  */
 export function setLoginUserRouter(allRoutes) {
-    let permissions = getUserPermissions();
-    return childrenRouter(allRoutes, permissions);
+    let permissions = getUserPermissions()
+    return childrenRouter(allRoutes, permissions)
 }
 
 /**
@@ -86,16 +86,16 @@ export function setLoginUserRouter(allRoutes) {
  */
 function childrenRouter(routes, permissions) {
     routes.forEach((route, index) => {
-        if (typeof route.slug !== 'undefined') {
-            if (!permissions.map(item => item.slug).includes(route.slug)) {
-                routes.splice(index, 1);
+        if (typeof route.meta !== 'undefined' && typeof route.meta.slug !== 'undefined') {
+            if (!permissions.map(item => item.slug).includes(route.meta.slug)) {
+                routes.splice(index, 1)
             }
         }
         if (typeof route.children !== 'undefined') {
-            routes[index].children = childrenRouter(route.children, permissions);
+            routes[index].children = childrenRouter(route.children, permissions)
         }
     })
-    return routes;
+    return routes
 }
 
 /**
@@ -106,16 +106,16 @@ function childrenRouter(routes, permissions) {
  * @returns {boolean}
  */
 export function hasUserPermissions(name, is_force = true) {
-    let ps = sessionStorage.getItem('permissions');
+    let ps = sessionStorage.getItem('permissions')
     if (ps === null) {
-        return false;
+        return false
     }
-    let data = JSON.parse(ps).map(item => item.slug);
+    let data = JSON.parse(ps).map(item => item.slug)
     
     if (typeof name === 'string') {
-        return data.includes(name);
+        return data.includes(name)
     } else if (name instanceof Array) {
-        return is_force === true ? name.every(item => data.includes(item)) : name.some(item => data.includes(item));
+        return is_force === true ? name.every(item => data.includes(item)) : name.some(item => data.includes(item))
     }
-    return false;
+    return false
 }

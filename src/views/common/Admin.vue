@@ -17,8 +17,8 @@
     </div>
 </template>
 <script>
-    import {HeadTop, NavLeft, BreadCrumb} from '@/views/common';
-
+    import {HeadTop, NavLeft, BreadCrumb} from '@/views/common'
+    
     export default {
         components: {
             HeadTop,

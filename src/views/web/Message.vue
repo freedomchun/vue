@@ -4,13 +4,7 @@
 		<el-button type="primary">访问</el-button>
 	</div>
 </template>
-<script>
-	export default {
-		data() {
-			return {};
-		}
-	}
-</script>
+
 <style scoped>
 	.bg-g {
 		background: #eeeeee;

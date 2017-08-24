@@ -3,10 +3,10 @@
 		<div class="grid-content bg-g">
 			<el-form inline style="padding-top: 20px; padding-left: 20px;">
 				<el-form-item>
-					<el-input v-model="keyword" placeholder="请输入关键词"></el-input>
+					<el-input placeholder="请输入关键词"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click="getPermissions">查询</el-button>
+					<el-button type="primary">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="addUserForm">新建</el-button>
@@ -33,7 +33,7 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-pagination class="fenye" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
+		<el-pagination class="fenye" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
 		</el-pagination>
 		<!--新增界面-->
 		<el-dialog title="新增主题" v-model="showAddUser" :close-on-click-modal="false" size="tiny">
@@ -61,30 +61,15 @@
 			return {
 				currentPage1: 5,
 				psList: [],
-				keyword: '',
 				showAddUser: false,
 				addUser: {
 					name: '',
 				},
 			}
 		},
-		mounted() {
-			this.getPermissions();
-		},
 		methods: {
 			addUserForm() {
 				this.showAddUser = true;
-			},
-			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
-			},
-			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
-			},
-
-			getPermissions() {
-				this.loading = true;
-				console.log(this.keyword)
 			},
 		},
 	}

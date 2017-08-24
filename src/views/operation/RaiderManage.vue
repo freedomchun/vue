@@ -3,20 +3,23 @@
 		<div class="grid-content bg-g">
 			<el-form inline style="padding-top: 20px; padding-left: 20px;">
 				<el-form-item>
-					<el-input v-model="keyword" placeholder="请输入关键词"></el-input>
+					<el-input placeholder="请输入关键词"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary">查询</el-button>
 				</el-form-item>
 				<el-form-item>
-					<router-link to="/raiderManageAdd" class="addmain">新建攻略</router-link>
+					<router-link :to="{name:'raiderManageAdd'}" class="addmain">新建攻略</router-link>
 				</el-form-item>
 			</el-form>
 		</div>
 		<div>
 			<el-form inline style="padding-top: 20px; padding-left: 20px;" label-position="top">
 				<el-form-item label="选择目的地">
-					<el-cascader :options="options" v-model="selectedOptions"></el-cascader>
+					<el-select placeholder="请选择" v-model="value">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item label="选择活动发布时间范围">
 					<el-date-picker v-model="value3" type="datetimerange" placeholder="选择时间范围">
@@ -46,7 +49,7 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-pagination class="fenye" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
+		<el-pagination class="fenye" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
 		</el-pagination>
 	</section>
 </template>
@@ -54,46 +57,18 @@
 	export default {
 		data() {
 			return {
+				options: [{
+					value: '选项1',
+					label: '黄金糕'
+				}],
+				value: '',
 				currentPage1: 5,
 				value3: [new Date(2017, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
 				psList: [],
-				keyword: '',
-				options: [{
-					value: 'zhinan',
-					label: '国内',
-					children: [{
-						value: 'shejiyuanze',
-						label: '西藏',
-						children: [{
-							value: 'yizhi',
-							label: '珠穆拉玛峰'
-						}, {
-							value: 'fankui',
-							label: '拉萨'
-						}]
-					}, {
-						value: 'daohang',
-						label: '四川',
-						children: [{
-							value: 'cexiangdaohang',
-							label: '成都'
-						}, {
-							value: 'dingbudaohang',
-							label: '广元'
-						}]
-					}]
-				}],
-				selectedOptions: [],
+
 			}
 		},
-		methods: {
-			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
-			},
-			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
-			},
-		},
+		methods: {},
 	}
 </script>
 <style scoped>
