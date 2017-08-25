@@ -14,7 +14,7 @@
             <el-table-column fixed="right" label="操作" width="130">
                 <template scope="scope">
                     <el-button-group>
-                        <el-button type="primary" size="small">
+                        <el-button type="primary" size="small" @click="edit(scope.row)">
                             修改
                         </el-button>
                         <el-button type="danger" size="small" @click="deleteRow(scope.row)">
@@ -25,8 +25,7 @@
             </el-table-column>
         </el-table>
         <div style="margin-top: 20px; float: left;">
-            <el-button>排序</el-button>
-            <el-button type="danger" @click="deleteMultiple">删除</el-button>
+            <el-button type="danger" icon="delete" @click="deleteMultiple" :loading="loading.del">删除</el-button>
         </div>
         <el-pagination class="fenye" :current-page.sync="pagination.current_page" :page-size="pagination.per_page"
                        :total="pagination.total" @current-change="get_articles"
@@ -77,8 +76,11 @@
                     }).catch(() => {
                     })
                 }
+            },
+            edit(row) {
+                this.$router.push({name: 'articleEdit', params: {id: row.id}})
             }
-        },
+        }
     }
 </script>
 <style>
