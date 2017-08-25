@@ -20,7 +20,7 @@
                     {{ '----'.repeat(scope.row.level) + scope.row.title }}
                 </template>
             </el-table-column>
-            <el-table-column prop="article_count" label="文章数量" width="200" sortable></el-table-column>
+            <el-table-column prop="articles_count" label="文章数量" width="200" sortable></el-table-column>
             <el-table-column prop="created_at" label="创建日期" width="200" sortable></el-table-column>
             <el-table-column prop="is_show" label="状态" width="100">
                 <template scope="scope">
