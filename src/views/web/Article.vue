@@ -1,6 +1,11 @@
 <template>
     <div class="cont">
-        <el-form :model="currentArticle" ref="currentArticle" label-position="top">
+        <el-form :model="currentArticle" ref="article" label-position="top">
+            <el-form-item label="所属栏目" prop="category_id" :rules="[{required: true, message: '请选择所属栏目'}]">
+                <el-select v-model="currentArticle.category_id" placeholder="请选择所属栏目">
+                    <el-option v-for="item in categorys_level" :key="item.id" :label="'----'.repeat(item.level) + item.title" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="文章标题" prop="title" :rules="[{required: true, message: '请输入文章标题', trigger: 'blur'}]">
                 <el-input v-model="currentArticle.title" placeholder="请输入文章名称"></el-input>
             </el-form-item>
@@ -33,15 +38,29 @@
             currentArticle: state => state.article.currentArticle,
             loading: state => state.article.loading,
             img_files: state => state.article.img_files,
+            categorys_level: state => state.article.categorys_level,
         }),
         methods: {
-            ...mapActions(['get_article', 'submit_article', 'upload_images']),
+            ...mapActions(['get_article', 'updateArticle', 'createArticle', 'upload_images', 'get_categorys_level']),
             submit() {
-                if (this.currentArticle.article_data.content.length === 0) {
-                    return this.$message('请输入文章内容!')
-                }
-                this.submit_article().then(rs => {
-                    this.$message.success('操作成功!')
+                this.$refs.article.validate((valid) => {
+                    if (valid) {
+                        this.currentArticle.id ? this.update() : this.add()
+                    } else {
+                        return false
+                    }
+                })
+            },
+            add() {
+                this.createArticle().then(rs => {
+                    this.$message.success('添加成功!')
+                    this.$router.go(-1)
+                }).catch(() => {
+                })
+            },
+            update() {
+                this.updateArticle().then(rs => {
+                    this.$message.success('修改成功!')
                     this.$router.go(-1)
                 }).catch(() => {
                 })
@@ -52,6 +71,7 @@
             if (params.id) {
                 this.get_article(params.id)
             }
+            this.get_categorys_level()
         }
     }
 </script>

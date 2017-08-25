@@ -205,19 +205,19 @@ const router = new Router({
                     icon: 'iconfont icon-shezhi',
                 }
             }, {
-                path: ':id',
-                name: 'articleEdit',
-                component: Article,
-                meta: {
-                    title: '文章编辑',
-                    icon: 'iconfont icon-shezhi',
-                }
-            }, {
                 path: 'add',
                 name: 'articleAdd',
                 component: Article,
                 meta: {
                     title: '文章添加',
+                    icon: 'iconfont icon-shezhi',
+                }
+            }, {
+                path: 'edit/:id',
+                name: 'articleEdit',
+                component: Article,
+                meta: {
+                    title: '文章编辑',
                     icon: 'iconfont icon-shezhi',
                 }
             }]
