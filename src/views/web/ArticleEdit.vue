@@ -11,8 +11,8 @@
 				<el-input type="textarea" v-model="addPermission.seoDescription" placeholder="请输入简介内容"></el-input>
 			</el-form-item>
 			<el-form-item label="文章内容">
-				<div id="editor">
-					<mavon-editor style="height: 100%"></mavon-editor>
+				<div id="editor" style="height: 500px">
+					<mavon-editor></mavon-editor>
 				</div>
 			</el-form-item>
 			<el-form-item>
