@@ -1,8 +1,17 @@
-import {getCategorys, getArticles, getArticle, deleteArticles, updateArticles, uploadImages} from '@/api/web'
+import {
+    getCategorys,
+    getArticles,
+    getArticle,
+    deleteArticles,
+    updateArticle,
+    createArticle,
+    uploadImages
+} from '@/api/web'
 
 const article = {
     state: {
         categorys: [],
+        categorys_level: [],
         articles: [],
         loading: {
             category: false,
@@ -42,6 +51,9 @@ const article = {
         save_categorys(state, categorys) {
             state.categorys = categorys
         },
+        save_categorys_level(state, categorys) {
+            state.categorys_level = categorys
+        },
         save_articles(state, articles) {
             state.articles = articles
         },
@@ -51,6 +63,17 @@ const article = {
                 Object.assign(article, append)
             }
             state.currentArticle = article
+        },
+        clear_currentArticle(state) {
+            state.currentArticle = {
+                category_id: null,
+                title: '',
+                keywords: '',
+                description: '',
+                article_data: {
+                    content: ''
+                }
+            }
         },
         save_currentId(state, id) {
             state.op.currentId = id
@@ -67,6 +90,12 @@ const article = {
                 state.loading.category = false
             }).catch(err => {
                 state.loading.category = false
+            })
+        },
+        get_categorys_level({state, commit}) {
+            getCategorys().then(rs => {
+                commit('save_categorys_level', rs.data)
+            }).catch(() => {
             })
         },
         get_articles({state, commit}) {
@@ -105,10 +134,22 @@ const article = {
                 })
             })
         },
-        update_article({state}) {
+        createArticle({state}) {
             return new Promise((resolve, reject) => {
                 state.loading.edit = true
-                updateArticles(state.currentArticle).then(rs => {
+                createArticle(state.currentArticle).then(rs => {
+                    state.loading.edit = false
+                    resolve(rs)
+                }).catch(err => {
+                    state.loading.edit = false
+                    reject(err)
+                })
+            })
+        },
+        updateArticle({state}) {
+            return new Promise((resolve, reject) => {
+                state.loading.edit = true
+                updateArticle(state.currentArticle).then(rs => {
                     state.loading.edit = false
                     resolve(rs)
                 }).catch(err => {

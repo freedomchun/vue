@@ -87,8 +87,16 @@ export function deleteArticles(ids = []) {
  * 修改文章
  * @param params
  */
-export function updateArticles(params) {
+export function updateArticle(params) {
     return fetch.patch(`/article/${params.id}`, params)
+}
+
+/**
+ * 创建文章
+ * @param params
+ */
+export function createArticle(params) {
+    return fetch.post('/article', params)
 }
 
 /**

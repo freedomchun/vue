@@ -9,7 +9,7 @@
                     <el-button type="primary" @click="get_articles">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <router-link :to="{name:'articleEdit'}" class="addmain">添加文章</router-link>
+                    <el-button @click="toAdd">添加文章</el-button>
                 </el-form-item>
             </el-form>
             <el-row :span="24" :gutter="10">
@@ -28,7 +28,7 @@
     </section>
 </template>
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapMutations, mapActions} from 'vuex'
 
     export default {
         computed: mapState({
@@ -42,6 +42,7 @@
             this.get_categorys()
         },
         methods: {
+            ...mapMutations(['clear_currentArticle']),
             ...mapActions(['get_categorys', 'get_articles']),
             currentClick(data) {
                 this.pagination.current_page = 1
@@ -50,6 +51,10 @@
             articles() {
                 this.pagination.current_page = 1
                 this.get_articles()
+            },
+            toAdd() {
+                this.clear_currentArticle()
+                this.$router.push({name: 'articleAdd'})
             }
         },
     }
@@ -68,24 +73,6 @@
         box-sizing: border-box;
         height: auto;
         min-height: 200px;
-    }
-
-    .addmain {
-        background: #4db3ff;
-        color: white;
-        margin: 0;
-        padding: 10px 15px;
-        border-radius: 4px;
-        display: inline-block;
-        line-height: 1;
-        white-space: nowrap;
-        cursor: pointer;
-        font-size: 14px;
-        box-sizing: border-box;
-        outline: 0;
-        text-align: center;
-        text-decoration: none;
-        border: 1px solid #c4c4c4;
     }
 
     .artaside {
