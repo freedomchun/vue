@@ -1,4 +1,12 @@
-import {getCategorys, getArticles, getArticle, deleteArticles, updateArticles, uploadImages} from '@/api/web'
+import {
+    getCategorys,
+    getArticles,
+    getArticle,
+    deleteArticles,
+    updateArticle,
+    createArticle,
+    uploadImages
+} from '@/api/web'
 
 const article = {
     state: {
@@ -51,6 +59,16 @@ const article = {
                 Object.assign(article, append)
             }
             state.currentArticle = article
+        },
+        clear_currentArticle(state) {
+            state.currentArticle = {
+                title: '',
+                keywords: '',
+                description: '',
+                article_data: {
+                    content: ''
+                }
+            }
         },
         save_currentId(state, id) {
             state.op.currentId = id
@@ -105,10 +123,11 @@ const article = {
                 })
             })
         },
-        update_article({state}) {
+        submit_article({state}) {
             return new Promise((resolve, reject) => {
                 state.loading.edit = true
-                updateArticles(state.currentArticle).then(rs => {
+                let fn = state.currentArticle.id ? 'updateArticle' : 'createArticle'
+                fn(state.currentArticle).then(rs => {
                     state.loading.edit = false
                     resolve(rs)
                 }).catch(err => {

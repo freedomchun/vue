@@ -14,7 +14,7 @@ import WebInfo from '@/views/web/WebInfo'
 import ColumnList from '@/views/web/ColumnList'
 import ArticleList from '@/views/web/ArticleList'
 import Alist from '@/views/web/Alist'
-import ArticleEdit from '@/views/web/ArticleEdit'
+import Article from '@/views/web/Article'
 import Message from '@/views/web/Message'
 import ActivityManage from '@/views/operation/ActivityManage'
 import ActivityManageAdd from '@/views/operation/ActivityManageAdd'
@@ -201,15 +201,23 @@ const router = new Router({
                 name: 'alist',
                 component: Alist,
                 meta: {
-                    title: '列表页',
+                    title: '文章列表',
                     icon: 'iconfont icon-shezhi',
                 }
             }, {
-                path: 'articleEdit/:id',
+                path: ':id',
                 name: 'articleEdit',
-                component: ArticleEdit,
+                component: Article,
                 meta: {
-                    title: '编辑页',
+                    title: '文章编辑',
+                    icon: 'iconfont icon-shezhi',
+                }
+            }, {
+                path: 'add',
+                name: 'articleAdd',
+                component: Article,
+                meta: {
+                    title: '文章添加',
                     icon: 'iconfont icon-shezhi',
                 }
             }]
