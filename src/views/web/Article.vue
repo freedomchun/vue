@@ -3,7 +3,8 @@
         <el-form :model="currentArticle" ref="article" label-position="top">
             <el-form-item label="所属栏目" prop="category_id" :rules="[{required: true, message: '请选择所属栏目'}]">
                 <el-select v-model="currentArticle.category_id" placeholder="请选择所属栏目">
-                    <el-option v-for="item in categorys_level" :key="item.id" :label="'----'.repeat(item.level) + item.title" :value="item.id"></el-option>
+                    <el-option v-for="item in categorys_level" :key="item.id"
+                               :label="'----'.repeat(item.level) + item.title" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="文章标题" prop="title" :rules="[{required: true, message: '请输入文章标题', trigger: 'blur'}]">
@@ -16,7 +17,8 @@
                 <el-input type="textarea" v-model="currentArticle.description" placeholder="请输入简介内容"></el-input>
             </el-form-item>
             <el-form-item label="文章内容">
-                <mavon-editor style="height: 500px" v-model="currentArticle.article_data.content"></mavon-editor>
+                <mavon-editor style="height: 500px" ref="editor" v-model="currentArticle.article_data.content"
+                              @imgAdd="imgAdd" @imgDel="imgDel"></mavon-editor>
             </el-form-item>
             <el-form-item>
                 <el-button @click="$router.go(-1)">取消</el-button>
@@ -42,9 +44,16 @@
         }),
         methods: {
             ...mapActions(['get_article', 'updateArticle', 'createArticle', 'upload_images', 'get_categorys_level']),
+            imgAdd(index, file) {
+                this.img_files.splice(index, 0, file)
+            },
+            imgDel(index) {
+                this.img_files.splice(index, 1)
+            },
             submit() {
                 this.$refs.article.validate((valid) => {
                     if (valid) {
+                        console.log(this.img_files)
                         this.currentArticle.id ? this.update() : this.add()
                     } else {
                         return false
