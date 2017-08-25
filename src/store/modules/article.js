@@ -1,4 +1,4 @@
-import {getCategorys, getArticles, deleteArticles} from '@/api/web'
+import {getCategorys, getArticles, getArticle, deleteArticles, updateArticles, uploadImages} from '@/api/web'
 
 const article = {
     state: {
@@ -8,6 +8,7 @@ const article = {
             category: false,
             article: false,
             del: false,
+            edit: false,
         },
         op: {
             title: null,
@@ -23,11 +24,15 @@ const article = {
             per_page: 16,
             total: 0,
         },
-        addArticle: {
+        currentArticle: {
             title: '',
+            keywords: '',
             description: '',
-            content: '# h1 #',
+            article_data: {
+                content: ''
+            }
         },
+        img_files: [],
     },
     mutations: {
         setPagination(state, pagination) {
@@ -39,6 +44,13 @@ const article = {
         },
         save_articles(state, articles) {
             state.articles = articles
+        },
+        save_currentArticle(state, article) {
+            if (article.article_data === null) {
+                let append = {article_data: {content: ''}}
+                Object.assign(article, append)
+            }
+            state.currentArticle = article
         },
         save_currentId(state, id) {
             state.op.currentId = id
@@ -73,6 +85,12 @@ const article = {
                 state.loading.article = false
             })
         },
+        get_article({state, commit}, id) {
+            getArticle(id).then(rs => {
+                commit('save_currentArticle', rs.data)
+            }).catch(() => {
+            })
+        },
         delete_articles({state, dispatch}) {
             return new Promise((resolve, reject) => {
                 let ids = state.op.multipleSelection.map(item => item.id)
@@ -86,7 +104,29 @@ const article = {
                     reject(err)
                 })
             })
+        },
+        update_article({state}) {
+            return new Promise((resolve, reject) => {
+                state.loading.edit = true
+                updateArticles(state.currentArticle).then(rs => {
+                    state.loading.edit = false
+                    resolve(rs)
+                }).catch(err => {
+                    state.loading.edit = false
+                    reject(err)
+                })
+            })
+        },
+        upload_images({state}) {
+            let formdata = new FormData();
+            for (let i in state.img_files) {
+                formdata.append(i, this.img_files[i]);
+            }
+            uploadImages(formdata).then(rs => {
+                console.log(rs)
+            }).catch(() => {
             
+            })
         }
     }
 }

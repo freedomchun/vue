@@ -64,6 +64,14 @@ export function getArticles(params = null) {
 }
 
 /**
+ * 获取文章
+ * @param params
+ */
+export function getArticle(id) {
+    return fetch.get(`/article/${id}`)
+}
+
+/**
  * 删除文章
  * @param ids
  */
@@ -72,5 +80,25 @@ export function deleteArticles(ids = []) {
         params: {
             ids
         }
+    })
+}
+
+/**
+ * 修改文章
+ * @param params
+ */
+export function updateArticles(params) {
+    return fetch.patch(`/article/${params.id}`, params)
+}
+
+/**
+ * 上传图片
+ * @param formdata
+ * @returns {AxiosPromise | *}
+ */
+export function uploadImages(formdata) {
+    return fetch.post('/upload', {
+        headers: {'Content-Type': 'multipart/form-data'},
+        data: formdata,
     })
 }
