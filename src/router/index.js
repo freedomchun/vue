@@ -40,6 +40,9 @@ import InfoManage from '@/views/info/InfoManage'
 import InfoDetail from '@/views/info/InfoDetail'
 import TravelManage from '@/views/info/TravelManage'
 import TravelDetail from '@/views/info/TravelDetail'
+import WebTraffic from '@/views/data/WebTraffic'
+
+
 
 Vue.use(Router)
 
@@ -369,6 +372,23 @@ const router = new Router({
             component: TravelDetail,
             meta: {
                 title: '游记详情',
+                icon: 'iconfont icon-zhanghu',
+            }
+        }]
+    },{
+        path: '/data',
+        name: 'data',
+        component: Admin,
+        meta: {
+            title: '数据中心',
+            icon: 'iconfont icon-zhanghu',
+        },
+        children: [{
+            path: 'WebTraffic',
+            name: 'webTraffic',
+            component: WebTraffic,
+            meta: {
+                title: '网站流量',
                 icon: 'iconfont icon-zhanghu',
             }
         }]

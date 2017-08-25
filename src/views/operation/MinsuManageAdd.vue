@@ -27,9 +27,9 @@
 
 			<div class="bg-g">
 				<el-form-item label="地图定位">
-					<div class="amap-wrapper">
+					<!--<div class="amap-wrapper">
 						<el-amap :vid="'amap-vue'"></el-amap>
-					</div>
+					</div>-->
 				</el-form-item>
 				<el-form-item label="输入地点">
 					<el-form inline>
