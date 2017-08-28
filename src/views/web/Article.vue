@@ -17,7 +17,8 @@
                 <el-input type="textarea" v-model="currentArticle.description" placeholder="请输入简介内容"></el-input>
             </el-form-item>
             <el-form-item label="文章内容">
-                <mavon-editor style="height: 100%; min-height: 500px;" ref="editor" v-model="currentArticle.article_data.content"
+                <mavon-editor style="height: 100%; min-height: 500px;" ref="editor"
+                              v-model="currentArticle.article_data.content"
                               @imgAdd="imgAdd" @imgDel="imgDel"></mavon-editor>
             </el-form-item>
             <el-form-item>
@@ -80,7 +81,9 @@
             if (params.id) {
                 this.get_article(params.id)
             }
-            this.get_categorys_level()
+            if (this.categorys_level.length === 0) {
+                this.get_categorys_level()
+            }
         }
     }
 </script>
