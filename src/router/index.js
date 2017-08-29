@@ -1,26 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import OrderManage from '@/views/order/OrderManage'
-//import ActivityOrder from '@/views/order/ActivityOrder'
-//import OrderDetail from '@/views/order/OrderDetail'
-import DinzhiManage from '@/views/order/DinzhiManage'
-//import DinzhiDetail from '@/views/order/DinzhiDetail'
-
-import InfoManage from '@/views/info/InfoManage'
-import InfoDetail from '@/views/info/InfoDetail'
-import TravelManage from '@/views/info/TravelManage'
-import TravelDetail from '@/views/info/TravelDetail'
-import WebTraffic from '@/views/data/WebTraffic'
-import ActivityTraffic from '@/views/data/ActivityTraffic'
-import OrderData from '@/views/data/OrderData'
-import InfoData from '@/views/data/InfoData'
-
-import ChainTab from '@/views/chain/ChainTab'
-import ChainPage from '@/views/chain/ChainPage'
-
-
-
 Vue.use(Router)
 
 const Login = () => import('@/views/user/Login')
@@ -52,6 +32,22 @@ const MinsuManage = () => import('@/views/operation/MinsuManage')
 const MinsuManageAdd = () => import('@/views/operation/MinsuManageAdd')
 const ScenicManage = () => import('@/views/operation/ScenicManage')
 const ScenicManageAdd = () => import('@/views/operation/ScenicManageAdd')
+
+const OrderManage = () => import( '@/views/order/OrderManage')
+//const ActivityOrder = () => import( '@/views/order/ActivityOrder')
+//const OrderDetail = () => import( '@/views/order/OrderDetail')
+const DinzhiManage = () => import( '@/views/order/DinzhiManage')
+//const DinzhiDetail = () => import( '@/views/order/DinzhiDetail')
+const InfoManage = () => import( '@/views/info/InfoManage')
+//const InfoDetail = () => import( '@/views/info/InfoDetail')
+const TravelManage = () => import( '@/views/info/TravelManage')
+const TravelDetail = () => import( '@/views/info/TravelDetail')
+const WebTraffic = () => import( '@/views/data/WebTraffic')
+const ActivityTraffic = () => import( '@/views/data/ActivityTraffic')
+const OrderData = () => import( '@/views/data/OrderData')
+const InfoData = () => import( '@/views/data/InfoData')
+const ChainTab = () => import( '@/views/chain/ChainTab')
+const ChainPage = () => import( '@/views/chain/ChainPage')
 
 const router = new Router({
     routes: [{
@@ -366,28 +362,12 @@ const router = new Router({
                 icon: 'iconfont icon-m0010101',
             }
         },{
-            path: 'infoDetail',
-            name: 'infoDetail',
-            component: InfoDetail,
-            meta: {
-                title: '用户详情',
-                icon: 'iconfont icon-zhanghu',
-            }
-        },{
             path: 'travelManage',
             name: 'travelManage',
             component: TravelManage,
             meta: {
                 title: '游记管理',
                 icon: 'iconfont icon-icon',
-            }
-        },{
-            path: 'travelDetail',
-            name: 'travelDetail',
-            component: TravelDetail,
-            meta: {
-                title: '游记详情',
-                icon: 'iconfont icon-zhanghu',
             }
         }]
     },{
