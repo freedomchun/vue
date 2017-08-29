@@ -1,34 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/user/Login'
-import Admin from '@/views/common/Admin'
-import Sysinfo from '@/views/common/Sysinfo'
-import Role from '@/views/setting/Role'
-import NoPermissions from '@/views/permissions/NoPermissions'
-import NotFind from '@/views/error/404'
-import AccountManage from '@/views/setting/AccountManage'
-import Permisson from '@/views/setting/Permisson'
-import MyInfo from '@/views/user/MyInfo'
-import Pic from '@/views/picture/Pic'
-import WebInfo from '@/views/web/WebInfo'
-import ColumnList from '@/views/web/ColumnList'
-import ArticleList from '@/views/web/ArticleList'
-import Alist from '@/views/web/Alist'
-import Article from '@/views/web/Article'
-import Message from '@/views/web/Message'
-import ActivityManage from '@/views/operation/ActivityManage'
-import ActivityManageAdd from '@/views/operation/ActivityManageAdd'
-import TopicManage from '@/views/operation/TopicManage'
-import DestinationManage from '@/views/operation/DestinationManage'
-import LeaderManage from '@/views/operation/LeaderManage'
-import RaiderManage from '@/views/operation/RaiderManage'
-import RaiderManageAdd from '@/views/operation/RaiderManageAdd'
-import FoodManage from '@/views/operation/FoodManage'
-import FoodManageAdd from '@/views/operation/FoodManageAdd'
-import MinsuManage from '@/views/operation/MinsuManage'
-import MinsuManageAdd from '@/views/operation/MinsuManageAdd'
-import ScenicManage from '@/views/operation/ScenicManage'
-import ScenicManageAdd from '@/views/operation/ScenicManageAdd'
 
 import OrderManage from '@/views/order/OrderManage'
 //import ActivityOrder from '@/views/order/ActivityOrder'
@@ -51,6 +22,36 @@ import ChainPage from '@/views/chain/ChainPage'
 
 
 Vue.use(Router)
+
+const Login = () => import('@/views/user/Login')
+const Admin = () => import('@/views/common/Admin')
+const Sysinfo = () => import('@/views/common/Sysinfo')
+const Role = () => import('@/views/setting/Role')
+const NoPermissions = () => import('@/views/permissions/NoPermissions')
+const NotFind = () => import('@/views/error/404')
+const AccountManage = () => import('@/views/setting/AccountManage')
+const Permisson = () => import('@/views/setting/Permisson')
+const MyInfo = () => import('@/views/user/MyInfo')
+const Pic = () => import('@/views/picture/Pic')
+const WebInfo = () => import('@/views/web/WebInfo')
+const ColumnList = () => import('@/views/web/ColumnList')
+const ArticleList = () => import('@/views/web/ArticleList')
+const Alist = () => import('@/views/web/Alist')
+const Article = () => import('@/views/web/Article')
+const Message = () => import('@/views/web/Message')
+const ActivityManage = () => import('@/views/operation/ActivityManage')
+const ActivityManageAdd = () => import('@/views/operation/ActivityManageAdd')
+const TopicManage = () => import('@/views/operation/TopicManage')
+const DestinationManage = () => import('@/views/operation/DestinationManage')
+const LeaderManage = () => import('@/views/operation/LeaderManage')
+const RaiderManage = () => import('@/views/operation/RaiderManage')
+const RaiderManageAdd = () => import('@/views/operation/RaiderManageAdd')
+const FoodManage = () => import('@/views/operation/FoodManage')
+const FoodManageAdd = () => import('@/views/operation/FoodManageAdd')
+const MinsuManage = () => import('@/views/operation/MinsuManage')
+const MinsuManageAdd = () => import('@/views/operation/MinsuManageAdd')
+const ScenicManage = () => import('@/views/operation/ScenicManage')
+const ScenicManageAdd = () => import('@/views/operation/ScenicManageAdd')
 
 const router = new Router({
     routes: [{
