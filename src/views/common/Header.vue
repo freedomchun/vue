@@ -1,14 +1,15 @@
 <template>
 	<el-col :span="24" class="header">
-		<el-col :span="4" class="logo">
+		<el-row style="clear: both;">
+		<el-col :span="11" class="logo">
 			<img src="../../assets/admin-logo.png" />
 		</el-col>
-		<el-col :span="18" class="usersearch">
-			<span><i class="iconfont icon-rizhi"></i></span>
-			<span><i class="iconfont icon-shouyeshixin"></i></span>
+		<el-col :span="10" class="usersearch">
+			<span><i class="iconfont icon-jiesuan-xianxing"></i></span>
+			<span><i class="iconfont icon-cangkucangchu-xianxing"></i></span>
 			<span><el-input style="border-radius: 20px;" placeholder="搜索..." icon="search" v-model="search"></el-input></span>
 		</el-col>
-		<el-col :span="2" class="userinfo" v-if="loginUser">
+		<el-col :span="3" class="userinfo" v-if="loginUser">
 			<el-dropdown trigger="hover">
 				<span class="el-dropdown-link userinfo-inner">
                     <img :src="imagecut(loginUser.avatar, 35)" id="avatar"> {{ loginUser.name }}
@@ -22,6 +23,7 @@
 				</el-dropdown-menu>
 			</el-dropdown>
 		</el-col>
+		</el-row>
 	</el-col>
 </template>
 

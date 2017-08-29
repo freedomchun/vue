@@ -45,10 +45,10 @@
     }
 
     .logo {
-        width: 260px;
+        
         height: 50px;
         padding-left: 20px;
-        padding-right: 20px;
+        box-sizing: border-box;
     }
 
     .logo img {
@@ -62,7 +62,7 @@
     .usersearch span {
         display: inline;
         float: right;
-        padding-right: 10px;
+        padding-right: 5px;
     }
 
     .usersearch span input {
@@ -76,7 +76,7 @@
     }
 
     .userinfo {
-        float: right;
+        
         text-align: right;
         padding-right: 20px;
         cursor: pointer;
@@ -93,6 +93,7 @@
         float: left;
         padding-right: 5px;
         margin-top: 8px;
+         box-sizing: border-box;
     }
 
     .main {
@@ -115,6 +116,7 @@
     aside .el-menu {
         height: 100%;
         background: #35363a;
+        overflow-y: auto;
     }
 
     .collapsed {

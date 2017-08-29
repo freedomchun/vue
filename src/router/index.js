@@ -33,6 +33,22 @@ const MinsuManageAdd = () => import('@/views/operation/MinsuManageAdd')
 const ScenicManage = () => import('@/views/operation/ScenicManage')
 const ScenicManageAdd = () => import('@/views/operation/ScenicManageAdd')
 
+const OrderManage = () => import( '@/views/order/OrderManage')
+//const ActivityOrder = () => import( '@/views/order/ActivityOrder')
+//const OrderDetail = () => import( '@/views/order/OrderDetail')
+const DinzhiManage = () => import( '@/views/order/DinzhiManage')
+//const DinzhiDetail = () => import( '@/views/order/DinzhiDetail')
+const InfoManage = () => import( '@/views/info/InfoManage')
+//const InfoDetail = () => import( '@/views/info/InfoDetail')
+const TravelManage = () => import( '@/views/info/TravelManage')
+const TravelDetail = () => import( '@/views/info/TravelDetail')
+const WebTraffic = () => import( '@/views/data/WebTraffic')
+const ActivityTraffic = () => import( '@/views/data/ActivityTraffic')
+const OrderData = () => import( '@/views/data/OrderData')
+const InfoData = () => import( '@/views/data/InfoData')
+const ChainTab = () => import( '@/views/chain/ChainTab')
+const ChainPage = () => import( '@/views/chain/ChainPage')
+
 const router = new Router({
     routes: [{
         path: '/',
@@ -119,7 +135,7 @@ const router = new Router({
         component: Admin,
         meta: {
             title: '全局配置',
-            icon: 'iconfont icon-shezhi',
+            icon: 'iconfont icon-shezhi-xianxing',
         },
         children: [{
             path: 'role',
@@ -128,7 +144,7 @@ const router = new Router({
             meta: {
                 slug: 'all.role',
                 title: '角色管理',
-                icon: 'iconfont icon-jiaose',
+                icon: 'iconfont icon-jiaosequnti',
             }
         }, {
             path: 'permission',
@@ -137,7 +153,7 @@ const router = new Router({
             meta: {
                 slug: 'all.permission',
                 title: '权限管理',
-                icon: 'iconfont icon-quanxianmiyao',
+                icon: 'iconfont icon-quanxianyuechi-xianxing',
             }
         }, {
             path: 'accountManage',
@@ -146,7 +162,7 @@ const router = new Router({
             meta: {
                 slug: 'all.user',
                 title: '账户管理',
-                icon: 'iconfont icon-zhanghu',
+                icon: 'iconfont icon-yonghu-xianxing',
             }
         }]
     }, {
@@ -155,7 +171,7 @@ const router = new Router({
         component: Admin,
         meta: {
             title: '附件管理',
-            icon: 'iconfont icon-zhanghu',
+            icon: 'iconfont icon-fujian',
         },
         children: [{
             path: 'pic',
@@ -163,7 +179,7 @@ const router = new Router({
             component: Pic,
             meta: {
                 title: '图片管理',
-                icon: 'iconfont icon-zhanghu',
+                icon: 'iconfont icon-tupian-xianxing',
             }
         }]
     }, {
@@ -172,7 +188,7 @@ const router = new Router({
         component: Admin,
         meta: {
             title: '网站内容',
-            icon: 'iconfont icon-shezhi',
+            icon: 'iconfont icon-wangzhan',
         },
         children: [{
             path: 'webInfo',
@@ -180,7 +196,7 @@ const router = new Router({
             component: WebInfo,
             meta: {
                 title: '网站信息',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-bf-message',
             }
         }, {
             path: 'columnList',
@@ -188,14 +204,14 @@ const router = new Router({
             component: ColumnList,
             meta: {
                 title: '栏目设置',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-lanmushezhi',
             }
         }, {
             path: 'article',
             component: ArticleList,
             meta: {
                 title: '文章发布',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-fabu',
             },
             children: [{
                 path: '',
@@ -228,7 +244,7 @@ const router = new Router({
             component: Message,
             meta: {
                 title: '短信管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-duanxin',
             }
         }]
     }, {
@@ -237,7 +253,7 @@ const router = new Router({
         component: Admin,
         meta: {
             title: '运营管理',
-            icon: 'iconfont icon-shezhi',
+            icon: 'iconfont icon-yunyingguanli',
         },
         children: [{
             path: 'destinationManage',
@@ -245,7 +261,7 @@ const router = new Router({
             component: DestinationManage,
             meta: {
                 title: '目的地管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-mudedi',
             }
         }, {
             path: 'activityManage',
@@ -253,7 +269,7 @@ const router = new Router({
             component: ActivityManage,
             meta: {
                 title: '活动管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-huodongguanli',
             }
         }, {
             path: 'topicManage',
@@ -261,7 +277,7 @@ const router = new Router({
             component: TopicManage,
             meta: {
                 title: '主题管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-zhuti',
             }
         }, {
             path: 'leaderManage',
@@ -269,7 +285,7 @@ const router = new Router({
             component: LeaderManage,
             meta: {
                 title: '领队管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-lingduiguanli',
             }
         }, {
             path: 'raiderManage',
@@ -277,7 +293,7 @@ const router = new Router({
             component: RaiderManage,
             meta: {
                 title: '攻略管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-gonglve',
             }
         }, {
             path: 'foodManage',
@@ -285,7 +301,7 @@ const router = new Router({
             component: FoodManage,
             meta: {
                 title: '美食管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-meishi',
             }
         }, {
             path: 'minsuManage',
@@ -293,7 +309,7 @@ const router = new Router({
             component: MinsuManage,
             meta: {
                 title: '民宿管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-minsu',
             }
         }, {
             path: 'scenicManage',
@@ -301,10 +317,126 @@ const router = new Router({
             component: ScenicManage,
             meta: {
                 title: '景点管理',
-                icon: 'iconfont icon-shezhi',
+                icon: 'iconfont icon-jingdian',
             }
         }]
     }, {
+        path: '/order',
+        name: 'order',
+        component: Admin,
+        meta: {
+            title: '订单中心',
+            icon: 'iconfont icon-dingdanzhongxin',
+        },
+        children: [{
+            path: 'orderManage',
+            name: 'orderManage',
+            component: OrderManage,
+            meta: {
+                title: '订单管理',
+                icon: 'iconfont icon-dingdanguanli',
+            }
+        },{
+            path: 'dinzhiManage',
+            name: 'dinzhiManage',
+            component: DinzhiManage,
+            meta: {
+                title: '定制管理',
+                icon: 'iconfont icon-dingzhi',
+            }
+        }]
+    }, {
+        path: '/info',
+        name: 'info',
+        component: Admin,
+        meta: {
+            title: '用户管理',
+            icon: 'iconfont icon-zhanghaoshezhi',
+        },
+        children: [{
+            path: 'infoManage',
+            name: 'infoManage',
+            component: InfoManage,
+            meta: {
+                title: '用户信息',
+                icon: 'iconfont icon-m0010101',
+            }
+        },{
+            path: 'travelManage',
+            name: 'travelManage',
+            component: TravelManage,
+            meta: {
+                title: '游记管理',
+                icon: 'iconfont icon-icon',
+            }
+        }]
+    },{
+        path: '/data',
+        name: 'data',
+        component: Admin,
+        meta: {
+            title: '数据中心',
+            icon: 'iconfont icon-shujuzhongxin',
+        },
+        children: [{
+            path: 'WebTraffic',
+            name: 'webTraffic',
+            component: WebTraffic,
+            meta: {
+                title: '网站流量',
+                icon: 'iconfont icon-shuju1',
+            }
+        },{
+            path: 'activityTraffic',
+            name: 'activityTraffic',
+            component: ActivityTraffic,
+            meta: {
+                title: '活动流量',
+                icon: 'iconfont icon-dingdanshuju',
+            }
+        },{
+            path: 'orderData',
+            name: 'orderData',
+            component: OrderData,
+            meta: {
+                title: '订单数据',
+                icon: 'iconfont icon-shuju',
+            }
+        },{
+            path: 'infoData',
+            name: 'infoData',
+            component: InfoData,
+            meta: {
+                title: '用户数据',
+                icon: 'iconfont icon-yonghushuju',
+            }
+        }]
+    }, {
+        path: '/chain',
+        name: 'chain',
+        component: Admin,
+        meta: {
+            title: '外链管理',
+            icon: 'iconfont icon-wailian',
+        },
+        children: [{
+            path: 'chainTab',
+            name: 'chainTab',
+            component: ChainTab,
+            meta: {
+                title: '外链标签',
+                icon: 'iconfont icon-wailian2',
+            }
+        },{
+            path: 'chainPage',
+            name: 'chainPage',
+            component: ChainPage,
+            meta: {
+                title: '外链页面',
+                icon: 'iconfont icon-wailian1',
+            }
+        }]
+    },{
         path: '/login',
         component: Login,
         meta: {
