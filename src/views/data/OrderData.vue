@@ -1,8 +1,8 @@
 <template>
 	<section>
 		<el-tabs v-model="activeName" @tab-click="handleClick">
-			<el-tab-pane label="首页访问" name="first">首页访问</el-tab-pane>
-			<el-tab-pane label="目的地" name="second">
+			<el-tab-pane label="订单量" name="first">订单量</el-tab-pane>
+			<el-tab-pane label="订单总额" name="second">
 				<div>
 					<el-form inline style="padding-top: 20px; padding-left: 20px;" label-position="top">
 						<el-form-item>
@@ -11,12 +11,8 @@
 						</el-form-item>
 					</el-form>
 				</div>
-				<div id="chartLine" style="width:65%; height:400px;padding-left: 20px;"></div>
+				<div id="chartLine" style="width:100%; height:400px;padding-left: 20px;"></div>
 			</el-tab-pane>
-			<el-tab-pane label="周边游" name="third">周边游</el-tab-pane>
-			<el-tab-pane label="省内游" name="fourth">省内游</el-tab-pane>
-			<el-tab-pane label="国内游" name="fifth">国内游</el-tab-pane>
-			<el-tab-pane label="境外游" name="sixth">境外游</el-tab-pane>
 		</el-tabs>
 	</section>
 </template>
@@ -39,7 +35,7 @@
 				this.chartLine = echarts.init(document.getElementById('chartLine'));
 				this.chartLine.setOption({
 					title: {
-						text: '目的地'
+						text: ''
 					},
 					tooltip: {
 						trigger: 'axis'

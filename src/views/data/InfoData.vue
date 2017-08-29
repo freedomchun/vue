@@ -1,8 +1,8 @@
 <template>
 	<section>
 		<el-tabs v-model="activeName" @tab-click="handleClick">
-			<el-tab-pane label="首页访问" name="first">首页访问</el-tab-pane>
-			<el-tab-pane label="目的地" name="second">
+			<el-tab-pane label="注册人数" name="first">注册人数</el-tab-pane>
+			<el-tab-pane label="下单人数" name="second">
 				<div>
 					<el-form inline style="padding-top: 20px; padding-left: 20px;" label-position="top">
 						<el-form-item>
@@ -11,19 +11,15 @@
 						</el-form-item>
 					</el-form>
 				</div>
-				<div id="chartLine" style="width:65%; height:400px;padding-left: 20px;"></div>
+				<div id="chartLine" style="width:100%; height:400px;padding-left: 20px;"></div>
 			</el-tab-pane>
-			<el-tab-pane label="周边游" name="third">周边游</el-tab-pane>
-			<el-tab-pane label="省内游" name="fourth">省内游</el-tab-pane>
-			<el-tab-pane label="国内游" name="fifth">国内游</el-tab-pane>
-			<el-tab-pane label="境外游" name="sixth">境外游</el-tab-pane>
 		</el-tabs>
 	</section>
 </template>
 <script>
 	import echarts from 'echarts'
+	
 	export default {
-
 		data() {
 			return {
 				activeName: 'second',
@@ -39,13 +35,13 @@
 				this.chartLine = echarts.init(document.getElementById('chartLine'));
 				this.chartLine.setOption({
 					title: {
-						text: '目的地'
+						text: ''
 					},
 					tooltip: {
 						trigger: 'axis'
 					},
 					legend: {
-						data: ['邮件营销', '联盟广告', '搜索引擎']
+						data: ['下单人数']
 					},
 					grid: {
 						left: '3%',
@@ -62,24 +58,11 @@
 						type: 'value'
 					},
 					series: [{
-							name: '邮件营销',
-							type: 'line',
-							stack: '总量',
-							data: [120, 132, 101, 134, 90, 230, 210, 57, 76, 67, 767, 767]
-						},
-						{
-							name: '联盟广告',
-							type: 'line',
-							stack: '总量',
-							data: [220, 182, 191, 234, 290, 330, 310, 132, 101, 134, 90, 230]
-						},
-						{
-							name: '搜索引擎',
-							type: 'line',
-							stack: '总量',
-							data: [820, 932, 901, 934, 1290, 1330, 1320, 1362, 101, 1364, 970, 2360]
-						}
-					]
+						name: '下单人数',
+						type: 'line',
+						stack: '总量',
+						data: [120, 132, 101, 134, 90, 230, 210, 57, 76, 67, 767, 767]
+					}]
 				});
 			},
 			drawCharts() {
