@@ -3,10 +3,10 @@
         <div class="grid-content bg-g">
             <el-form inline style="padding-top: 20px; padding-left: 20px;">
                 <el-form-item>
-                    <el-input placeholder="请输入目的地"></el-input>
+                    <el-input placeholder="请输入目的地" v-model="mop.title"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">查询</el-button>
+                    <el-button type="primary" @click="get_mddList">查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="mddForm">新建</el-button>

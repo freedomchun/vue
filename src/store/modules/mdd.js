@@ -18,6 +18,7 @@ const mdd = {
                 sort: 0,
                 is_show: true,
             },
+            title: null,
         },
         loading: {
             list: false,
@@ -39,7 +40,12 @@ const mdd = {
     actions: {
         get_mddList({state, commit}) {
             state.loading.list = true
-            api.getMdd().then(rs => {
+            let params = {
+                page: state.pagination.current_page,
+                per_page: state.pagination.per_page,
+                title: state.op.title
+            }
+            api.getMdd(params).then(rs => {
                 commit('setPagination', rs.data)
                 commit('setMddList', rs.data.data)
                 state.loading.list = false
