@@ -6,17 +6,13 @@ import web from './modules/web';
 import category from './modules/category'
 import article from './modules/article'
 import loc from './modules/loc'
+import mdd from './modules/mdd'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
     modules: {
-        auth,
-        pic,
-        web,
-        category,
-        article,
-        loc
+        auth, pic, web, category, article, loc, mdd,
     }
 })
 

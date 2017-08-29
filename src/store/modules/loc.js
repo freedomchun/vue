@@ -1,47 +1,34 @@
-import * as api from '@/api/loc'
+import {getLoc} from '@/api/loc'
 
-function checkRemoveChild(data) {
+function checkChildren(data) {
     data.forEach((item, index) => {
+        item.value = item.id
         if (item.all_children.length === 0) {
-            delete data[index].all_children
+            delete item.all_children
         } else {
-            data[index].all_children = checkRemoveChild(item.all_children)
+            item.all_children = checkChildren(item.all_children)
         }
+        data[index] = item
     })
     return data
 }
 
 const loc = {
     state: {
-        locs: [],
-        ms: [],
-        pagination: {
-            current_page: 1,
-            per_page: 15,
-            total: 0,
-        },
-        op: {
-            showAdd: false,
-            select: null,
-            add: null,
-            loc: null,
-            props: {
-                label: 'name',
-                value: 'id',
-                children: 'all_children'
-            }
-        },
+        list: [],
+        props: {
+            children: 'all_children'
+        }
     },
     mutations: {
-        set_loc(state, data) {
-            let a = checkRemoveChild(data)
-            console.log(a)
-        },
+        setList(state, data) {
+            state.list = checkChildren(data)
+        }
     },
     actions: {
-        getLocs({state, commit}) {
-            api.getLoc().then(rs => {
-                commit('set_loc', rs.data)
+        get_locList({commit}) {
+            getLoc().then(rs => {
+                commit('setList', rs.data)
             }).catch(() => {
             })
         }

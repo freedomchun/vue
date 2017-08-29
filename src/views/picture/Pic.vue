@@ -71,7 +71,7 @@
 </template>
 
 <script>
-    import {mapState, mapMutations, mapGetters, mapActions} from 'vuex'
+    import {mapState, mapMutations, mapActions} from 'vuex'
 
     export default {
         computed: {
