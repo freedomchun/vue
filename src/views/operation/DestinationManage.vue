@@ -20,12 +20,13 @@
                     <el-tag type="danger" v-else>隐藏</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="cascader" label="地区" width="300">
+            <el-table-column prop="loc.label" label="所在地区" width="150" show-overflow-tooltip>
                 <template scope="scope">
-                    <el-cascader :options="locList" :props="props" v-model="scope.row.cascader" disabled style="width: 100%;"></el-cascader>
+                    <span v-if="scope.row.loc.parent">{{ scope.row.loc.parent.label }} / </span>
+                    {{ scope.row.loc.label }}
                 </template>
             </el-table-column>
-            <el-table-column prop="title" label="目的地" width="200"></el-table-column>
+            <el-table-column prop="title" label="目的地" width="150" show-overflow-tooltip></el-table-column>
             <el-table-column prop="amount_count" label="活动数"></el-table-column>
             <el-table-column prop="raider_count" label="攻略数"></el-table-column>
             <el-table-column prop="food_count" label="美食数"></el-table-column>
