@@ -30,7 +30,7 @@ const article = {
         },
         pagination: {
             current_page: 1,
-            per_page: 16,
+            per_page: 15,
             total: 0,
         },
         currentArticle: {
@@ -44,7 +44,7 @@ const article = {
         img_files: [],
     },
     mutations: {
-        setPagination(state, pagination) {
+        setArticlePagination(state, pagination) {
             state.pagination.current_page = pagination.current_page
             state.pagination.total = pagination.total
         },
@@ -108,7 +108,7 @@ const article = {
             }
             getArticles(params).then(rs => {
                 commit('save_articles', rs.data.data)
-                commit('setPagination', rs.data)
+                commit('setArticlePagination', rs.data)
                 state.loading.article = false
             }).catch(err => {
                 state.loading.article = false

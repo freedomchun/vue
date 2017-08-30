@@ -26,7 +26,7 @@ const mdd = {
         }
     },
     mutations: {
-        setPagination(state, pagination) {
+        setMddPagination(state, pagination) {
             state.pagination.current_page = pagination.current_page
             state.pagination.total = pagination.total
         },
@@ -46,19 +46,20 @@ const mdd = {
                 title: state.op.title
             }
             api.getMdd(params).then(rs => {
-                commit('setPagination', rs.data)
+                commit('setMddPagination', rs.data)
                 commit('setMddList', rs.data.data)
                 state.loading.list = false
             }).catch(() => {
                 state.loading.list = false
             })
         },
-        submit_mdd({state, commit}) {
+        submit_mdd({state, dispatch}) {
             return new Promise((resolve, reject) => {
                 state.loading.current = true
                 let fn = state.op.current.id ? 'updateMdd' : 'createMdd'
                 api[fn](state.op.current).then(rs => {
                     state.loading.current = false
+                    dispatch('get_mddList')
                     resolve(rs)
                 }).catch(err => {
                     state.loading.current = false

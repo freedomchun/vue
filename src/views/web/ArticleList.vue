@@ -39,7 +39,9 @@
             pagination: state => state.article.pagination,
         }),
         mounted() {
-            this.get_categorys()
+            if (0 === this.categorys.length) {
+                this.get_categorys()
+            }
         },
         methods: {
             ...mapMutations(['clear_currentArticle']),

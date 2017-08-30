@@ -87,8 +87,12 @@
             })
         },
         mounted() {
-            this.getDirs()
-            this.getAtts()
+            if (0 === this.dirs.length) {
+                this.getDirs()
+            }
+            if (0 === this.atts.length) {
+                this.getAtts()
+            }
         },
         methods: {
             ...mapMutations(['setCurrentDir', 'setUploadInfo', 'uploadPreview', 'checkAllChange', 'checkedAttsChange']),

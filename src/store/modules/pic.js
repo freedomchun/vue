@@ -49,7 +49,7 @@ const pic = {
         setAtts(state, resData) {
             state.atts = resData
         },
-        setPagination(state, pagination) {
+        setPicPagination(state, pagination) {
             state.pagination.current_page = pagination.current_page
             state.pagination.total = pagination.total
         },
@@ -90,7 +90,7 @@ const pic = {
             let params = {page: state.pagination.current_page, per_page: state.pagination.per_page, dir_id}
             attachment.requestAttachments(params).then(rs => {
                 commit('setAtts', rs.data.data)
-                commit('setPagination', rs.data)
+                commit('setPicPagination', rs.data)
                 state.loading.att = false
             }).catch(err => {
                 state.loading.att = false

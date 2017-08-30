@@ -105,7 +105,6 @@
                 this.$refs.mdd.validate((valid) => {
                     if (valid) {
                         this.submit_mdd().then(rs => {
-                            this.get_mddList()
                             this.mop.show = false
                             this.$message.success('操作成功!')
                         }).catch(() => {
