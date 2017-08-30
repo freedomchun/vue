@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column prop="cascader" label="地区" width="300">
                 <template scope="scope">
-                    <el-cascader :options="locList" :props="props" v-model="scope.row.cascader" disabled style="width: 100%;"></el-cascader>
+                    <el-cascader class="nostyle" :options="locList" :props="props" v-model="scope.row.cascader" disabled style="width: 100%; border: none !important; background-color: none !important;"></el-cascader>
                 </template>
             </el-table-column>
             <el-table-column prop="title" label="目的地" width="200"></el-table-column>
@@ -139,4 +139,11 @@
         background: #eeeeee;
         border-radius: .2em;
     }
+    .el-cascader .el-icon-caret-bottom { display: none !important;}
+    .nostyle .el-input.is-disabled .el-input__inner {
+    background: none !important;
+    border: none !important;}
+    .nostyle i{ display: none;}
+    .nostyle .el-input__icon{ display: none !important; }
+    .el-input__icon{ display: none !important;}
 </style>
