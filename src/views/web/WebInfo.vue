@@ -37,7 +37,9 @@
             loading: state => state.web.loading,
         }),
         mounted() {
-            this.getInfo()
+            if (this.info.name === null) {
+                this.getInfo()
+            }
         },
         methods: {
             ...mapActions(['updateInfo', 'getInfo']),

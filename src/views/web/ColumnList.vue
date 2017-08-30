@@ -118,7 +118,9 @@
             current: state => state.category.current,
         }),
         mounted() {
-            this.getList()
+            if (0 === this.list.length) {
+                this.getList()
+            }
         },
         methods: {
             ...mapMutations(['save_current', 'clear_current']),
