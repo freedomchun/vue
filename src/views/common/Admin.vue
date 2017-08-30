@@ -213,4 +213,21 @@
     ul {
         list-style: none
     }
+    .addmain {
+		background: #4db3ff;
+		color: white;
+		margin: 0;
+		padding: 10px 15px;
+		border-radius: 4px;
+		display: inline-block;
+		line-height: 1;
+		white-space: nowrap;
+		cursor: pointer;
+		font-size: 14px;
+		box-sizing: border-box;
+		outline: 0;
+		text-align: center;
+		text-decoration: none;
+		border: 1px solid #c4c4c4;
+	}
 </style>

@@ -11,7 +11,7 @@
 						</el-form-item>
 					</el-form>
 				</div>
-				<div id="chartLine" style="width:65%; height:400px;padding-left: 20px;"></div>
+				<div id="chartLine" style="width:100%; height:400px;padding-left: 20px;"></div>
 			</el-tab-pane>
 			<el-tab-pane label="周边游" name="third">周边游</el-tab-pane>
 			<el-tab-pane label="省内游" name="fourth">省内游</el-tab-pane>

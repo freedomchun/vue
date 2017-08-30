@@ -21,7 +21,7 @@ const Article = () => import('@/views/web/Article')
 const Message = () => import('@/views/web/Message')
 const ActivityManage = () => import('@/views/operation/ActivityManage')
 const ActivityManageAdd = () => import('@/views/operation/ActivityManageAdd')
-const TopicManage = () => import('@/views/operation/TopicManage')
+//const TopicManage = () => import('@/views/operation/TopicManage')
 const DestinationManage = () => import('@/views/operation/DestinationManage')
 const LeaderManage = () => import('@/views/operation/LeaderManage')
 const RaiderManage = () => import('@/views/operation/RaiderManage')
@@ -35,13 +35,13 @@ const ScenicManageAdd = () => import('@/views/operation/ScenicManageAdd')
 
 const OrderManage = () => import( '@/views/order/OrderManage')
 // const ActivityOrder = () => import( '@/views/order/ActivityOrder')
-// const OrderDetail = () => import( '@/views/order/OrderDetail')
+const OrderDetail = () => import( '@/views/order/OrderDetail')
 const DinzhiManage = () => import( '@/views/order/DinzhiManage')
-// const DinzhiDetail = () => import( '@/views/order/DinzhiDetail')
+const DinzhiDetail = () => import( '@/views/order/DinzhiDetail')
 const InfoManage = () => import( '@/views/info/InfoManage')
-// const InfoDetail = () => import( '@/views/info/InfoDetail')
+const InfoDetail = () => import( '@/views/info/InfoDetail')
 const TravelManage = () => import( '@/views/info/TravelManage')
-// const TravelDetail = () => import( '@/views/info/TravelDetail')
+const TravelDetail = () => import( '@/views/info/TravelDetail')
 const WebTraffic = () => import( '@/views/data/WebTraffic')
 const ActivityTraffic = () => import( '@/views/data/ActivityTraffic')
 const OrderData = () => import( '@/views/data/OrderData')
@@ -122,6 +122,38 @@ const router = new Router({
                 icon: 'el-icon-setting',
             }
         }, {
+            path: 'orderDetail',
+            name: 'orderDetail',
+            component: OrderDetail,
+            meta: {
+                title: '订单详情',
+                icon: 'el-icon-setting',
+            }
+        },{
+            path: 'dinzhiDetail',
+            name: 'dinzhiDetail',
+            component: DinzhiDetail,
+            meta: {
+                title: '定制详情',
+                icon: 'el-icon-setting',
+            }
+        },{
+            path: 'infoDetail',
+            name: 'infoDetail',
+            component: InfoDetail,
+            meta: {
+                title: '用户详情',
+                icon: 'el-icon-setting',
+            }
+        },{
+            path: 'travelDetail',
+            name: 'travelDetail',
+            component: TravelDetail,
+            meta: {
+                title: '游记详情',
+                icon: 'el-icon-setting',
+            }
+        },{
             path: '404',
             name: '404',
             component: NotFind,
@@ -270,14 +302,6 @@ const router = new Router({
             meta: {
                 title: '活动管理',
                 icon: 'iconfont icon-huodongguanli',
-            }
-        }, {
-            path: 'topicManage',
-            name: 'topicManage',
-            component: TopicManage,
-            meta: {
-                title: '主题管理',
-                icon: 'iconfont icon-zhuti',
             }
         }, {
             path: 'leaderManage',

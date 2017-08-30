@@ -28,7 +28,7 @@
 				</el-form-item>
 			</el-form>
 		</div>
-		<el-table border style="width: 100%; margin-top: 20px;">
+		<el-table :data="list" border style="width: 100%; margin-top: 20px;">
 			<el-table-column prop="cover" label="活动封面" width="150"></el-table-column>
 			<el-table-column prop="raidername" label="活动名称" show-overflow-tooltip></el-table-column>
 			<el-table-column prop="amount" label="订单数" width="150"></el-table-column>
@@ -37,11 +37,7 @@
 			<el-table-column prop="sum" label="订单总额" width="150"></el-table-column>
 			<el-table-column fixed="right" label="操作" width="150">
 				<template scope="scope">
-					<el-button-group>
-						<el-button style="margin-left: 10px;" type="primary" size="small">
-							详情
-						</el-button>
-					</el-button-group>
+						<router-link :to="{name:'orderDetail'}" class="addmain">详情</router-link>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -60,6 +56,12 @@
 				value: '',
 				currentPage1: 5,
 				value3: [new Date(2017, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
+				list: [{
+					mudi: 'dfgfdg',
+					created_at: '2016-05-02',
+					tel: '1389909789'
+					
+				}],
 			}
 		},
 	}
@@ -69,4 +71,5 @@
 		background: #eeeeee;
 		border-radius: .2em;
 	}
+	
 </style>

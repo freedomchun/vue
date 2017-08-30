@@ -23,7 +23,7 @@
 		<div class="panel-body">
 		<div class="bg-g">
 			<p>订单信息</p>
-			<el-table style="width: 100%">
+			<el-table :data="list" style="width: 100%">
 				<el-table-column prop="num" width="150" label="订单编号">
 				</el-table-column>
 				<el-table-column prop="name" label="活动名称" show-overflow-tooltip>
@@ -53,7 +53,7 @@
 		<div class="panel-body">
 		<div class="bg-g">
 			<p>游记信息</p>
-			<el-table style="width: 100%">
+			<el-table :data="list" style="width: 100%">
 				<el-table-column prop="num" width="150" label="游记封面">
 				</el-table-column>
 				<el-table-column prop="name" label="游记名称" show-overflow-tooltip>
@@ -87,6 +87,11 @@
 		data() {
 			return {
 				currentPage1: 5,
+				list: [{
+					name: '佛挡杀佛的个',
+					at: '2016-05-02',	
+					amount: '2'
+				}],
 			}
 		}
 	}

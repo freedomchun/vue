@@ -38,7 +38,7 @@
 						<el-button style="margin-left: 10px;" type="primary" size="small">
 							修改
 						</el-button>
-						<el-button type="danger" size="small">
+						<el-button type="danger" size="small" @click="deleteMdd(scope.row)">
 							删除
 						</el-button>
 					</el-button-group>
@@ -106,7 +106,11 @@
 				checkedCities: ['上海', '北京'],
 				cities: cityOptions,
 				isIndeterminate: true,
-				psList: [],
+				psList: [{
+					created_at: '2016-05-02',
+					amount: 1
+					
+				}],
 				showAddUser: false,
 				addUser: {},
 
@@ -125,6 +129,16 @@
 			addUserForm() {
 				this.showAddUser = true;
 			},
+			deleteMdd(mdd) {
+				this.$confirm(`你确定要删除 ${mdd.title} 吗?`, '提示', {
+					type: 'warning'
+				}).then(() => {
+					this.delete_mdd(mdd).then(rs => {
+						this.get_mddList()
+						this.$message.success('删除成功')
+					}).catch(() => {})
+				}).catch(() => {})
+			}
 
 		},
 	}

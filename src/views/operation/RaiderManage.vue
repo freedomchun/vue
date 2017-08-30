@@ -42,7 +42,7 @@
 						<el-button style="margin-left: 10px;" type="primary" size="small">
 							修改
 						</el-button>
-						<el-button type="danger" size="small">
+						<el-button type="danger" size="small" @click="deleteMdd(scope.row)">
 							删除
 						</el-button>
 					</el-button-group>
@@ -64,11 +64,25 @@
 				value: '',
 				currentPage1: 5,
 				value3: [new Date(2017, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
-				psList: [],
-
+				psList: [{
+					raidername: 'fdsdfd',
+					created_at: '2016-05-02',
+					amount: 1
+				}],
 			}
 		},
-		methods: {},
+		methods: {
+			deleteMdd(mdd) {
+				this.$confirm(`你确定要删除 ${mdd.title} 吗?`, '提示', {
+					type: 'warning'
+				}).then(() => {
+					this.delete_mdd(mdd).then(rs => {
+						this.get_mddList()
+						this.$message.success('删除成功')
+					}).catch(() => {})
+				}).catch(() => {})
+			}
+		},
 	}
 </script>
 <style scoped>

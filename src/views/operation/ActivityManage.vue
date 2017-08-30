@@ -36,7 +36,7 @@
 				</el-form-item>
 			</el-form>
 		</div>
-		<el-table border style="width: 100%; margin-top: 20px;">
+		<el-table :data="list" border style="width: 100%; margin-top: 20px;">
 			<el-table-column prop="avatar" label="封面">
 				<template scope="scope">
 					<img :src="scope.row.avatar" width="100">
@@ -51,7 +51,7 @@
 					<el-button-group>
 						<el-switch v-model="value2" on-color="#13ce66" off-color="#ff4949" on-text="上架" off-text="下架">
 						</el-switch>
-						<el-button style="margin-left: 10px;" type="primary" size="small">
+						<el-button style="margin-right: 10px;" type="primary" size="small">
 							修改
 						</el-button>
 					</el-button-group>
@@ -66,6 +66,11 @@
 	export default {
 		data() {
 			return {
+				list: [{
+					created_at: '2016-05-02',
+					name: '王小虎',
+					amount: 1
+				}],
 				options: [{
 					value: '选项1',
 					label: '黄金糕'
@@ -84,23 +89,5 @@
 	.bg-g {
 		background: #eeeeee;
 		border-radius: .2em;
-	}
-	
-	.addmain {
-		background: #4db3ff;
-		color: white;
-		margin: 0;
-		padding: 10px 15px;
-		border-radius: 4px;
-		display: inline-block;
-		line-height: 1;
-		white-space: nowrap;
-		cursor: pointer;
-		font-size: 14px;
-		box-sizing: border-box;
-		outline: 0;
-		text-align: center;
-		text-decoration: none;
-		border: 1px solid #c4c4c4;
 	}
 </style>

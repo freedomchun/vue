@@ -11,7 +11,7 @@
 			</el-form>
 		</div>
 
-		<el-table border style="width: 100%; margin-top: 20px;">
+		<el-table :data="list" border style="width: 100%; margin-top: 20px;">
 			<el-table-column prop="info_num" label="用户编号" width="150" show-overflow-tooltip></el-table-column>
 			<el-table-column prop="info_head" label="头像" width="150"></el-table-column>
 			<el-table-column prop="info_name" label="用户名" show-overflow-tooltip></el-table-column>
@@ -23,11 +23,7 @@
 			<el-table-column prop="info_end" label="最后登录" width="150" show-overflow-tooltip></el-table-column>
 			<el-table-column fixed="right" label="操作" width="150">
 				<template scope="scope">
-					<el-button-group>
-						<el-button style="margin-left: 10px;" type="primary" size="small">
-							详情
-						</el-button>
-					</el-button-group>
+					<router-link :to="{name:'infoDetail'}" class="addmain">详情</router-link>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -40,6 +36,10 @@
 		data() {
 			return {
 				currentPage1: 5,
+				list: [{
+					info_name: '佛挡杀佛的个',
+					info_at: '2016-05-02'	
+				}],
 			}
 		}
 	}

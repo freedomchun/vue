@@ -35,13 +35,14 @@
 						</el-checkbox-group>
 					</div>
 				</el-form-item>
-				<el-form-item label="选择关联主题">
-					<el-tag :key="tag.name" v-for="tag in dynamicTags" :type="tag.type" :closable="true" :close-transition="false" @close="handleClose(tag)">
-						{{tag.name}}
+				<el-form-item label="选择关联主题" class="dem">
+					<el-tag :key="tag" v-for="tag in dynamicTags" :closable="true" :close-transition="false" @close="handleClose(tag)">
+						{{tag}}
 					</el-tag>
 					<el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
 					</el-input>
 					<el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
+
 				</el-form-item>
 			</div>
 			<div class="bg-g">
@@ -315,19 +316,7 @@
 				},
 				value1: '',
 				value3: true,
-				dynamicTags: [{
-						name: '特惠游',
-						type: 'danger'
-					},
-					{
-						name: '亲子游',
-						type: 'warning'
-					},
-					{
-						name: '暑期游',
-						type: 'success'
-					}
-				],
+				dynamicTags: ['标签一', '标签二', '标签三'],
 				inputVisible: false,
 				inputValue: '',
 				checkAll: true,
@@ -421,4 +410,17 @@
 		border-bottom: 1px solid #ccc;
 		padding: 20px 20px 30px 20px;
 	}
+	
+	.dem .button-new-tag {
+		margin-left: 10px;
+		height: 24px;
+		line-height: 22px;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	
+	.dem .el-tag+.el-tag {
+		margin-left: 10px;
+	}
+	.dem .input-new-tag{ width: 110px;}
 </style>

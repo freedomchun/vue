@@ -13,14 +13,14 @@
 				</el-form-item>
 			</el-form>
 		</div>
-		<el-table border style="width: 100%; margin-top: 20px;">
+		<el-table :data="list" border style="width: 100%; margin-top: 20px;">
 			<el-table-column prop="chain_name" label="名称" show-overflow-tooltip></el-table-column>
 			<el-table-column prop="chain_at" label="创建时间" width="150" show-overflow-tooltip></el-table-column>
 			<el-table-column fixed="right" label="操作" width="150">
 				<template scope="scope">
 					<el-button-group>
 						<el-button type="primary" size="small">修改</el-button>
-						<el-button type="danger" size="small">删除</el-button>
+						<el-button type="danger" size="small"  @click="deleteMdd(scope.row)">删除</el-button>
 					</el-button-group>
 				</template>
 			</el-table-column>
@@ -47,7 +47,23 @@
 		data() {
 			return {
 				currentPage1: 5,
+				list: [{
+					chain_at: '2016-05-02',
+					chain_name: '王gfdg'
+				}],
 			}
+		},
+		methods: {
+			deleteMdd(mdd) {
+				this.$confirm(`你确定要删除 ${mdd.title} 吗?`, '提示', {
+					type: 'warning'
+				}).then(() => {
+					this.delete_mdd(mdd).then(rs => {
+						this.get_mddList()
+						this.$message.success('删除成功')
+					}).catch(() => {})
+				}).catch(() => {})
+			},
 		}
 	}
 </script>

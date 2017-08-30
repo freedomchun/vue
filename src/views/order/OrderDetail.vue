@@ -23,7 +23,7 @@
 		</div>
 		<div class="bg-g">
 			<p>报名人信息</p>
-			<el-table style="width: 100%">
+			<el-table :data="list" style="width: 100%">
 				<el-table-column type="index" width="80" label="序号">
 				</el-table-column>
 				<el-table-column prop="name" label="姓名" width="180">
@@ -63,6 +63,13 @@
 		data() {
 			return {
 				currentPage1: 5,
+				list: [{
+					name: '张某某',
+					contacts: '王某某',
+					id_num: '5132545465767',
+					tel_num01: '1389909789'
+					
+				}],
 			}
 		}
 	}

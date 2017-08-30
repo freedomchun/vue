@@ -25,7 +25,7 @@
 						</el-form-item>
 					</el-form>
 				</div>
-				<el-table border style="width: 100%; margin-top: 20px;">
+				<el-table :data="list" border style="width: 100%; margin-top: 20px;">
 					<el-table-column prop="cover" label="活动封面" width="150"></el-table-column>
 					<el-table-column prop="raidername" label="活动名称" show-overflow-tooltip></el-table-column>
 					<el-table-column prop="amount" label="访问量" width="150"></el-table-column>
@@ -54,6 +54,10 @@
 				value: '',
 				currentPage1: 5,
 				value3: [new Date(2017, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
+				list: [{
+					raidername: '佛挡杀佛的个',
+					created_at: '2016-05-02'	
+				}],
 			}
 		},
 		methods: {
